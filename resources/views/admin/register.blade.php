@@ -19,10 +19,13 @@
     <!-- <div class="flex justify-between items-center mx-10 mt-4">
         <h2 class="py-4 px-6 dark:bg-stone-800 bg-gray-200 rounded-lg text-xl font-semibold text-gray-700 dark:text-gray-200">Register Cost Center Manager</h2>
     </div> -->
-    <h2 class="py-4 px-6  bg-green-500 rounded-lg text-xl font-semibold text-gray-700 dark:text-gray-200">Register Cost Center Manager</h2>
-    <!-- Registration Form -->
-    <form method="POST" action="{{ route('admin.register') }}" class="dark:bg-stone-800 px-6 mx-6 bg-gray-200 rounded-lg mt-2 " id="registerForm">
 
+    <!-- Registration Form -->
+    <form method="POST" action="{{ route('admin.register') }}" class="dark:bg-stone-800 mx-6 bg-gray-200 rounded-lg mt-2 " id="registerForm">
+        <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">Register Cost Center Manager
+            <p class="text-sm font-semibold">all fields are required</p>
+        </h2>
+        
         @csrf
         <div class="p-10 mx-10">
 

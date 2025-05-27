@@ -1,6 +1,9 @@
 <x-app-layout>
     @if(auth()->user()->hasRole('admin'))
-    <div class="link text-gray-700 dark:text-gray-200 flex justify-end mt-2 px-4 font-bold">
+    <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 font-bold">
+        <div>
+            <h1 class="text-xl font-bold text-green-400">Welcome, <span class="capitalize text-stone-800 dark:text-slate-50">{{Auth::user()->name}}</span></h1>
+        </div>
         <div class="flex underline underline-offset-4">
             <a href="{{ route('admin.manage-accounts') }}">Manage Accounts</a>
 
@@ -10,6 +13,12 @@
         </div>
     </div>
     @endif
+
+    <div class="mx-2 mt-5 px-4 py-6 bg-green-300 rounded-md border-4 border-green-300 border-l-green-800">
+        <div >
+            <p class="text-green-800 font-bold">hello admin this is all your pending for recieveing and approval <span class="font-extrabold">RECORDS TURN-OVER</span> </p>
+        </div>
+    </div>
 
     <div class="py-4">
         <div class="mx-auto sm:px-6 lg:px-2 flex">

@@ -104,6 +104,7 @@ class InventoryController extends Controller
 
     public function displayIndexManager(Request $request)
     {
+
         if ($request->ajax()) {
             $data = Inventory::with('user')
                 ->whereHas('user', function ($query) {
@@ -112,8 +113,13 @@ class InventoryController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                
                 ->addColumn('prepared_by', function ($row) {
                     return $row->user->name ?? 'N/A';
+                })
+
+                ->editColumn('disposal_date', function($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
                 })
                 ->addColumn('action', function ($row) {
                     $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');

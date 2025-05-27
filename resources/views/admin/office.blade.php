@@ -17,13 +17,11 @@
     </div>
 
     <!-- Office Department -->
-    <form method="POST" action="{{ route('admin.storeOffice') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg px-6 mx-10 mt-2" id="registerForm">
+    <form method="POST" action="{{ route('admin.storeOffice') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2" id="registerForm">
+        <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">Create Office</h2>
         @csrf
         <div class="p-10">
             <!-- office name -->
-            <div class="text-center px-6">
-                <h1 class="dark:text-gray-200 font-bold text-lg">Create Office:</h1>
-            </div>
             <div>
                 <x-input-label for="office_dept" :value="__('Office Department')" class="dark:text-gray-300 text-md" />
                 <x-text-input placeholder="Ex. Accounting" id="department" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" type="text" name="department" :value="old('department    ')" required autofocus autocomplete="name" />

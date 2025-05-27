@@ -20,18 +20,22 @@
                     $loggedInUser = Auth::user();
                     @endphp
                     @if(auth()->user()->hasRole('admin'))
-                    <x-sidebar-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
-                        <div class="flex items-center " title="Dashboard">
+                    <div class="my-5">
+                        <div class="flex items-center" title="Dashboard">
                             <!-- Heroicon for Dashboard -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                 <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                             </svg>
-                            <span class="font-bold underline underline-offset-8">
-                                {{ Auth::user()->name }} <span class="uppercase">({{ Auth::user()->getRoleNames()->first() ?? 'No Role' }})</span>
-                            </span>
+                            <div class="ml-4">
 
+                                <div class="capitalize text-sm opacity-80">{{ Auth::user()->getRoleNames()->first() ?? 'No Role' }},</div>
+                                <div class="font-bold capitalize text-green-700 dark:text-green-300">
+                                    {{ Auth::user()->name }}
+                                </div>
+                            </div>
                         </div>
-                    </x-sidebar-link>
+                    </div>
+
                     <x-sidebar-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
                         <div class="flex items-center" title="Dashboard">
                             <!-- Heroicon for Dashboard -->
@@ -81,18 +85,21 @@
                     @endif
 
                     @if(auth()->user()->hasRole('manager'))
-                    <x-sidebar-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
-                        <div class="flex items-center " title="Dashboard">
+                    <div class="my-5">
+                        <div class="flex items-center" title="Dashboard">
                             <!-- Heroicon for Dashboard -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                 <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                             </svg>
-                            <span class="font-bold underline underline-offset-8">
-                                {{ Auth::user()->name }} <span class="uppercase">({{ Auth::user()->getRoleNames()->first() ?? 'No Role' }})</span>
-                            </span>
+                            <div class="ml-4">
 
+                                <div class="capitalize text-sm opacity-80">{{ Auth::user()->getRoleNames()->first() ?? 'No Role' }},</div>
+                                <div class="font-bold capitalize text-green-700 dark:text-green-300">
+                                    {{ Auth::user()->name }}
+                                </div>
+                            </div>
                         </div>
-                    </x-sidebar-link>
+                    </div>
 
                     <x-sidebar-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
                         <div class="flex items-center" title="Dashboard">
@@ -123,18 +130,21 @@
                     @endif
 
                     @if(auth()->user()->hasRole('user'))
-                    <x-sidebar-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
-                        <div class="flex items-center " title="Dashboard">
+                    <div class="my-5">
+                        <div class="flex items-center" title="Dashboard">
                             <!-- Heroicon for Dashboard -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                 <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                             </svg>
-                            <span class="font-bold underline underline-offset-8">
-                                {{ Auth::user()->name }} <span class="uppercase">({{ Auth::user()->getRoleNames()->first() ?? 'No Role' }})</span>
-                            </span>
+                            <div class="ml-4">
 
+                                <div class="capitalize text-sm opacity-80">{{ Auth::user()->getRoleNames()->first() ?? 'No Role' }},</div>
+                                <div class="font-bold capitalize text-green-700 dark:text-green-300">
+                                    {{ Auth::user()->name }}
+                                </div>
+                            </div>
                         </div>
-                    </x-sidebar-link>
+                    </div>
 
                     <x-sidebar-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         <div class="flex items-center" title="Dashboard">

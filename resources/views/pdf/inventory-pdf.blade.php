@@ -35,9 +35,10 @@
         .uppercase {
             text-transform: uppercase;
         }
+
         .foot {
             text-transform: uppercase;
-            
+
         }
 
         .bold {
@@ -94,8 +95,10 @@
                 <td>{{ \Carbon\Carbon::parse($inventory->doc_date)->format('Y') }}</td>
                 <td>{{ $inventory->quantity_code }}</td>
                 <td>{{ $inventory->index_code }}</td>
-                <td>{{ $inventory->status }}</td>
-                <td>{{ $inventory->retention_period }}</td>
+                <td style="color: {{ $inventory->status === 'Permanent' ? 'blue' : ($inventory->status === 'Temporary' ? 'orange' : 'black') }}">
+                    {{ $inventory->status }}
+                </td>
+                <td>{{ $inventory->retention_period }} <span style="margin-right: 2px; text-transform:uppercase;">year/s</span></td>
                 <td>{{ \Carbon\Carbon::parse($inventory->disposal_date)->format('Y') }}</td>
             </tr>
         </tbody>
@@ -112,7 +115,7 @@
             </td>
             <td style="width: 48%; vertical-align: top; border: none;">
                 <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}} - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('d/m/Y') }}</p>
-                <p class="foot"><strong>approved by:</strong>  {{ $inventory->approved_by}} - {{ \Carbon\Carbon::parse($inventory->approved_date)->format('d/m/Y') }}</p>
+                <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}} - {{ \Carbon\Carbon::parse($inventory->approved_date)->format('d/m/Y') }}</p>
             </td>
         </tr>
     </table>

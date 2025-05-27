@@ -115,7 +115,7 @@
                         <x-secondary-button @click="show = false">{{__('Close')}}</x-secondary-button>
                     </div>
 
-                    <div>
+                    <div class="flex gap-4">
                         <x-danger-button>{{__('delete')}}</x-danger-button>
                         <form :action="'{{ route('admin.recieve') }}'" method="POST" x-show="!inventory.recieved_by">
                             @csrf
@@ -129,7 +129,7 @@
                                 </svg>
 
 
-                                {{ __('Already Recieved') }}
+                                {{ __('Recieved') }}
                             </p>
                         </template>
 
@@ -145,7 +145,7 @@
                                 </svg>
 
 
-                                {{ __('Already approved') }}
+                                {{ __('approved') }}
                             </p>
                         </template>
                     </div>

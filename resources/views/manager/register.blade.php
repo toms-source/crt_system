@@ -17,12 +17,11 @@
         </div>
     </div>
 
-    <div class="flex justify-between items-center mx-10 my-4">
-        <h2 class="py-4 px-6 dark:bg-stone-800 bg-gray-200 rounded-lg text-xl font-semibold text-gray-700 dark:text-gray-200">Register User</h2>
-    </div>
-
     <!-- Registration Form -->
-    <form method="POST" action="{{ route('user.register') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg px-6 mx-10 mt-2" id="registerForm">
+    <form method="POST" action="{{ route('user.register') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2" id="registerForm">
+        <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">Register your user
+            <p class="text-sm font-semibold">all fields are required</p>
+        </h2>
         @csrf
         <div class="p-10">
             <!-- Name -->
@@ -62,9 +61,9 @@
                     <label for="show-password" class="ms-2 text-sm text-gray-600 dark:text-gray-400">Show Password</label>
                 </div>
                 <!-- Submit Button -->
-                <x-primary-button id="submitButton">
-                    {{ __('Submit') }}
-                </x-primary-button>
+                <x-green-button id="submitButton">
+                    {{ __('create new user') }}
+                </x-green-button>
             </div>
         </div>
     </form>

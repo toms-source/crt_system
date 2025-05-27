@@ -16,7 +16,7 @@
         </div>
     </div>
     <header class="flex justify-between items-center mx-10 my-4">
-        <h2 class="py-4 px-6 xs:px-2 dark:bg-stone-800 bg-gray-200 rounded-lg text-xl xs:text-md font-semibold text-gray-700 dark:text-gray-200">Cost Center Manager & Users</h2>
+        <h2 class="py-4 px-6 xs:px-2 dark:bg-stone-800 bg-green-300 rounded-lg text-xl xs:text-md font-semibold text-green-800">Cost Center Manager & Users</h2>
     </header>
 
     <div class="mx-auto sm:px-6 lg:px-8 xs:mx-4">

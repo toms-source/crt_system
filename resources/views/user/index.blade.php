@@ -1,7 +1,21 @@
 <x-app-layout>
+    <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 font-bold">
+        <div>
+            <h1 class="text-xl font-bold text-green-400">Welcome, <span class="capitalize text-stone-800 dark:text-slate-50">{{Auth::user()->name}}</span></h1>
+        </div>
+
+        <div class="flex underline underline-offset-4">
+            <a href="{{ route('user.reports') }}">Reports</a>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </div>
+    </div>
     <div class="py-4">
         <div class="mx-auto sm:px-6 lg:px-2 flex">
             <div class="flex-1 bg-white dark:bg-stone-800 shadow-sm sm:rounded-lg">
+
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <section>
                         <h1>My RTO inventory</h1>
@@ -28,7 +42,7 @@
                                             @forelse($inventories as $inventory)
                                             <tr>
                                                 <td class="px-6 py-4">{{ $inventory->id }}</td>
-                                                <td class="px-6 py-4">{{ $inventory->description }}</td>
+                                                <td class="px-6 py-4 max-w-[150px] truncate whitespace-nowrap overflow-hidden">{{ $inventory->description }}</td>
                                                 <td class="px-6 py-4">{{ $loggedInUser->manager?->name ?? 'N/A' }}</td>
                                                 <td class="px-6 py-4 uppercase font-bold text-center text-sm">
                                                     <span class="rounded-full px-4
