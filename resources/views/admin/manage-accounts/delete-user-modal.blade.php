@@ -84,6 +84,4 @@
         </div>
     </div>
 </div>
-<!-- 
-<script src="{{ asset('js/disabledbutton.js') }}"></script> -->
 <script src="{{ asset('js/registerTogglePassword.js') }}"></script>

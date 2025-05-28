@@ -42,7 +42,7 @@
         <div class="flex-grow h-screen overflow-y-auto flex flex-col">
             <!-- Page Content -->
             <main class="flex flex-1 flex-col">
-                <div class="flex justify-between px-6 py-3 dark:text-gray-200 h-12 w-full bg-white dark:bg-stone-800 border-b border-gray-100 dark:border-gray-700 sticky top-0 z-100">
+                <div class="flex justify-between px-6 py-3 dark:text-gray-200 h-12 w-full sticky top-0 z-100">
                     <!-- Sidebar Toggle (only on small screens) -->
                     <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -57,7 +57,7 @@
                     <div class="flex-1 flex justify-end items-center">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                <button class="inline-flex items-center gap-2 px-2 py-1 border border-transparent text-sm font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-stone-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-2 px-2 py-1 border border-transparent text-sm font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 whitespace-nowrap">
                                     <!-- Avatar Icon -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />

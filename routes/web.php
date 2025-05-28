@@ -19,18 +19,12 @@ Route::get('/pdf-test', function() {
     return view('pdf.pdf-test');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-//Route::get('/dashboard', [InventoryController::class, 'display'])->middleware(['auth', 'role:admin'])->name('dashboard');
-
 // admin Route
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/reports', function () {
         return view('admin.reports');
     })->name('admin.reports');
-    Route::get('/inventory/print/{id}', [PdfController::class, 'print'])->name('print-pdf');
+    //Route::get('/inventory/print/{id}', [PdfController::class, 'print'])->name('print-pdf');
     Route::get('/admin/dashboard', [InventoryController::class, 'display'])->name('admin.index');
     Route::get('/admin/office', [OfficesController::class, 'display'])->name('admin.office');
     Route::get('/admin/register-manager-form', [OfficesController::class, 'fetchSelection'])->name('admin.registerForm');
@@ -73,6 +67,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/inventory/print/{id}', [PdfController::class, 'print'])->name('print-pdf');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

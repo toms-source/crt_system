@@ -36,11 +36,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // public function inventories()
-    // {
-    //     return $this->belongsTo(Inventory::class);
-    // }
-
     // Many-to-One: User belongs to an Office
     public function office()
     {
@@ -64,7 +59,6 @@ class User extends Authenticatable
     }
 
     public function manager() {
-         //return $this->hasOne(User::class, 'managerId');
        return $this->belongsTo(User::class, 'managerId');
     }
     /**

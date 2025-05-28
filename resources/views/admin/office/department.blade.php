@@ -1,6 +1,6 @@
 <div>
     <div class="mt-4">
-        <div class="mx-auto sm:px-6 lg:px-8">
+        <div class="mx-6">
             <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden sm:rounded-lg">
                 <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                     <thead class="bg-zinc-300 dark:bg-stone-800">

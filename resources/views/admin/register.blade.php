@@ -16,10 +16,6 @@
         </div>
     </div>
 
-    <!-- <div class="flex justify-between items-center mx-10 mt-4">
-        <h2 class="py-4 px-6 dark:bg-stone-800 bg-gray-200 rounded-lg text-xl font-semibold text-gray-700 dark:text-gray-200">Register Cost Center Manager</h2>
-    </div> -->
-
     <!-- Registration Form -->
     <form method="POST" action="{{ route('admin.register') }}" class="dark:bg-stone-800 mx-6 bg-gray-200 rounded-lg mt-2 " id="registerForm">
         <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">Register Cost Center Manager
@@ -59,7 +55,7 @@
 
             <div class="mt-4">
                 <x-input-label for="office_id" :value="__('Select Office')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Status</x-input-label>
-                <select name="office_id" id="office_id" class="block w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700 ">
+                <select name="office_id" id="office_id" class="block w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-stone-900 ">
                     <option value="" disabled selected hidden>-- Select Office --</option>
 
                     @foreach($offices as $office)

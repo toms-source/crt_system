@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Inventory PDF</title>
+    <title>{{ $inventory->prepared_by }} - RTO Inventory PDF</title>
     <style>
         body {
             font-family: "Nunito", sans-serif;
@@ -114,8 +114,8 @@
                 <p class="foot">LOC CODE:</p>
             </td>
             <td style="width: 48%; vertical-align: top; border: none;">
-                <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}} - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('d/m/Y') }}</p>
-                <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}} - {{ \Carbon\Carbon::parse($inventory->approved_date)->format('d/m/Y') }}</p>
+                <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}} - {{ $inventory->recieve_date }}</p>
+                <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}} - {{ $inventory->approved_date }}</p>
             </td>
         </tr>
     </table>

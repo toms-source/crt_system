@@ -66,27 +66,18 @@
                 <div class="mt-6">
                     <x-input-label for="name" :value="__('Name')" class="dark:text-gray-300" />
                     <x-text-input name="name" x-model="userName" type="text" class="mt-1 w-full" required />
-                    <!-- <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" /> -->
                 </div>
                 <!-- email -->
                 <div class="mt-6">
                     <x-input-label for="email" :value="__('Email')" class="dark:text-gray-300" />
                     <x-text-input name="email" x-model="userEmail" type="email" class="mt-1 w-full" required />
-                    <!-- <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" /> -->
                 </div>
                 <!-- password -->
                 <div class="mt-6">
                     <x-input-label for="password" :value="__('Password')" class="dark:text-gray-300" />
                     <x-text-input name="password" type="password" placeholder="Leave blank to keep current password" class="mt-1 w-full" />
-                    <!-- <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" /> -->
                 </div>
-
-                <!-- Checkbox to Show/Hide Password -->
-                <!-- <div class="mt-2 flex items-center">
-                    <input type="checkbox" id="show-password" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" onclick="togglePassword()">
-                    <label for="show-password" class="ms-2 text-sm text-gray-600 dark:text-gray-400">Show Password</label>
-                </div> -->
-
+                
                 <div class="mt-6 gap-4 flex justify-end">
                     <x-secondary-button x-on:click="show = false">
                         Cancel

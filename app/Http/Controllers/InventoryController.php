@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
-use Spatie\Permission\Traits\HasRoles;
 
 class InventoryController extends Controller
 {
@@ -44,23 +43,18 @@ class InventoryController extends Controller
             'office_id' => $user->office_id,
         ]);
 
-        // return redirect()->back()->with('success', 'Inventory record saved!');
         return redirect()->route('user.index')->with('success', 'Inventory record saved!');
     }
     //
     public function display(Request $request)
     {
-
-
         if ($request->ajax()) {
             $data = Inventory::whereNotNull('manager_approval');
 
-            // $data = Inventory::query();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
-
                     return '
         <button 
             x-data 
@@ -86,19 +80,17 @@ class InventoryController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         return view('admin.index');
     }
 
     public function displayIndexUser()
     {
-
         $user = Auth::user();
-        // $inventories = Inventory::with('manager')->get();
         $inventories = Inventory::with('owner')
             ->where('user_id', Auth::id())
             ->get();
-
-
+            
         return view('user.index', compact('inventories'));
     }
 

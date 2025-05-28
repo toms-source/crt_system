@@ -59,7 +59,7 @@
                                                         View
                                                     </x-success-button>
                                                     <x-danger-button>
-                                                        Pdf
+                                                        <a href="{{ route('print-pdf', $inventory->id) }}" target="_blank" class="text-white">PDF</a>
                                                     </x-danger-button>
                                                 </td>
                                             </tr>
