@@ -15,11 +15,11 @@
             </svg>
         </div>
     </div>
-    <header class="flex justify-between items-center mx-10 my-4">
-        <h2 class="py-4 px-6 xs:px-2 bg-green-300 rounded-lg text-xl xs:text-md font-semibold text-green-800">Cost Center Manager & Users</h2>
+    <header class="flex justify-between items-center mx-2 mt-4 ">
+        <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">Cost Center Manager & Users</h2>
     </header>
 
-    <div class="mx-auto sm:px-6 lg:px-8 xs:mx-4">
+    <div class="mx-2 sm:px-6 bg-white dark:bg-stone-800 shadow-lg shadow-stone-500/50">
         @if($users->count() > 0)
         @include('admin.manage-accounts.filter-users')
         @include('admin.manage-accounts.retrieve-users')

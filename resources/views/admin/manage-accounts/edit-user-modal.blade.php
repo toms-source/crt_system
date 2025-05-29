@@ -83,9 +83,9 @@
                         Cancel
                     </x-secondary-button>
 
-                    <x-primary-button type="submit">
+                    <x-green-button type="submit">
                         Save Changes
-                    </x-primary-button>
+                    </x-green-button>
                 </div>
 
             </form>

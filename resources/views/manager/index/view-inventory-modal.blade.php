@@ -70,11 +70,18 @@
                 <h3>location code:</h3>
             </div>
             <div class="flex-1">
-                <h3>recieved by:<span x-text="inventory.recieved_by"></span></h3>
-                <h3>date:<span x-text="inventory.recieve_date"></span></h3>
-                <h3>approved by(supervisor):<span x-text="inventory.approved_by"></span></h3>
-                <h3>
-                    date:
+               <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                <h3><strong>date:</strong><span
+                                x-text="inventory.recieve_date 
+                                ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
+                                    month: 'short', 
+                                    day: '2-digit', 
+                                    year: 'numeric' 
+                                    }) 
+                                : 'N/A'">
+                            </span></h3>
+                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                <h3><strong>date:</strong>
                     <span
                         x-text="inventory.approved_date 
                                 ? new Date(inventory.approved_date).toLocaleString('en-US', { 
@@ -104,11 +111,11 @@
                         <!-- If already approved, disable the button -->
                         <div>
                             <template x-if="inventory.manager_approval">
-                                <p class="text-blue-200 flex align-center">
+                                <p class="text-blue-500 dark:text-blue-200 flex align-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
-                                    {{ __('Already approved') }}
+                                    {{ __('Approved') }}
                                 </p>
                             </template>
                         </div>

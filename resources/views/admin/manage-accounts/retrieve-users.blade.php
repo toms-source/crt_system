@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($users as $user)
         <!-- Cards -->
-        <div class="bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-stone-200 dark:bg-stone-700 border-t-8 border-green-500 overflow-hidden shadow shadow-stone-500 sm:rounded-lg ">
             <div class="flex flex-col text-gray-900 dark:text-gray-100 p-6">
                 <div class="flex flex-1 gap-4">
                     <!-- SVG Icon -->
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-1 justify-end mt-4 gap-4">
+                <div class="flex flex-1 justify-end mt-8 gap-4">
                     <!-- Edit Button -->
                     <x-success-button type="button" x-data=""
                         x-on:click="$dispatch('open-modal', { 

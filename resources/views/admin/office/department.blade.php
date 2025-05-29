@@ -3,11 +3,11 @@
         <div class="mx-6">
             <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden sm:rounded-lg">
                 <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                    <thead class="bg-zinc-300 dark:bg-stone-800">
+                    <thead class="bg-gray-50 dark:bg-gray-200">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-gray-300 uppercase tracking-wider">Office ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-gray-300 uppercase tracking-wider">Department Name(Double click to edit)</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-800 dark:text-gray-300 uppercase tracking-wider">Delete</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Office ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department Name(Double click to edit)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="bg-zinc-200 dark:bg-stone-900">

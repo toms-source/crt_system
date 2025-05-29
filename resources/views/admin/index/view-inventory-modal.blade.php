@@ -39,11 +39,13 @@
         @php
         $loggedInUser = Auth::user();
         @endphp
-        <div class="head-title text-center">
+        <div class="head-title text-center pt-4">
+            <span class="flex justify-center">
+                <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
+            </span>
             <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
             <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong><span x-text="inventory.manager_approval"></span></p>
-            <!-- <p class="text-sm">cost center head approval status:</p> -->
         </div>
 
         <div class="inventory-head text-sm w-full flex justify-center py-4">
@@ -53,7 +55,7 @@
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-green-500' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
+                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm">
@@ -82,8 +84,8 @@
                         <h3>location code:</h3>
                     </div>
                     <div class="flex-1">
-                        <h3>recieved by:<span x-text="inventory.recieved_by"></span></h3>
-                        <h3>date:<span
+                        <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                        <h3><strong>date:</strong><span
                                 x-text="inventory.recieve_date 
                                 ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
                                     month: 'short', 
@@ -92,9 +94,8 @@
                                     }) 
                                 : 'N/A'">
                             </span></h3>
-                        <h3>approved by(supervisor):<span x-text="inventory.approved_by"></span></h3>
-                        <h3>
-                            date:
+                        <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                        <h3><strong>date:</strong>
                             <span
                                 x-text="inventory.approved_date 
                                 ? new Date(inventory.approved_date).toLocaleString('en-US', {  
@@ -143,9 +144,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-
-
-                                {{ __('approved') }}
+                                {{ __('Approved') }}
                             </p>
                         </template>
                     </div>

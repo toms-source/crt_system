@@ -19,7 +19,7 @@
 
     <!-- Registration Form -->
     <form method="POST" action="{{ route('user.register') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2" id="registerForm">
-        <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">Register your user
+        <h2 class="py-4 px-6 bg-green-600 rounded-t-lg text-xl font-bold text-white">Register your user
             <p class="text-sm font-semibold">all fields are required</p>
         </h2>
         @csrf
