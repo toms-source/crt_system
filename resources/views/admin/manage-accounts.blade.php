@@ -19,16 +19,13 @@
         <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">Cost Center Manager & Users</h2>
     </header>
 
-    <div class="mx-2 sm:px-6 bg-white dark:bg-stone-800 shadow-lg shadow-stone-500/50">
+    <div class="mx-2 py-4 sm:px-6 bg-white dark:bg-stone-800 shadow shadow-stone-500/50">
         @if($users->count() > 0)
         @include('admin.manage-accounts.filter-users')
         @include('admin.manage-accounts.retrieve-users')
         @include('admin.manage-accounts.retrieve-user-pagination')
         @else
         <p class="text-red-500 text-center">No users found.</p>
-        <x-danger-button class="flex justify-center align-center w-full">
-            <a href="{{ route('admin.manage-accounts') }}">Go back</a>
-        </x-danger-button>
         @endif
     </div>
 

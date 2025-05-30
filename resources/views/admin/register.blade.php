@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 font-bold">
+    <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 my-6 font-bold">
         <div class="flex underline underline-offset-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -83,8 +83,6 @@
             </div>
         </div>
     </form>
-
-    @include('components.footer')
 
 </x-app-layout>
 

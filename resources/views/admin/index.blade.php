@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     @if(auth()->user()->hasRole('admin'))
     <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 font-bold">
         <div>
