@@ -15,15 +15,35 @@
             <a href="{{ route('manager.register') }}">Add User</a>
         </div>
     </div>
-    
-    <!-- warning -->
-    <div class="flex justify-center align-center">
-        <img src="{{ asset('images/under_construction.svg') }}" alt="" class="w-72">
+
+    <div class="mx-2 mt-5 px-4 py-6 bg-green-300 rounded-md border-4 border-green-300 border-l-green-800 shadow-sm shadow-green-800">
+        <div>
+            <p class="text-green-800 font-bold">
+                hello manager this is all the list/s of completed RTO/Inventory by user under your provision
+            <div class="text-red-700 text-sm">
+                <span class="uppercase text-red-700 text-sm font-extrabold mr-2">note*</span>all the list below will be controll by the admin
+            </div>
+            </p>
+        </div>
     </div>
-    <div class="flex align-center justify-center text-red-700">
-        <h1 class="text-lg font-extrabold ">DO NOT ENTER</h1>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-            <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-        </svg>
+
+    <div>
+        <div class="flex justify-between items-center mx-2 mt-4 ">
+            <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">RTO/Inventory History</h2>
+        </div>
+        <div class="mx-2">
+            <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden">
+                <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-200">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared By</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department Name(Double click to edit)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </x-app-layout>

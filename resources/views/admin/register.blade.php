@@ -23,7 +23,7 @@
         </h2>
         
         @csrf
-        <div class="p-10 mx-10">
+        <div class="lg:p-8 md:p-10 mx-10">
 
             <!-- Name -->
             <div>
