@@ -13,7 +13,7 @@
                     <tbody class="bg-zinc-200 dark:bg-stone-900">
                         @foreach ($offices as $office)
                         <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
-                            <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $office->id }}</td>
+                            <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200"><span>Dept -</span>{{ $office->id }}</td>
 
                             <!-- display department name and double click to edit -->
                             <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200"

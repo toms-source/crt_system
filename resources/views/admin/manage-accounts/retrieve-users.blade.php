@@ -3,6 +3,16 @@
         @foreach($users as $user)
         <!-- Cards -->
         <div class="bg-stone-200 dark:bg-stone-700 border-t-8 border-green-500 overflow-hidden shadow shadow-stone-500 sm:rounded-lg ">
+            <!-- department -->
+            <div class="flex justify-end text-gray-900 dark:text-gray-100 w-full px-4 mt-4">
+                <div class="flex flex-col text-center">
+                    <h5 class="truncate capitalize text-lg px-3 bg-blue-200 rounded-full text-blue-800 font-bold" title="{{ $user->office?->department ?? 'No Office Assigned' }}">
+                        {{ $user->office?->department ?? 'No Office Assigned' }}
+                    </h5>
+                    <p class="text-xs">Department</p>
+                </div>
+
+            </div>
             <div class="flex flex-col text-gray-900 dark:text-gray-100 p-6">
                 <div class="flex flex-1 gap-4">
                     <!-- SVG Icon -->
@@ -16,33 +26,32 @@
                     <div>
                         <!-- Name -->
                         <div class="text-xl md:text-md xs:text-sm font-bold">
-                            <h1 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->name }}">{{ $user->name }}</h1>
+                            <h1 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->name }}">{{ $user->name }} -
+                                <span title="{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}">{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}</span>
+                            </h1>
                         </div>
 
                         <!-- Email -->
                         <div class="text-lg md:text-sm xs:text-sm">
-                            <h5 class="w-[250px] sm:w-[300px] truncate" title="{{ $user->email }}">Email: {{ $user->email }}</h5>
-                        </div>
-                        <!-- department -->
-                        <div class="text-lg md:text-sm xs:text-sm">
-                            <h5 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->office?->department ?? 'No Office Assigned' }}">
-                                Office Dept: {{ $user->office?->department ?? 'No Office Assigned' }}
+                            <h5 class="w-[250px] sm:w-[300px] truncate" title="{{ $user->email }}">
+                                Email: <a class="underline" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                             </h5>
                         </div>
-                        <div class="text-lg md:text-sm xs:text-sm">
+
+                        <!-- <div class="text-lg md:text-sm xs:text-sm">
                             @if($user->manager)
                             <h5 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->manager->name }}">
                                 Manager: {{ $user->manager->name }}
                             </h5>
                             @endif
-                        </div>
+                        </div> -->
 
                         <!-- Roles -->
-                        <div class="text-xs">
+                        <!-- <div class="text-xs">
                             <h6 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}">Role:
                                 {{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}
                             </h6>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

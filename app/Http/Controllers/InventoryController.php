@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArchiveInventories;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
+use App\Models\Offices;
+use App\Models\User;
 use App\Models\Inventory;
+
+use function Pest\Laravel\delete;
 
 class InventoryController extends Controller
 {
@@ -14,6 +18,11 @@ class InventoryController extends Controller
     {
         return view('user.form');
     }
+    public function displayRegister()
+    {
+        return view('manager.register');
+    }
+
     public function create(Request $request)
     {
         $request->validate([
@@ -45,44 +54,7 @@ class InventoryController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Inventory record saved!');
     }
-    //
-    public function display(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = Inventory::whereNotNull('manager_approval');
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
-                    return '
-        <button 
-            x-data 
-            x-on:click="$dispatch(\'open-modal\', { inventory: ' . $inventoryJson . ' })"
-            class="inline-flex items-center px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
-        >
-            View
-        </button>
-
-        <button 
-                x-data 
-                x-on:click="$dispatch(\'edit-modal\', { inventory: ' . $inventoryJson . ' })"
-                class="inline-flex items-center px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition"
-            >
-                Edit
-            </button>
-            <button class="inline-flex items-center px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700 transition">
-                <a href="' . route('print-pdf', $row->id) . '" 
-                target="_blank">Pdf</a> 
-            </button>
-    ';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('admin.index');
-    }
+    
 
     public function displayIndexUser()
     {
@@ -90,47 +62,8 @@ class InventoryController extends Controller
         $inventories = Inventory::with('owner')
             ->where('user_id', Auth::id())
             ->get();
-            
+
         return view('user.index', compact('inventories'));
-    }
-
-    public function displayIndexManager(Request $request)
-    {
-
-        if ($request->ajax()) {
-            $data = Inventory::with('user')
-                ->whereHas('user', function ($query) {
-                    $query->where('managerId', Auth::id());
-                });
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                
-                ->addColumn('prepared_by', function ($row) {
-                    return $row->user->name ?? 'N/A';
-                })
-
-                ->editColumn('disposal_date', function($row) {
-                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
-                })
-                ->addColumn('action', function ($row) {
-                    $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
-
-                    return '
-        <button 
-            x-data 
-            x-on:click="$dispatch(\'open-modal\', { inventory: ' . $inventoryJson . ' })"
-            class="inline-flex items-center px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
-        >
-            View
-        </button>
-    ';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('manager.index');
     }
 
     public function approve(Request $request)
@@ -186,5 +119,42 @@ class InventoryController extends Controller
         }
 
         return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
+    }
+    public function destroy(Inventory $inventory)
+    {
+        ArchiveInventories::create([
+            'original_id'       => $inventory->id,
+            'description'       => $inventory->description,
+            'doc_date'          => $inventory->doc_date,
+            'quantity_code'     => $inventory->quantity_code,
+            'index_code'        => $inventory->index_code,
+            'status'            => $inventory->status,
+            'retention_period'  => $inventory->retention_period,
+            'disposal_date'     => $inventory->disposal_date,
+            'office_origin'     => $inventory->office_origin,
+            'prepared_by'       => $inventory->prepared_by,
+            'list_no'           => $inventory->list_no,
+            'series_no'         => $inventory->series_no,
+            'loc_code'          => $inventory->loc_code,
+            'recieved_by'       => $inventory->recieved_by,
+            'recieve_date'      => $inventory->recieve_date,
+            'manager_approval'  => $inventory->manager_approval,
+            'approved_by'       => $inventory->approved_by,
+            'approved_date'     => $inventory->approved_date,
+            'user_id'           => $inventory->user_id,
+            'office_id'         => $inventory->office_id,
+        ]);
+
+        $inventory->delete(); 
+
+        return redirect()->back()->with('success', 'Inventory archived successfully.');
+    }
+    public function reports() 
+    {
+        $users = User::count()-1;
+        $inventories = ArchiveInventories::count();
+        $office = Offices::count();
+
+        return view('admin.reports', compact('users', 'inventories', 'office'));
     }
 }

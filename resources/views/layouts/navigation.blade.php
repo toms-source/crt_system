@@ -5,47 +5,47 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    
-                       <img src="{{ asset('images/TranscoLogo.png') }}" alt="TranscoLogo" class="w-[100px]"/>
-                   
+
+                    <img src="{{ asset('images/TranscoLogo.png') }}" alt="TranscoLogo" class="w-[100px]" />
+
                 </div>
 
                 <!-- Admin Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.manage-accounts')" :active="request()->routeIs('admin.manage-accounts')">
-                            {{ __('Manage Accounts') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports')">
-                            {{ __('Reports') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.manage-accounts')" :active="request()->routeIs('admin.manage-accounts')">
+                        {{ __('Manage Accounts') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports')">
+                        {{ __('Reports') }}
+                    </x-nav-link>
                     @endif
-                    
+
                     <!-- Cost Center Manager Navigation Links-->
                     @if(auth()->user()->hasRole('manager'))
-                        <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('manager.reports')" :active="request()->routeIs('manager.reports')">
-                            {{ __('Reports') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('manager.reports')" :active="request()->routeIs('manager.reports')">
+                        {{ __('Reports') }}
+                    </x-nav-link>
                     @endif
 
                     <!-- User Navigation Links -->
                     @if(auth()->user()->hasRole('user'))
-                        <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('user.reports')" :active="request()->routeIs('user.reports')">
-                            {{ __('Reports') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.reports')" :active="request()->routeIs('user.reports')">
+                        {{ __('Reports') }}
+                    </x-nav-link>
                     @endif
 
                 </div>
-                
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -67,13 +67,21 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Edit Profile') }}
                         </x-dropdown-link>
+                        <!-- Darkmode Toggle -->
+                        <button
+                            @click="toggle()"
+                            class="p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                            aria-label="Toggle Dark Mode">
+                            <span x-show="!isDark">🌞</span>
+                            <span x-show="isDark">🌙</span>
+                        </button>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -98,41 +106,41 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
 
-        <!-- Admin Navigation Links -->
+            <!-- Admin Navigation Links -->
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('admin.manage-accounts')" :active="request()->routeIs('admin.manage-accounts')">
-                    {{ __('Manage Accounts') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.manage-accounts')" :active="request()->routeIs('admin.manage-accounts')">
+                {{ __('Manage Accounts') }}
+            </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports')">
-                    {{ __('Reports') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports')">
+                {{ __('Reports') }}
+            </x-responsive-nav-link>
             @endif
 
-        <!-- Cost Center Navigation Links -->
+            <!-- Cost Center Navigation Links -->
             @if(auth()->user()->hasRole('manager'))
-                <x-responsive-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('manager.reports')" :active="request()->routeIs('manager.reports')">
-                    {{ __('Reports') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('manager.reports')" :active="request()->routeIs('manager.reports')">
+                {{ __('Reports') }}
+            </x-responsive-nav-link>
             @endif
 
             <!-- User Navigation Links -->
             @if(auth()->user()->hasRole('user'))
-                <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('user.reports')" :active="request()->routeIs('user.reports')">
-                    {{ __('Reports') }}
-                </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.reports')" :active="request()->routeIs('user.reports')">
+                {{ __('Reports') }}
+            </x-responsive-nav-link>
             @endif
         </div>
 
@@ -153,7 +161,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

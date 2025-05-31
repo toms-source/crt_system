@@ -117,7 +117,27 @@
                     </div>
 
                     <div class="flex gap-4">
-                        <x-danger-button>{{__('delete')}}</x-danger-button>
+                        <!-- <x-danger-button>{{__('delete')}}</x-danger-button> -->
+
+                        <form
+                            :action="`{{ url('admin/inventory') }}/${inventory.id}`"
+                            method="POST"
+                            @submit.prevent="
+        if (confirm('Are you sure you want to delete this item?')) {
+            $el.submit();
+        } else {
+            // Do nothing if cancelled
+        }
+    ">
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                                {{ __('Delete') }}
+                            </button>
+                        </form>
+
                         <form :action="'{{ route('admin.recieve') }}'" method="POST" x-show="!inventory.recieved_by">
                             @csrf
                             <input type="hidden" name="id" :value="inventory.id">

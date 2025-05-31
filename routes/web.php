@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\DTController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PdfController;
@@ -15,17 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pdf-test', function() {
-    return view('pdf.pdf-test');
-});
-
 // admin Route
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/reports', function () {
-        return view('admin.reports');
-    })->name('admin.reports');
-    //Route::get('/inventory/print/{id}', [PdfController::class, 'print'])->name('print-pdf');
-    Route::get('/admin/dashboard', [InventoryController::class, 'display'])->name('admin.index');
+    Route::get('/admin/reports', [InventoryController::class, 'reports'])->name('admin.reports');
+    Route::get('/admin/dashboard', [DTController::class, 'display'])->name('admin.index');
     Route::get('/admin/office', [OfficesController::class, 'display'])->name('admin.office');
     Route::get('/admin/register-manager-form', [OfficesController::class, 'fetchSelection'])->name('admin.registerForm');
     Route::get('/admin', [InventoryController::class, 'display'])->name('admin.inventory');
@@ -35,6 +29,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::patch('/admin/office/{office}', [OfficesController::class, 'update'])->name('department.update');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::delete('/admin/office/{office}', [OfficesController::class, 'destroy'])->name('office.destroy');
+    Route::delete('/admin/inventory/{inventory}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
     Route::post('/manager/register', [RegisterController::class, 'registerManager'])->name('admin.register');
     Route::post('admin/storeOffice', [OfficesController::class, 'storeOffice'])->name('admin.storeOffice');
     Route::post('/admin/recieve-form', [InventoryController::class, 'adminRecieve'])->name('admin.recieve');
@@ -47,12 +42,9 @@ Route::middleware(['auth', 'role:manager'])->group(function () {
         return view('manager.reports');
     })->name('manager.reports');
 
-    Route::get('/user-register', function () {
-        return view('manager.register');
-    })->name('manager.register');
-
+    Route::get('/manager/user-register', [InventoryController::class, 'displayRegister'])->name('manager.register');   
     Route::post('/approve-inventory', [InventoryController::class, 'approve'])->name('inventory.approve');
-    Route::get('/manager/dashboard', [InventoryController::class, 'displayIndexManager'])->name('manager.index');
+    Route::get('/manager/dashboard', [DTController::class, 'displayIndexManager'])->name('manager.index');
     Route::post('/user/register', [RegisterController::class, 'registerUser'])->name('user.register');
 });
 

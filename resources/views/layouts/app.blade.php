@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="darkMode()" :class="{ 'dark': isDark }" x-init="init()">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" href="{{ asset('images/IcoTranscoLogo.ico')}}" type="image/x-icon">
     <title>CRTS</title>
 
     <!-- Fonts -->
@@ -42,7 +42,7 @@
         <div class="flex-grow h-screen overflow-y-auto flex flex-col">
             <!-- Page Content -->
             <main class="flex flex-1 flex-col">
-                <div class="flex justify-between px-6 py-3 dark:text-gray-200 h-12 w-full sticky top-0 z-100">
+                <div class="flex justify-between px-6 py-3 bg-gray-100 dark:bg-stone-900 dark:text-gray-200 h-12 w-full sticky top-0 z-100">
                     <!-- Sidebar Toggle (only on small screens) -->
                     <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -75,7 +75,13 @@
                                 <x-dropdown-link :href="route('profile.edit')">
                                     {{ __('Edit Profile') }}
                                 </x-dropdown-link>
-
+                                <!-- Darkmode Toggle -->
+                                <x-dropdown-link
+                                    @click="toggle()"
+                                    aria-label="Toggle Dark Mode">
+                                    <span x-show="isDark">Good Morning! 🌞</span>
+                                    <span x-show="!isDark">Good Night! 🌙</span>
+                                </x-dropdown-link>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <x-dropdown-link :href="route('logout')"
@@ -94,6 +100,27 @@
     </div>
 
 
+    <!-- Darkmode Script -->
+    <script>
+        function darkMode() {
+            return {
+                isDark: false,
+                toggle() {
+                    this.isDark = !this.isDark;
+                    localStorage.setItem('dark', this.isDark);
+                },
+                init() {
+                    // Load dark mode setting from localStorage or system preference
+                    if (localStorage.getItem('dark') !== null) {
+                        this.isDark = JSON.parse(localStorage.getItem('dark'));
+                    } else {
+                        // fallback to system preference
+                        this.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 
