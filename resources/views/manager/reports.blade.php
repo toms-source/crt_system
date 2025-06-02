@@ -52,7 +52,9 @@
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->approved_by}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->disposal_date}}</td>
                                 <td>
-                                    <x-success-button>
+                                    <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
                                         View
                                     </x-success-button>
                                     <x-primary-button>
@@ -83,9 +85,11 @@
                                 <strong>Disposal Date: <span>{{ $archInventory->disposal_date }}</span></strong>
                             </div>
                             <div class="mt-4">
-                                <x-success-button>
-                                    View
-                                </x-success-button>
+                                <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
                                 <x-primary-button>
                                     <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
                                 </x-primary-button>
@@ -97,4 +101,5 @@
             </div>
         </div>
     </div>
+    @include('modal.view-arch-inventory-modal')
 </x-app-layout>

@@ -129,5 +129,5 @@
         <p>{{ session('success') }}</p>
     </div>
     @endif
-    @include('user.index.view-inventory-modal')
+    @include('modal.user-view-inventory-modal')
 </x-app-layout>

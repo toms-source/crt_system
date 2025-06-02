@@ -88,7 +88,11 @@
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->disposal_date}}</td>
                                 <td>
                                     <div class="flex gap-4"></div>
-                                    <x-green-button>View</x-green-button>
+                                    <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
                                     <x-danger-button>Delete</x-danger-button>
                                     <x-primary-button>
                                         <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
@@ -118,9 +122,11 @@
                                 <strong>Disposal Date: <span>{{ $archInventory->disposal_date }}</span></strong>
                             </div>
                             <div class="mt-4">
-                                <x-success-button>
-                                    View
-                                </x-success-button>
+                                <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
                                 <x-danger-button>Delete</x-danger-button>
                                 <x-primary-button>
                                     <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
@@ -134,5 +140,5 @@
             </div>
         </div>
     </div>
-
+@include('modal.view-arch-inventory-modal')
 </x-app-layout>

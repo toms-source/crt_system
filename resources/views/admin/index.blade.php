@@ -106,7 +106,7 @@
         <!-- DataTables Responsive JS -->
         <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
-        @include('admin.index.view-inventory-modal')
+        @include('modal.admin-view-inventory-modal')
     </div>
     @if(session('error'))
     <div x-data="{ show: true }" x-show="show"

@@ -1,11 +1,11 @@
 <div
     x-data="{
         show: false,
-        inventory: {},
+        archInventory: {},
 
         init() {
             window.addEventListener('open-modal', event => {
-                this.inventory = event.detail.inventory;
+                this.archInventory = event.detail.archInventory;
                 this.show = true;
             });
         }
@@ -42,31 +42,31 @@
         <div class="head-title text-center">
             <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
             <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
-            <p><strong>Cost Center Head:</strong> {{ $loggedInUser->manager?->name ?? 'N/A' }}</p>
+            <p><strong>Cost Center Head:</strong><span x-text="archInventory.manager_approval"></span></p>
             <!-- <p class="text-sm">cost center head approval status:</p> -->
         </div>
 
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
-                <h3>Office origin: {{ $loggedInUser->office?->department ?? 'N/A' }}</h3>
-                <h3>turn-over date:  <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
+                <h3>Office origin: <span x-text="archInventory.office_origin"></span></h3>
+                <h3>turn-over date:  <span x-text="new Date(archInventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
-                <h3>prepared by: <span class="underline font-bold">{{ $loggedInUser->name}}</span></h3>
-                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-green-500' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
+                <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
+                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-green-500' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm">
-            <p><strong>Item No:</strong> <span x-text="inventory.id"></span></p>
-            <p><strong>Description:</strong> <span x-text="inventory.description"></span></p>
+            <p><strong>Item No:</strong> <span x-text="archInventory.id"></span></p>
+            <p><strong>Description:</strong> <span x-text="archInventory.description"></span></p>
             <p><strong>Doc Date:</strong>
-                <span x-text="new Date(inventory.doc_date).getFullYear()"></span>
+                <span x-text="new Date(archInventory.doc_date).getFullYear()"></span>
             </p>
-            <p><strong>Quantity/unit code:</strong> <span x-text="inventory.quantity_code"></span></p>
-            <p><strong>index code:</strong> <span x-text="inventory.index_code"></span></p>
-            <p><strong>document status:</strong> <span x-text="inventory.status"></span></p>
-            <p><strong>retention period:</strong> <span x-text="inventory.retention_period"></span><span class="pl-2">year/s</span></p>
-            <p><strong>disposal date:</strong> <span x-text="new Date(inventory.disposal_date).getFullYear() ?? 'N/A'""></span></p>
+            <p><strong>Quantity/unit code:</strong> <span x-text="archInventory.quantity_code"></span></p>
+            <p><strong>index code:</strong> <span x-text="archInventory.index_code"></span></p>
+            <p><strong>document status:</strong> <span x-text="archInventory.status"></span></p>
+            <p><strong>retention period:</strong> <span x-text="archInventory.retention_period"></span><span class="pl-2">year/s</span></p>
+            <p><strong>disposal date:</strong> <span x-text="new Date(archInventory.disposal_date).getFullYear() ?? 'N/A'""></span></p>
         </div>
         <div class=" text-sm flex justify-center py-4">
                     <div class="flex-1">
@@ -75,14 +75,25 @@
                         <h3>location code:</h3>
                     </div>
                     <div class="flex-1">
-                        <h3>recieved by:<span x-text="inventory.recieved_by"></span></h3>
-                        <h3>date:<span x-text="inventory.recieve_date"></span></h3>
-                        <h3>approved by(supervisor):<span x-text="inventory.approved_by"></span></h3>
+                        <h3>recieved by:<span x-text="archInventory.recieved_by"></span></h3>
                         <h3>
                             date:
                             <span
-                                x-text="inventory.approved_date 
-                                ? new Date(inventory.approved_date).toLocaleString('en-US', {  
+                                x-text="archInventory.recieve_date 
+                                ? new Date(archInventory.recieve_date).toLocaleString('en-US', {  
+                                    month: 'short', 
+                                    day: '2-digit', 
+                                    year: 'numeric' 
+                                    }) 
+                                : 'N/A'">
+                            </span>
+                        </h3>
+                        <h3>approved by(supervisor):<span x-text="archInventory.approved_by"></span></h3>
+                        <h3>
+                            date:
+                            <span
+                                x-text="archInventory.approved_date 
+                                ? new Date(archInventory.approved_date).toLocaleString('en-US', {  
                                     month: 'short', 
                                     day: '2-digit', 
                                     year: 'numeric' 
