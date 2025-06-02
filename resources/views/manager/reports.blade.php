@@ -38,10 +38,22 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared By</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department Name(Double click to edit)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Recieved And Approved by</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ( $managerArchiveInventory as $archInventory)
+                            <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->original_id}}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by}}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->approved_by}}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200" >{{$archInventory->disposal_date}}</td>
+                                <td><x-danger-button>PDF</x-danger-button></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

@@ -4,63 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Offices;
 use Illuminate\Http\Request;
+use App\Services\OfficeService;
 
 class OfficesController extends Controller
 {
-    //
-    public function storeOffice(Request $request)
+    protected $officeService;
+    public function __construct(OfficeService $officeService)
     {
-        $request->validate([
-            'department' => 'required|string|max:255',
-        ]);
-
-        $existingOffice = Offices::where('department', $request->department)->first();
-
-        if ($existingOffice) {
-            return back()->withErrors(['name' => 'Office already exists.'])->withInput();
-        }
-
-        Offices::create(['department' => $request->department]);
-
-        return redirect()->back()->with('success', 'Office created successfully.');
+        $this->officeService = $officeService;
     }
 
-    public function fetchSelection()
+    public function storeOffice(Request $request)
     {
-        $offices = Offices::all();
+        return $this->officeService->newOffice($request);
+    }
+
+    public function fetchOfficeSelection()
+    {
+        $offices = $this->officeService->getAll();
 
         return view('admin.register', compact('offices'));
     }
 
-    public function display()
+    public function displayOffice()
     {
-        $offices = Offices::all();
+        $offices = $this->officeService->getAll();
 
         return view('admin.office', compact('offices'));
     }
 
-    public function destroy(Request $request, Offices $office)
+    public function destroyOffice(Request $request, Offices $office)
     {
-        // Validate the password before deleting
-        $request->validateWithBag('officeDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $office->delete();
-
-        return redirect()->route('admin.office')->with('success', 'department deleted successfully!');
+        return $this->officeService->deleteOffice($request, $office);
     }
 
-    public function update(Request $request, Offices $office)
+    public function updateOffice(Request $request, Offices $office)
     {
-        $request->validate([
-            'department' => ['required', 'string', 'max:255'],
-        ]);
+        $result = $this->officeService->updateOffice($request, $office);
 
-        $office->update([
-            'department' => $request->department,
-        ]);
-
-        return response()->json(['success' => true]);
+        return response()->json($result);
     }
 }
