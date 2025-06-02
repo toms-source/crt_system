@@ -26,7 +26,7 @@ class ReportsController extends Controller
         $inventories = ArchiveInventories::count();
         $office = Offices::count();
 
-        $adminArchiveInventory = $this->inventoriesArchService->getAll();
+        $adminArchiveInventory = $this->inventoriesArchService->getAllByAdmin();
 
         return view('admin.reports', compact('users', 'inventories', 'office', 'adminArchiveInventory'));
     }

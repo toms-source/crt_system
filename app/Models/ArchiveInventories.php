@@ -29,4 +29,10 @@ class ArchiveInventories extends Model
         'user_id',
         'office_id',
     ];
+
+    // Many-to-One: Inventory belongs to one user (owner)
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

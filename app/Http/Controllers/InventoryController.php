@@ -32,7 +32,7 @@ class InventoryController extends Controller
 
     public function displayIndexUser()
     {
-        $this->inventoriesService->getUserInventories();
+        $inventories = $this->inventoriesService->getUserInventories();
 
         return view('user.index', compact('inventories'));
     }

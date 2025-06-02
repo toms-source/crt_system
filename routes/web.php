@@ -11,12 +11,10 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-use function Pest\Laravel\get;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 // admin Route
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -40,9 +38,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // Manager Route
 Route::middleware(['auth', 'role:manager'])->group(function () {
-    // Route::get('/manager/reports', function () {
-    //     return view('manager.reports');
-    // })->name('manager.reports');
     Route::get('/manager/reports', [ReportsController::class, 'managerReports'])->name('manager.reports');
     Route::get('/manager/user-register', [InventoryController::class, 'displayRegister'])->name('manager.register');   
     Route::post('/approve-inventory', [InventoryController::class, 'approve'])->name('inventory.approve');
@@ -52,16 +47,16 @@ Route::middleware(['auth', 'role:manager'])->group(function () {
 
 // User Route
 Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/reports', [ReportsController::class, 'userReports'])->name('user.reports');
     Route::get('/user/dashboard', [InventoryController::class, 'displayIndexUser'])->name('user.index');;
     Route::get('/user/inventory-form', [InventoryController::class, 'view'])->name('form');
     Route::post('/user/create-inventory', [InventoryController::class, 'create'])->name('user.form');
-    Route::get('/user/reports', function () {
-        return view('user.reports');
-    })->name('user.reports');
+
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/inventory/print/{id}', [PdfController::class, 'print'])->name('print-pdf');
+    Route::get('/inventory/print/arch/{id}', [PdfController::class, 'printArch'])->name('print-arch-pdf');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

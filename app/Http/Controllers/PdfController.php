@@ -14,6 +14,10 @@ class PdfController extends Controller
 
     public function print(Request $request, $id)
     {
-        return $this->printInventoryService->gerneratePdf($request, $id);
+        return $this->printInventoryService->generatePdf($request, $id);
+    }
+    public function printArch(Request $request, $id)
+    {
+        return $this->printInventoryService->generateArchPdf($request, $id);
     }
 }
