@@ -44,7 +44,7 @@
         <div class="text-sm w-full flex justify-center py-4">
             <div class="flex-1">
                 <p><strong>Office origin:</strong> {{ $loggedInUser->office?->department ?? 'N/A' }}</p>
-                <h3><strong>turn-over date: </strong><span x-text="new Date(inventory.doc_date).getFullYear() ?? 'N/A'"></span></h3>
+                <h3><strong>turn-over date: </strong><span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
                 <h3><strong>prepared by: </strong><span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>

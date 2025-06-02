@@ -65,7 +65,7 @@
         <tr>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Office Origin:</strong> <span style="text-transform: capitalize;">{{ $inventory->office_origin}}</span></p>
-                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('Y') }}</span></p>
+                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('M-d-y') }}</span></p>
             </td>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Prepared/Turn-over By:</strong> <span style="text-transform: capitalize;">{{ $inventory->prepared_by}}</span></p>
@@ -114,8 +114,8 @@
                 <p class="foot">LOC CODE:</p>
             </td>
             <td style="width: 48%; vertical-align: top; border: none;">
-                <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}} - {{ $inventory->recieve_date }}</p>
-                <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}} - {{ $inventory->approved_date }}</p>
+                <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}} - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('M-d-y') }}</p>
+                <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}} - {{ \Carbon\Carbon::parse($inventory->approve_date)->format('M-d-y') }}</p>
             </td>
         </tr>
     </table>

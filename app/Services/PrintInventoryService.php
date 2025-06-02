@@ -32,7 +32,7 @@ class PrintInventoryService
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download(
-            'inventory-' . $inventory->prepared_by . '-' . $inventory->created_at->format('Ymd') . '.pdf'
+            'inventory-' . $inventory->prepared_by . '-' . $inventory->created_at->timezone('Asia/Manila')->format('Ymd') . '.pdf'
         );
     }
     public function generateArchPdf(Request $request, $id)
@@ -57,7 +57,7 @@ class PrintInventoryService
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download(
-            'inventory-' . $inventory->prepared_by . '-' . $inventory->created_at->format('Ymd') . '.pdf'
+            'inventory-' . $inventory->prepared_by . '-' . $inventory->created_at->timezone('Asia/Manila')->format('Ymd') . '.pdf'
         );
     }
 }

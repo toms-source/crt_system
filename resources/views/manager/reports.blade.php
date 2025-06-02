@@ -27,34 +27,73 @@
         </div>
     </div>
 
-    <div>
+    <div class="text-gray-900 dark:text-gray-100">
         <div class="flex justify-between items-center mx-2 mt-4 ">
             <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">RTO/Inventory History</h2>
         </div>
         <div class="mx-2">
             <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden">
-                <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-200">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared By</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Recieved And Approved by</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ( $managerArchiveInventory as $archInventory)
+                <div class="lg:block md:hidden sm:hidden xs:hidden">
+                    <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-200">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared By</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Recieved And Approved by</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ( $managerArchiveInventory as $archInventory)
                             <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->original_id}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->approved_by}}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200" >{{$archInventory->disposal_date}}</td>
-                                <td><x-danger-button>PDF</x-danger-button></td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->disposal_date}}</td>
+                                <td>
+                                    <x-success-button>
+                                        View
+                                    </x-success-button>
+                                    <x-primary-button>
+                                        <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
+                                    </x-primary-button>
+                                </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- mobile view -->
+                <div class="lg:hidden md:block sm:block xs:block mt-4">
+                    @foreach ( $managerArchiveInventory as $archInventory )
+                    <div class="bg-stone-200 dark:bg-stone-700 border-t-8 border-green-500 overflow-hidden shadow shadow-stone-500 sm:rounded-lg mb-4">
+
+                        <div class="p-4">
+                            <div class="">
+                                <strong>Item No: <span>{{ $archInventory->original_id }}</span></strong>
+                            </div>
+                            <div class="">
+                                <strong>Prepared By: <span>{{ $archInventory->prepared_by }}</span></strong>
+                            </div>
+                            <div class="">
+                                <strong>Cost Center Head: <span>{{ $archInventory->approved_by }}</span></strong>
+                            </div>
+                            <div class="">
+                                <strong>Disposal Date: <span>{{ $archInventory->disposal_date }}</span></strong>
+                            </div>
+                            <div class="mt-4">
+                                <x-success-button>
+                                    View
+                                </x-success-button>
+                                <x-primary-button>
+                                    <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
+                                </x-primary-button>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

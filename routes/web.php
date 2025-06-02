@@ -16,6 +16,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/check-time', function () {
+    return [
+        'app_timezone' => config('app.timezone'),
+        'php_time' => date('Y-m-d H:i:s'),
+        'carbon_now' => \Carbon\Carbon::now()->toDateTimeString(),
+    ];
+});
 // admin Route
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/reports', [ReportsController::class, 'adminReports'])->name('admin.reports');

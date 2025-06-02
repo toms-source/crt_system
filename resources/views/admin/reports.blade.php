@@ -6,7 +6,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
 
-            <a href="{{ route('admin.registerForm') }}">Add Manager</a>
+            <a href="{{ route('admin.office') }}">Manager Office</a>
         </div>
     </div>
     <header class="flex justify-between items-center mx-2 mt-4">
@@ -89,9 +89,10 @@
                                 <td>
                                     <div class="flex gap-4"></div>
                                     <x-green-button>View</x-green-button>
-                                    <x-danger-button> 
+                                    <x-danger-button>Delete</x-danger-button>
+                                    <x-primary-button>
                                         <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                    </x-danger-button>
+                                    </x-primary-button>
                                 </td>
                             </tr>
                             @endforeach
@@ -117,12 +118,13 @@
                                 <strong>Disposal Date: <span>{{ $archInventory->disposal_date }}</span></strong>
                             </div>
                             <div class="mt-4">
-                                <x-success-button >
+                                <x-success-button>
                                     View
                                 </x-success-button>
-                                <x-danger-button>
+                                <x-danger-button>Delete</x-danger-button>
+                                <x-primary-button>
                                     <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                </x-danger-button>
+                                </x-primary-button>
                             </div>
                         </div>
                     </div>
