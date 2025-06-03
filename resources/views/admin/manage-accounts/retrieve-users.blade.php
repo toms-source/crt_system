@@ -37,21 +37,6 @@
                                 Email: <a class="underline" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                             </h5>
                         </div>
-
-                        <!-- <div class="text-lg md:text-sm xs:text-sm">
-                            @if($user->manager)
-                            <h5 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->manager->name }}">
-                                Manager: {{ $user->manager->name }}
-                            </h5>
-                            @endif
-                        </div> -->
-
-                        <!-- Roles -->
-                        <!-- <div class="text-xs">
-                            <h6 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}">Role:
-                                {{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}
-                            </h6>
-                        </div> -->
                     </div>
                 </div>
 
@@ -87,7 +72,7 @@
         </div>
 
         @endforeach
-        @include('admin.manage-accounts.edit-user-modal')
-        @include('admin.manage-accounts.delete-user-modal')
+        @include('modal.edit-user-modal')
+        @include('modal.delete-user-modal')
     </div>
 </section>

@@ -39,7 +39,10 @@
         @php
         $loggedInUser = Auth::user();
         @endphp
-        <div class="head-title text-center">
+        <div class="head-title text-center pt-4">
+            <span class="flex justify-center">
+                <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
+            </span>
             <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
             <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong> {{ $loggedInUser->manager?->name ?? 'N/A' }}</p>
@@ -70,14 +73,13 @@
         </div>
         <div class=" text-sm flex justify-center py-4">
                     <div class="flex-1">
-                        <h3>inventory list no.:</h3>
-                        <h3>disposal series no.:</h3>
-                        <h3>location code:</h3>
+                        <h3><strong>inventory list no.:</strong><span x-text="inventory.list_no" class="underline"></span></h3>
+                        <h3><strong>disposal series no.:</strong><span x-text="inventory.series_no" class="underline"></span></h3>
+                        <h3><strong>location code:</strong><span x-text="inventory.loc_code" class="underline"></span></h3>
                     </div>
                     <div class="flex-1">
-                        <h3>recieved by:<span x-text="inventory.recieved_by"></span></h3>
-                        <h3>
-                            date:
+                        <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" class="underline"></span></h3>
+                        <h3><strong>date:</strong> 
                             <span
                                 x-text="inventory.recieve_date 
                                 ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
@@ -85,12 +87,11 @@
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
-                                : 'N/A'">
+                                : 'N/A'" class="underline">
                             </span>
                         </h3>
-                        <h3>approved by(supervisor):<span x-text="inventory.approved_by"></span></h3>
-                        <h3>
-                            date:
+                        <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" class="underline"></span></h3>
+                        <h3><strong>date:</strong> 
                             <span
                                 x-text="inventory.approved_date 
                                 ? new Date(inventory.approved_date).toLocaleString('en-US', {  
@@ -98,7 +99,7 @@
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
-                                : 'N/A'">
+                                : 'N/A'" class="underline">
                             </span>
                         </h3>
                     </div>

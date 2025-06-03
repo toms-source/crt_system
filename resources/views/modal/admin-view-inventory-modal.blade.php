@@ -51,7 +51,7 @@
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
                 <h3>Office origin: <span x-text="inventory.office_origin"></span></h3>
-                <h3>turn-over date:  <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
+                <h3>turn-over date: <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>
@@ -79,9 +79,9 @@
         </div>
         <div class=" text-sm flex justify-center py-4">
                     <div class="flex-1">
-                        <h3>inventory list no.:</h3>
-                        <h3>disposal series no.:</h3>
-                        <h3>location code:</h3>
+                        <h3><strong>inventory list no.: </strong> <span x-text="inventory.list_no"></span></h3>
+                        <h3><strong> disposal series no.: </strong><span x-text="inventory.series_no"></span></h3>
+                        <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
                     </div>
                     <div class="flex-1">
                         <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
@@ -131,11 +131,9 @@
     ">
                             @csrf
                             @method('DELETE')
-                            <button
-                                type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                            <x-danger-button type="submit">
                                 {{ __('Delete') }}
-                            </button>
+                            </x-danger-button>
                         </form>
 
                         <form :action="'{{ route('admin.recieve') }}'" method="POST" x-show="!inventory.recieved_by">
@@ -148,8 +146,6 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-
-
                                 {{ __('Recieved') }}
                             </p>
                         </template>

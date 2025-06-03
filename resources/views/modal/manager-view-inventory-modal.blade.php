@@ -65,9 +65,9 @@
 
         <div class="text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3>inventory list no.:</h3>
-                <h3>disposal series no.:</h3>
-                <h3>location code:</h3>
+                <h3>inventory list no.: <span x-text="inventory.list_no"></span></h3>
+                <h3>disposal series no.: <span x-text="inventory.series_no"></span></h3>
+                <h3>location code: <span x-text="inventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>

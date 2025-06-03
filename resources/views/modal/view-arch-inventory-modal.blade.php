@@ -39,7 +39,10 @@
         @php
         $loggedInUser = Auth::user();
         @endphp
-        <div class="head-title text-center">
+        <div class="head-title text-center pt-4">
+            <span class="flex justify-center">
+                <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
+            </span>
             <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
             <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong><span x-text="archInventory.manager_approval"></span></p>
@@ -49,7 +52,7 @@
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
                 <h3>Office origin: <span x-text="archInventory.office_origin"></span></h3>
-                <h3>turn-over date:  <span x-text="new Date(archInventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
+                <h3>turn-over date: <span x-text="new Date(archInventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
