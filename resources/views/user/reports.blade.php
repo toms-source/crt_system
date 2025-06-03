@@ -22,7 +22,7 @@
     </div>
 
     <div class="text-gray-900 dark:text-gray-100">
-        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory:</h3>
+        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{$totalArch}}</h3>
         <div class="flex justify-between items-center mx-2 mt-4 ">
             <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">RTO/Inventory History</h2>
 

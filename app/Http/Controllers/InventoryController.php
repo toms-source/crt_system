@@ -29,12 +29,42 @@ class InventoryController extends Controller
         return $this->inventoriesService->createInventory($request);
     }
 
+    public function update(Request $request, int $id, InventoriesService $inventoriesService)
+    {
+        $validated = $request->validate([
+            'list_no' => 'required|string|max:50',
+            'series_no' => 'required|string|max:50',
+            'loc_code' => 'required|string|max:50',
+        ]);
+
+        $inventoriesService->updateInventory($id, $validated);
+
+        return response()->json(['message' => 'Inventory updated successfully.']);
+    }
 
     public function displayIndexUser()
     {
         $inventories = $this->inventoriesService->getUserInventories();
+        $totalInv = $inventories->count();
+        return view('user.index', compact('inventories', '$totalInv'));
+    }
 
-        return view('user.index', compact('inventories'));
+    // index display of admin
+    public function adminDisplay(Request $request)
+    {
+        $data = $this->inventoriesService->getAdminInventories($request);
+        if ($data) return $data;
+
+        return view('admin.index');
+    }
+
+    // index display of manager
+    public function managerDisplay(Request $request)
+    {
+        $data = $this->inventoriesService->getManagerInventories($request);
+        if ($data) return $data;
+
+        return view('manager.index');
     }
 
     // manager approval
@@ -60,10 +90,19 @@ class InventoryController extends Controller
 
         return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
     }
+
     // transfer RTO to archives
     public function destroy(Inventory $inventory)
     {
         $this->inventoriesService->toArchiveInventoryAndDelete($inventory);
+
+        return redirect()->back()->with('success', 'Inventory archived successfully.');
+    }
+
+    // archive inventory
+    public function destroyArch($id)
+    {
+        $this->inventoriesService->deleteInventory($id);
 
         return redirect()->back()->with('success', 'Inventory archived successfully.');
     }

@@ -28,6 +28,7 @@
     </div>
 
     <div class="text-gray-900 dark:text-gray-100">
+        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{$totalInv}}</h3>
         <div class="flex justify-between items-center mx-2 mt-4 ">
             <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">RTO/Inventory History</h2>
         </div>
@@ -65,7 +66,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                 
+
                 </div>
                 <!-- mobile view -->
                 <div class="lg:hidden md:block sm:block xs:block mt-4">
@@ -87,10 +88,10 @@
                             </div>
                             <div class="mt-4">
                                 <x-success-button
-                                        x-data
-                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                        View
-                                    </x-success-button>
+                                    x-data
+                                    x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                    View
+                                </x-success-button>
                                 <x-primary-button>
                                     <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
                                 </x-primary-button>
@@ -98,7 +99,7 @@
                         </div>
                     </div>
                     @endforeach
-                  
+
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">prepared by</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center Head</th>
-                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
+                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                             </tr>
                         </thead>
@@ -82,8 +82,8 @@
                             name: 'manager_approval'
                         },
                         {
-                            data: 'description',
-                            name: 'description',
+                            data: 'disposal_date',
+                            name: 'disposal_date',
                             width: '200px',
                             createdCell: function(td, cellData, rowData, row, col) {
                                 $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
@@ -107,6 +107,7 @@
         <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
         @include('modal.admin-view-inventory-modal')
+        @include('modal.admin-edit-inventory-modal')
     </div>
     @if(session('error'))
     <div x-data="{ show: true }" x-show="show"

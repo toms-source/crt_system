@@ -65,7 +65,7 @@
         <tr>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Office Origin:</strong> <span style="text-transform: capitalize;">{{ $inventory->office_origin}}</span></p>
-                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('M-d<strong>-Y') }}</span></p>
+                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('M-d-Y') }}</span></p>
             </td>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Prepared/Turn-over By:</strong> <span style="text-transform: capitalize;">{{ $inventory->prepared_by}}</span></p>
@@ -109,9 +109,9 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 48%; vertical-align: top; border: none; margin-left: 20px;">
-                <p class="foot"><strong>INVENTORY LIST NO.:</strong></p>
-                <p class="foot"><strong>DISPOSAL SERIES NO.:</strong></p>
-                <p class="foot"><strong>LOC CODE:</strong></p>
+                <p class="foot"><strong>INVENTORY LIST NO.:</strong> {{ $inventory->list_no }}</p>
+                <p class="foot"><strong>DISPOSAL SERIES NO.:</strong> {{$inventory->series_no }}</span></p>
+                <p class="foot"><strong>LOC CODE:</strong> {{ $inventory->loc_code }}</p>
             </td>
             <td style="width: 48%; vertical-align: top; border: none;">
 

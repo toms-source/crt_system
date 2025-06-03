@@ -35,13 +35,14 @@ class ReportsController extends Controller
     public function managerReports()
     {
         $managerArchiveInventory = $this->inventoriesArchService->getAll();
-
-        return view('manager.reports', compact('managerArchiveInventory'));
+        $totalInv = $managerArchiveInventory->count();
+        return view('manager.reports', compact('managerArchiveInventory', 'totalInv'));
     }
 
     public function userReports()
     {
         $userArchiveInventory = $this->inventoriesArchService->getAll();
-        return view('user.reports', compact('userArchiveInventory'));
+        $totalArch = $userArchiveInventory->count();
+        return view('user.reports', compact('userArchiveInventory', 'totalArch'));
     }
 }

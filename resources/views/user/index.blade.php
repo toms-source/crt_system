@@ -5,7 +5,7 @@
         </div>
 
         <div class="flex underline underline-offset-4">
-            <a href="{{ route('user.reports') }}">Reports</a>
+            <a href="{{ route('form') }}">Form</a>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -14,6 +14,7 @@
     </div>
 
     <div class="text-gray-900 dark:text-gray-100 w-full py-6 ">
+        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{ $totalInv }}</h3>
         <div class="text-xl mx-2 py-6 px-4 rounded-t-lg bg-stone-600 text-gray-50 font-bold">Records Turn-Over Inventory List</div>
         <div>
             <div class="px-2">

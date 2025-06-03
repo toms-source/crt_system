@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\ArchiveInventories;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class InventoriesService
@@ -16,7 +17,7 @@ class InventoriesService
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    
+
     public function getUserInventories()
     {
         return Inventory::with('owner')
@@ -55,6 +56,95 @@ class InventoriesService
         return redirect()->route('user.index')->with('success', 'Inventory record saved!');
     }
 
+    public function updateInventory(int $id, array $data): bool
+    {
+        $inventory = Inventory::findOrFail($id);
+
+        $inventory->update([
+            'list_no' => $data['list_no'],
+            'series_no' => $data['series_no'],
+            'loc_code' => $data['loc_code'],
+        ]);
+
+        return true;
+    }
+
+    public function getAdminInventories($request)
+    {
+        if ($request->ajax()) {
+            $data = Inventory::whereNotNull('manager_approval');
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
+                    return '
+                        <button 
+                            x-data 
+                            x-on:click="$dispatch(\'open-modal\', { inventory: ' . $inventoryJson . ' })"
+                            class="inline-flex items-center px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
+                        >
+                            View
+                        </button>
+
+                        <button 
+                            x-data 
+                            x-on:click="$dispatch(\'edit-modal\', { inventory: ' . $inventoryJson . ' })"
+                            class="inline-flex items-center px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition"
+                        >
+                            Edit
+                        </button>
+                        <button class="inline-flex items-center px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700 transition">
+                            <a href="' . route('print-pdf', $row->id) . '" target="_blank">Pdf</a> 
+                        </button>
+                    ';
+                })
+                ->editColumn('disposal_date', function ($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return null;
+    }
+
+    public function getManagerInventories($request)
+    {
+        if ($request->ajax()) {
+            $data = Inventory::with('user')
+                ->whereHas('user', function ($query) {
+                    $query->where('managerId', Auth::id());
+                });
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('prepared_by', function ($row) {
+                    return $row->user->name ?? 'N/A';
+                })
+                ->editColumn('disposal_date', function ($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
+                })
+                ->addColumn('action', function ($row) {
+                    $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
+
+                    return '
+                        <button 
+                            x-data 
+                            x-on:click="$dispatch(\'open-modal\', { inventory: ' . $inventoryJson . ' })"
+                            class="inline-flex items-center px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
+                        >
+                            View
+                        </button>
+                    ';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return null;
+    }
+
     public function toArchiveInventoryAndDelete(Inventory $inventory)
     {
         ArchiveInventories::create([
@@ -83,6 +173,12 @@ class InventoriesService
         $inventory->delete();
 
         return true;
+    }
+
+    public function deleteInventory(int $id): bool
+    {
+        $inventory = ArchiveInventories::findOrFail($id);
+        return $inventory->delete();
     }
 
     public function adminReceive(Request $request)

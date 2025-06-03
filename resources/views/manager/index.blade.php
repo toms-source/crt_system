@@ -19,7 +19,7 @@
             <p class="text-green-800 font-bold">hello manager this is all your pending for approval <span class="font-extrabold">RECORDS TURN-OVER</span> </p>
         </div>
     </div>
-
+    
     <div class="text-gray-900 dark:text-gray-100 w-full py-6">
         <div class="text-xl mx-2 py-6 px-4 rounded-t-lg bg-stone-600 text-gray-50 font-bold">Records Turn-Over Inventory List</div>
         <div>
