@@ -23,7 +23,7 @@
         @if($users->count() > 0)
         @include('admin.manage-accounts.filter-users')
         @include('admin.manage-accounts.retrieve-users')
-        @include('admin.manage-accounts.retrieve-user-pagination')
+        @include('pagination.retrieve-user-pagination')
         @else
         <p class="text-red-500 text-center">No users found.</p>
         @endif

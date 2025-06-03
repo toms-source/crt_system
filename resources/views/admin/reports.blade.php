@@ -102,6 +102,8 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @include('pagination.adminArchInventory-pagination')
+
                 </div>
                 <!-- mobile view -->
                 <div class="lg:hidden md:block sm:block xs:block mt-4">
@@ -123,10 +125,10 @@
                             </div>
                             <div class="mt-4">
                                 <x-success-button
-                                        x-data
-                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                        View
-                                    </x-success-button>
+                                    x-data
+                                    x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                    View
+                                </x-success-button>
                                 <x-danger-button>Delete</x-danger-button>
                                 <x-primary-button>
                                     <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
@@ -135,10 +137,11 @@
                         </div>
                     </div>
                     @endforeach
+                    @include('pagination.adminArchInventory-pagination')
                 </div>
 
             </div>
         </div>
     </div>
-@include('modal.view-arch-inventory-modal')
+    @include('modal.view-arch-inventory-modal')
 </x-app-layout>

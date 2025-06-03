@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Validator;
 
 class OfficeService
 {
+    /**
+     * Get all countries.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    
     public function getAll()
     {
         return Offices::all();

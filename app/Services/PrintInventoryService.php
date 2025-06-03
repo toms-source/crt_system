@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class PrintInventoryService
 {
+    /**
+     * Get all countries.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    
     public function generatePdf(Request $request, $id)
     {
         $inventory = Inventory::findOrFail($id);

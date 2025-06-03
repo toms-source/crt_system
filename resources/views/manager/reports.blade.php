@@ -65,6 +65,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                 
                 </div>
                 <!-- mobile view -->
                 <div class="lg:hidden md:block sm:block xs:block mt-4">
@@ -97,6 +98,7 @@
                         </div>
                     </div>
                     @endforeach
+                  
                 </div>
             </div>
         </div>

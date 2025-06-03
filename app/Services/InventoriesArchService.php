@@ -17,15 +17,17 @@ class InventoriesArchService
 
     public function getAllByAdmin()
     {
-        return ArchiveInventories::all()->map(function ($item) {
+        $data = ArchiveInventories::paginate(5);
+
+        $data->getCollection()->transform(function ($item) {
             $item->disposal_date = Carbon::parse($item->disposal_date)->format('Y');
             return $item;
         });
+
+        return $data;
     }
     public function getAll()
     {
-
-
         $user = Auth::user();
 
         return ArchiveInventories::with('owner')

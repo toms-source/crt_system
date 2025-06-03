@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class InventoriesService
 {
+    /**
+     * Get all countries.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    
     public function getUserInventories()
     {
         return Inventory::with('owner')
