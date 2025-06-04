@@ -1,5 +1,5 @@
 <x-app-layout>
-    
+
     @if(auth()->user()->hasRole('admin'))
     <div class="link text-gray-700 dark:text-gray-200 flex justify-between mt-2 px-4 font-bold">
         <div>
@@ -85,9 +85,25 @@
                             data: 'disposal_date',
                             name: 'disposal_date',
                             width: '200px',
-                            createdCell: function(td, cellData, rowData, row, col) {
+                            createdCell: function(td, cellData) {
                                 $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
-                            },
+
+                                if (!cellData) return;
+
+                                const disposalDate = new Date(cellData);
+                                const today = new Date();
+                                const timeDiff = disposalDate - today;
+                                const yearsLeft = timeDiff / (1000 * 60 * 60 * 24 * 365);
+
+                                if (yearsLeft <= 1) {
+                                    $(td).addClass('text-red-800 font-extrabold text-center bg-red-300 rounded-full');
+                                } else if (yearsLeft => 2) {
+                                    $(td).addClass('text-green-800 font-extrabold text-center bg-green-300 rounded-full');
+                                }
+                            }
+                            // createdCell: function(td, cellData, rowData, row, col) {
+                            //     $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
+                            // },
                         },
                         {
                             data: 'action',

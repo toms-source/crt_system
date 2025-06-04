@@ -1,15 +1,31 @@
 <div
     x-data="{
-        show: false,
-        archInventory: {},
+    show: false,
+    archInventory: {},
+    
+    get disposalYearClass() {
+        if (!this.archInventory.disposal_date) return '';
 
-        init() {
-            window.addEventListener('open-modal', event => {
-                this.archInventory = event.detail.archInventory;
-                this.show = true;
-            });
+        const now = new Date();
+        const disposalDate = new Date(this.archInventory.disposal_date);
+        const diffYears = (disposalDate - now) / (1000 * 60 * 60 * 24 * 365);
+
+        if (diffYears <= 1) {
+            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+        } else if (diffYears > 2) {
+            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+        } else {
+            return '';
         }
-    }"
+    },
+
+    init() {
+        window.addEventListener('open-modal', event => {
+            this.archInventory = event.detail.archInventory;
+            this.show = true;
+        });
+    }
+}"
     x-init="init()"
     x-show="show"
     class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
@@ -69,42 +85,49 @@
             <p><strong>index code:</strong> <span x-text="archInventory.index_code"></span></p>
             <p><strong>document status:</strong> <span x-text="archInventory.status"></span></p>
             <p><strong>retention period:</strong> <span x-text="archInventory.retention_period"></span><span class="pl-2">year/s</span></p>
-            <p><strong>disposal date:</strong> <span x-text="new Date(archInventory.disposal_date).getFullYear() ?? 'N/A'""></span></p>
+            <p>
+                <strong>disposal date:</strong>
+                <span
+                    class="underline"
+                    :class="disposalYearClass"
+                    x-text="archInventory.disposal_date ? new Date(archInventory.disposal_date).getFullYear() : 'N/A'">
+                </span>
+            </p>
         </div>
         <div class=" text-sm flex justify-center py-4">
-                    <div class="flex-1">
-                        <h3>inventory list no.:</h3>
-                        <h3>disposal series no.:</h3>
-                        <h3>location code:</h3>
-                    </div>
-                    <div class="flex-1">
-                        <h3>recieved by:<span x-text="archInventory.recieved_by"></span></h3>
-                        <h3>
-                            date:
-                            <span
-                                x-text="archInventory.recieve_date 
+            <div class="flex-1">
+                <h3>inventory list no.:</h3>
+                <h3>disposal series no.:</h3>
+                <h3>location code:</h3>
+            </div>
+            <div class="flex-1">
+                <h3>recieved by:<span x-text="archInventory.recieved_by"></span></h3>
+                <h3>
+                    date:
+                    <span
+                        x-text="archInventory.recieve_date 
                                 ? new Date(archInventory.recieve_date).toLocaleString('en-US', {  
                                     month: 'short', 
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
                                 : 'N/A'">
-                            </span>
-                        </h3>
-                        <h3>approved by(supervisor):<span x-text="archInventory.approved_by"></span></h3>
-                        <h3>
-                            date:
-                            <span
-                                x-text="archInventory.approved_date 
+                    </span>
+                </h3>
+                <h3>approved by(supervisor):<span x-text="archInventory.approved_by"></span></h3>
+                <h3>
+                    date:
+                    <span
+                        x-text="archInventory.approved_date 
                                 ? new Date(archInventory.approved_date).toLocaleString('en-US', {  
                                     month: 'short', 
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
                                 : 'N/A'">
-                            </span>
-                        </h3>
-                    </div>
+                    </span>
+                </h3>
+            </div>
         </div>
 
         <div class="mt-6 text-right">

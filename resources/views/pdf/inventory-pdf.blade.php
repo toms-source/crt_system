@@ -65,7 +65,7 @@
         <tr>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Office Origin:</strong> <span style="text-transform: capitalize;">{{ $inventory->office_origin}}</span></p>
-                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('M-d-Y') }}</span></p>
+                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('m-d-Y') }}</span></p>
             </td>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Prepared/Turn-over By:</strong> <span style="text-transform: capitalize;">{{ $inventory->prepared_by}}</span></p>
@@ -99,7 +99,22 @@
                     {{ $inventory->status }}
                 </td>
                 <td>{{ $inventory->retention_period }} <span style="margin-right: 2px; text-transform:uppercase;">year/s</span></td>
-                <td>{{ \Carbon\Carbon::parse($inventory->disposal_date)->format('Y') }}</td>
+                @php
+                $disposalDate = \Carbon\Carbon::parse($inventory->disposal_date);
+                $now = \Carbon\Carbon::now();
+                $diffInYears = $now->diffInYears($disposalDate, false);
+                $color = '';
+
+                if ($diffInYears <= 1) {
+                    $color='red' ;
+                    } elseif ($diffInYears> 2) {
+                    $color = 'green';
+                    }
+                    @endphp
+
+                    <td style="color: {{ $color }};">
+                        {{ $disposalDate->format('Y') }}
+                    </td>
             </tr>
         </tbody>
     </table>
@@ -117,12 +132,12 @@
 
                 <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}}
                     @if(!empty($inventory->recieved_by))
-                    - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('M-d-Y') }}
+                    - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('m-d-Y') }}
                     @endif
                 </p>
                 <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}}
                     @if(!empty($inventory->approved_by))
-                    - {{ \Carbon\Carbon::parse($inventory->approve_date)->format('M-d-Y') }}
+                    - {{ \Carbon\Carbon::parse($inventory->approve_date)->format('m-d-Y') }}
                     @endif
                 </p>
             </td>

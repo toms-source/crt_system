@@ -98,6 +98,8 @@ class InventoriesService
                             <a href="' . route('print-pdf', $row->id) . '" target="_blank">Pdf</a> 
                         </button>
                     ';
+                })->addColumn('disposal_date_full', function ($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->toDateString() : null;
                 })
                 ->editColumn('disposal_date', function ($row) {
                     return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
@@ -137,6 +139,11 @@ class InventoriesService
                             View
                         </button>
                     ';
+                })->addColumn('disposal_date_full', function ($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->toDateString() : null;
+                })
+                ->editColumn('disposal_date', function ($row) {
+                    return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

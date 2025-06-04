@@ -46,7 +46,7 @@ class InventoryController extends Controller
     {
         $inventories = $this->inventoriesService->getUserInventories();
         $totalInv = $inventories->count();
-        return view('user.index', compact('inventories', '$totalInv'));
+        return view('user.index', compact('inventories', 'totalInv'));
     }
 
     // index display of admin

@@ -1,15 +1,31 @@
 <div
     x-data="{
-        show: false,
-        inventory: {},
+    show: false,
+    inventory: {},
+    
+    get disposalYearClass() {
+        if (!this.inventory.disposal_date) return '';
 
-        init() {
-            window.addEventListener('open-modal', event => {
-                this.inventory = event.detail.inventory;
-                this.show = true;
-            });
+        const now = new Date();
+        const disposalDate = new Date(this.inventory.disposal_date);
+        const diffYears = (disposalDate - now) / (1000 * 60 * 60 * 24 * 365);
+
+        if (diffYears <= 1) {
+            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+        } else if (diffYears > 2) {
+            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+        } else {
+            return '';
         }
-    }"
+    },
+
+    init() {
+        window.addEventListener('open-modal', event => {
+            this.inventory = event.detail.inventory;
+            this.show = true;
+        });
+    }
+}"
     x-init="init()"
     x-show="show"
     class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
@@ -75,38 +91,45 @@
             <p><strong>index code:</strong> <span class="underline" x-text="inventory.index_code"></span></p>
             <p><strong>document status:</strong> <span class="underline" x-text="inventory.status"></span></p>
             <p><strong>retention period:</strong> <span class="underline" x-text="inventory.retention_period"></span><span class="pl-2">year/s</span></p>
-            <p><strong>disposal date:</strong> <span class="underline" x-text="new Date(inventory.disposal_date).getFullYear() ?? 'N/A'""></span></p>
+            <p>
+                <strong>disposal date:</strong>
+                <span
+                    class="underline"
+                    :class="disposalYearClass"
+                    x-text="inventory.disposal_date ? new Date(inventory.disposal_date).getFullYear() : 'N/A'">
+                </span>
+            </p>
         </div>
         <div class=" text-sm flex justify-center py-4">
-                    <div class="flex-1">
-                        <h3><strong>inventory list no.: </strong> <span x-text="inventory.list_no"></span></h3>
-                        <h3><strong> disposal series no.: </strong><span x-text="inventory.series_no"></span></h3>
-                        <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
-                    </div>
-                    <div class="flex-1">
-                        <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
-                        <h3><strong>date:</strong><span
-                                x-text="inventory.recieve_date 
+            <div class="flex-1">
+                <h3><strong>inventory list no.: </strong> <span x-text="inventory.list_no"></span></h3>
+                <h3><strong> disposal series no.: </strong><span x-text="inventory.series_no"></span></h3>
+                <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
+            </div>
+            <div class="flex-1">
+                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                <h3><strong>date:</strong><span
+                        x-text="inventory.recieve_date 
                                 ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
                                     month: 'short', 
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
                                 : 'N/A'">
-                            </span></h3>
-                        <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
-                        <h3><strong>date:</strong>
-                            <span
-                                x-text="inventory.approved_date 
+                    </span></h3>
+                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800"></span></h3>
+                <h3><strong>date:</strong>
+                    <span
+                        x-text="inventory.approved_date 
                                 ? new Date(inventory.approved_date).toLocaleString('en-US', {  
                                     month: 'short', 
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
                                 : 'N/A'">
-                            </span>
-                        </h3>
-                    </div>
+                    </span>
+                </h3>
+            </div>
         </div>
 
         <div class="mt-6 text-right">
