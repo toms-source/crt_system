@@ -12,7 +12,7 @@
 
         if (diffYears <= 1) {
             return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-        } else if (diffYears > 2) {
+        } else if (diffYears => 2) {
             return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
         } else {
             return '';
@@ -55,6 +55,13 @@
         @php
         $loggedInUser = Auth::user();
         @endphp
+        <div class="flex justify-end mt-2">
+            <button @click="show = false" class="text-green-200 hover:text-green-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
         <div class="head-title text-center pt-4">
             <span class="flex justify-center">
                 <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
@@ -125,12 +132,6 @@
                                 : 'N/A'" class="underline">
                     </span>
                 </h3>
-            </div>
-        </div>
-
-        <div class="mt-6 text-right">
-            <div class="p-8">
-                <x-secondary-button @click="show = false">{{__('Close')}}</x-secondary-button>
             </div>
         </div>
     </div>

@@ -101,9 +101,6 @@
                                     $(td).addClass('text-green-800 font-extrabold text-center bg-green-300 rounded-full');
                                 }
                             }
-                            // createdCell: function(td, cellData, rowData, row, col) {
-                            //     $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
-                            // },
                         },
                         {
                             data: 'action',
