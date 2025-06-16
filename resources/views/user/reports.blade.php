@@ -46,22 +46,7 @@
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->original_id }}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->description }}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->manager_approval }}</td>
-                                @php
-                                $disposalDate = \Carbon\Carbon::parse($archInventory->disposal_date);
-                                $now = \Carbon\Carbon::now();
-                                $diffInYears = $now->diffInYears($disposalDate, false);
-
-                                $disposalColor = '';
-                                if ($diffInYears <= 1) {
-                                    $disposalColor='text-red-800 bg-red-300 font-extrabold rounded-full text-center' ;
-                                    } elseif ($diffInYears> 2) {
-                                    $disposalColor = 'text-green-800 bg-green-300 font-extrabold rounded-full text-center';
-                                    }
-                                    @endphp
-
-                                    <td class="py-3 px-6 text-left {{ $disposalColor }}">
-                                        {{ $disposalDate->format('Y') }}
-                                    </td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->approved_by }}</td>
                                     <td>
                                         <x-success-button
                                             x-data

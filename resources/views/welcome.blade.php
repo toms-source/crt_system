@@ -29,7 +29,12 @@
                 <img src="{{ asset('images/TranscoLogo.png') }}" alt="Logo" class="w-32">
             </div>
 
-            <h2 class="text-2xl font-semibold mb-6">Welcome to Transco, Log in to your account</h2>
+            <h2 class="text-2xl font-semibold mb-6">
+                Welcome to
+                <span class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent font-extrabold">
+                    Trans<span class="uppercase">c</span>o
+                </span>, Log in to your account
+            </h2>
 
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -66,7 +71,7 @@
             style="background-image: url('{{ asset('images/background.svg') }}')">
 
             <div class="text-center">
-                <h3 class="text-xl font-semibold mb-4">Welcome to Transco Inventory System</h3>
+                <h3 class="text-xl font-semibold mb-4">Welcome to Transco RTO/Inventory System</h3>
                 <p class="text-sm max-w-md">Efficiently track and manage your inventory with ease. Secure, simple, and fast.</p>
             </div>
 

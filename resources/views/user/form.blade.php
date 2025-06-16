@@ -15,73 +15,84 @@
             </svg>
         </div>
     </div>
-    <!-- Registration Form -->
-    <form method="POST" action="{{ route('user.form') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2" id="registerForm">
+    <form method="POST" action="{{ route('user.form') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2">
         <h2 class="py-4 px-6 bg-green-400 rounded-t-lg text-xl font-bold text-green-50">RTO Inventory Form
             <p class="text-sm font-semibold">all fields are required</p>
         </h2>
         @csrf
+
         <div class="p-10">
+            <!-- Inventory Items -->
+            <div class="p-6 mt-6 rounded shadow" x-data="{ items: [{}] }">
+                <template x-for="(item, index) in items" :key="index">
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- description -->
+                        <div>
+                            <x-input-label for="description" :value="__('Document Description')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300" />
+                            <input type="text" placeholder="Ex. CRTS Inventory..." class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" :name="'items[' + index + '][description]'" x-model="item.description">
+                        </div>
 
-            <!-- Document Description -->
-            <div>
-                <x-input-label for="description" :value="__('Document Description')" class="dark:text-gray-300" />
-                <x-txt-area name="description" id="description" placeholder="Ex. CRTS Inventory...">{{ old('bio') }}</x-txt-area>
-                <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                        <!-- doc date -->
+                        <div>
+                            <x-input-label for="doc date" :value="__('Doc date')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300" />
+                            <input type="date" class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" :name="'items[' + index + '][doc_date]'" x-model="item.doc_date">
+                        </div>
+
+                        <!-- quantity/unit code -->
+                        <div>
+                            <x-input-label for="quantity_code" :value="__('quantity/unit code')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300" />
+                            <input type="text" placeholder="Ex. 7UAwqol1" class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code">
+                        </div>
+
+                        <!-- index code -->
+                        <div>
+                            <x-input-label for="index_code" :value="__('index code')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300" />
+                            <input type="text" placeholder="Ex. 7UAwqol1" class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" :name="'items[' + index + '][index_code]'" x-model="item.index_code">
+                        </div>
+
+                        <!-- retention period -->
+                        <div>
+                            <x-input-label for="retention_period" :value="__('retention period')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300" />
+                            <input type="number" placeholder="Ex. 1" class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" :name="'items[' + index + '][retention_period]'" x-model="item.retention_period">
+                        </div>
+
+                        <!-- status -->
+                        <div>
+                            <x-input-label for="status" :value="__('Select Document Status')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Status</x-input-label>
+                            <select :name="'items[' + index + '][status]'" id="status" class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700" x-model="item.status">
+                                <option value="" disabled selected hidden>-- Status --</option>
+                                <option value="Permanent">Permanent</option>
+                                <option value="Temporary">Temporary</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <button type="button" class="items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" @click="items.splice(index, 1)" x-show="items.length > 1">Remove Item</button>
+                        </div>
+                    </div>
+
+                </template>
+
+                <div class="my-4">
+                    <x-primary-button type="button" @click="items.push({})">
+                        + Add Another Item
+                    </x-primary-button>
+                </div>
+
             </div>
 
-            <!-- Quantity / Unit code -->
-            <div class="mt-4">
-                <x-input-label for="quantity_code" :value="__('Quantity/Unit Code')" class="dark:text-gray-300" />
-                <x-text-input placeholder="Ex. 7UAwqol1" id="quantity_code" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" type="text" name="quantity_code" :value="old('quantity_code')" required autocomplete="quantity_code" />
-                <x-input-error :messages="$errors->get('quantity_code')" class="mt-2" />
+            <div class="mt-6 flex justify-end">
+                <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded">
+                    Submit Inventory
+                </button>
             </div>
 
-            <!-- Document Date -->
-            <div class="mt-4">
-                <x-input-label for="doc_date" :value="__('Document Date')" class="dark:text-gray-300" />
-                <x-year-picker name="doc_date" :selected="old('doc_date')" :start="1980" :end="now()->year" />
-                <x-input-error :messages="$errors->get('doc_date')" class="mt-2" />
-            </div>
-
-            <!-- Index Code -->
-            <div class="mt-4">
-                <x-input-label for="index_code" :value="__('Index Code')" class="dark:text-gray-300" />
-                <x-text-input placeholder="Ex. 7UAwqol1" id="password_confirmation" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" type="text" name="index_code" required autocomplete="index_code" />
-                <x-input-error :messages="$errors->get('index_code')" class="mt-2" />
-            </div>
-
-            <!-- Status -->
-            <div class="mt-4">
-                <x-input-label for="status" :value="__('Select Document Status')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Status</x-input-label>
-                <select name="status" id="status" class="block w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-gray-700 ">
-                    <option value="" disabled selected hidden>-- Status --</option>
-                    <option value="Permanent">Permanent</option>
-                    <option value="Temporary">Temporary</option>
-                </select>
-            </div>
-
-            <!-- Retention period -->
-            <div class="mt-4">
-                <x-input-label for="retention_period" :value="__('Retention Period (counted as per year)')" class="dark:text-gray-300" />
-                <x-text-input placeholder="Ex. 1" id="retention_period" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" type="number" name="retention_period" required autocomplete="retention_period" />
-                <x-input-error :messages="$errors->get('retention_period')" class="mt-2" />
-            </div>
-
-            <!-- Already Registered -->
-            <div class="flex flex-col sm:flex-row items-center justify-end mt-4">
-
-                <!-- Submit Button -->
-                <x-green-button id="submitButton">
-                    {{ __('Submit form') }}
-                </x-green-button>
-            </div>
         </div>
-
 
     </form>
 
+    <!-- Flash Messages -->
     @if(session('error'))
     <div x-data="{ show: true }" x-show="show"
         class="fixed top-5 right-5 bg-red-500 text-white p-4 rounded shadow-lg"
@@ -98,6 +109,3 @@
     </div>
     @endif
 </x-app-layout>
-
-<script src="{{ asset('js/disabledbutton.js') }}"></script>
-<script src="{{ asset('js/registerTogglePassword.js') }}"></script>

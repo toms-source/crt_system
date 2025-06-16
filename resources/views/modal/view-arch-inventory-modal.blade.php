@@ -12,7 +12,7 @@
 
         if (diffYears <= 1) {
             return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-        } else if (diffYears > 2) {
+        } else if (diffYears => 2) {
             return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
         } else {
             return '';
@@ -55,6 +55,15 @@
         @php
         $loggedInUser = Auth::user();
         @endphp
+        <div class="flex justify-end mt-2">
+            <button @click="show = false" class="text-green-200 hover:text-green-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+                </svg>
+
+
+            </button>
+        </div>
         <div class="head-title text-center pt-4">
             <span class="flex justify-center">
                 <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
@@ -72,7 +81,7 @@
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-green-500' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
+                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm">
@@ -94,14 +103,14 @@
                 </span>
             </p>
         </div>
-        <div class=" text-sm flex justify-center py-4">
+        <div class="pb-24 text-sm flex justify-center py-4">
             <div class="flex-1">
                 <h3>inventory list no.:</h3>
                 <h3>disposal series no.:</h3>
                 <h3>location code:</h3>
             </div>
             <div class="flex-1">
-                <h3>recieved by:<span x-text="archInventory.recieved_by"></span></h3>
+                <h3>recieved by:<span x-text="archInventory.recieved_by" :class="archInventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
                 <h3>
                     date:
                     <span
@@ -114,7 +123,7 @@
                                 : 'N/A'">
                     </span>
                 </h3>
-                <h3>approved by(supervisor):<span x-text="archInventory.approved_by"></span></h3>
+                <h3>approved by(supervisor):<span x-text="archInventory.approved_by" :class="archInventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
                 <h3>
                     date:
                     <span
@@ -127,12 +136,6 @@
                                 : 'N/A'">
                     </span>
                 </h3>
-            </div>
-        </div>
-
-        <div class="mt-6 text-right">
-            <div class="p-8">
-                <x-secondary-button @click="show = false">{{__('Close')}}</x-secondary-button>
             </div>
         </div>
     </div>

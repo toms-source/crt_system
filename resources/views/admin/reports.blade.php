@@ -75,48 +75,34 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared by</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">disposal date</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach ( $adminArchiveInventory as $archInventory)
                             <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->original_id}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->manager_approval}}</td>
-                                @php
-                                $disposalDate = \Carbon\Carbon::parse($archInventory->disposal_date);
-                                $now = \Carbon\Carbon::now();
-                                $diffInYears = $now->diffInYears($disposalDate, false);
-
-                                $disposalColor = '';
-                                if ($diffInYears <= 1) {
-                                    $disposalColor='text-red-800 bg-red-300 font-extrabold rounded-full text-center' ;
-                                    } elseif ($diffInYears> 2) {
-                                    $disposalColor = 'text-green-800 bg-green-300 font-extrabold rounded-full text-center';
-                                    }
-                                    @endphp
-
-                                    <td class="py-3 px-6 text-left {{ $disposalColor }}">
-                                        {{ $disposalDate->format('Y') }}
-                                    </td>
-                                    <td class="flex gap-4">
-                                        <div></div>
+                                <td>
+                                    <div class="flex items-center gap-4">
                                         <x-success-button
-                                            x-data
-                                            x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                            View
-                                        </x-success-button>
-                                        <form action="{{ route('archInventory.destroy', $archInventory->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-danger-button type="submit">Delete</x-danger-button>
-                                        </form>
-                                        <x-primary-button>
-                                            <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                        </x-primary-button>
-                                    </td>
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
+                                    <form action="{{ route('archInventory.destroy', $archInventory->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-danger-button type="submit">Delete</x-danger-button>
+                                    </form>
+                                    <x-primary-button>
+                                        <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
+                                    </x-primary-button>
+                                </div>
+                                    
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

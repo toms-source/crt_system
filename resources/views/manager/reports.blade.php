@@ -51,32 +51,17 @@
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->original_id}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by}}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->approved_by}}</td>
-                                @php
-                                $disposalDate = \Carbon\Carbon::parse($archInventory->disposal_date);
-                                $now = \Carbon\Carbon::now();
-                                $diffInYears = $now->diffInYears($disposalDate, false);
-
-                                $disposalColor = '';
-                                if ($diffInYears <= 1) {
-                                    $disposalColor='text-red-800 bg-red-300 font-extrabold rounded-full text-center' ;
-                                    } elseif ($diffInYears> 2) {
-                                    $disposalColor = 'text-green-800 bg-green-300 font-extrabold rounded-full text-center';
-                                    }
-                                    @endphp
-
-                                    <td class="py-3 px-6 text-left {{ $disposalColor }}">
-                                        {{ $disposalDate->format('Y') }}
-                                    </td>
-                                    <td>
-                                        <x-success-button
-                                            x-data
-                                            x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                            View
-                                        </x-success-button>
-                                        <x-primary-button>
-                                            <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                        </x-primary-button>
-                                    </td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->disposal_date }}</td>
+                                <td>
+                                    <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
+                                    <x-primary-button>
+                                        <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
+                                    </x-primary-button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

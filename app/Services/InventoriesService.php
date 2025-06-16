@@ -8,7 +8,7 @@ use App\Models\ArchiveInventories;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class InventoriesService
 {
@@ -20,40 +20,68 @@ class InventoriesService
 
     public function getUserInventories()
     {
-        return Inventory::with('owner')
+        return Inventory::with(['owner', 'items'])
             ->where('user_id', Auth::id())
-            ->get();
+            ->get()
+            ->map(function ($inventory) {
+                $inventory->items->transform(function ($item) {
+                    $item->doc_date = \Carbon\Carbon::parse($item->doc_date)->format('m/d/Y');
+                    return $item;
+                });
+                return $inventory;
+            });
     }
     public function createInventory(Request $request)
     {
-        Validator::make($request->all(), [
-            'description' => 'required|string|max:255',
-            'quantity_code' => 'required|string|max:255',
-            'doc_date' => 'required|digits:4',
-            'index_code' => 'required|string|max:255',
-            'status' => 'required|string|in:Permanent,Temporary',
-            'retention_period' => 'required|integer|min:0',
-        ]);
-
+        DB::beginTransaction();
         $user = Auth::user();
-        $docDate = Carbon::createFromFormat('Y', $request->doc_date)->startOfYear();
-        $disposalDate = $docDate->copy()->addYears((int) $request->retention_period);
 
-        Inventory::create([
-            'description' => $request->description,
-            'quantity_code' => $request->quantity_code,
-            'doc_date' => Carbon::createFromFormat('Y', $request->doc_date)->startOfYear(),
-            'index_code' => $request->index_code,
-            'status' => $request->status,
-            'retention_period' => $request->retention_period,
-            'disposal_date' => $disposalDate,
-            'office_origin' => $user->office->department ?? 'Unknown Office',
-            'prepared_by' => $user->name,
-            'user_id' => $user->id,
-            'office_id' => $user->office_id,
-        ]);
+        try {
+            // count the number of valid inventory item
+            $validItems = collect($request->items)->filter(function ($item) {
+                return !empty($item['description']) &&
+                    !empty($item['doc_date']) &&
+                    !empty($item['quantity_code']) &&
+                    !empty($item['index_code']) &&
+                    !empty($item['retention_period']);
+            });
 
-        return redirect()->route('user.index')->with('success', 'Inventory record saved!');
+            $itemCount = $validItems->count();
+
+            // Create the main inventory
+            $inventory = Inventory::create([
+                'office_origin' => $user->office->department ?? 'Unknown Office',
+                'prepared_by' => $user->name,
+                'list_no' => $itemCount,
+                'user_id' => $user->id,
+                'office_id' => $user->office_id,
+            ]);
+
+            // Store each valid inventory item
+            foreach ($validItems->values() as $index => $item) {
+                $docDate = Carbon::parse($item['doc_date'])->startOfYear();
+                $disposalDate = $docDate->copy()->addYears((int) $item['retention_period']);
+                $retention = (int) $item['retention_period'];
+
+                $inventory->items()->create([
+                    'item_no' => $index + 1,
+                    'description' => $item['description'],
+                    'doc_date' => $docDate,
+                    'quantity_code' => $item['quantity_code'],
+                    'index_code' => $item['index_code'],
+                    'status' => $item['status'],
+                    'retention_period' => $retention,
+                    'disposal_date' => $disposalDate,
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Inventory and ' . $itemCount . ' items saved successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to save inventory. ' . $e->getMessage());
+        }
     }
 
     public function updateInventory(int $id, array $data): bool

@@ -10,22 +10,17 @@ class Inventory extends Model
     protected $table = 'inventories';
 
     protected $fillable = [
-        'description',
-        'doc_date',
-        'quantity_code',
-        'index_code',
-        'status',
-        'retention_period',
-        'disposal_date',
         'office_origin',
         'prepared_by',
         'list_no',
         'series_no',
         'loc_code',
         'recieved_by',
-        'recieve_date',
+        'recieved_date',
+        'manager_approval',
         'approved_by',
         'approved_date',
+        'disposal_status',
         'user_id',
         'office_id',
     ];
@@ -54,5 +49,9 @@ class Inventory extends Model
     public function manipulators()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
+    }
+    public function items()
+    {
+        return $this->hasMany(InventoryItem::class);
     }
 }
