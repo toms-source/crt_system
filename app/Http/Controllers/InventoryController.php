@@ -4,15 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inventory;
-use App\Services\InventoriesService;
+use App\Services\AdminApprovalService;
+use App\Services\AdminInventoriesService;
+use App\Services\AdminRecievingService;
+use App\Services\CheckUpdateInventoryService;
+use App\Services\CreateInventoryService;
+use App\Services\DeleteInventoryService;
+use App\Services\ManagerApprovalService;
+use App\Services\ManagerInventoriesService;
+use App\Services\TempToDelInventoriesService;
+use App\Services\UserInventoriesService;
 
 class InventoryController extends Controller
 {
 
-    protected $inventoriesService;
-    public function __construct(InventoriesService $inventoriesService)
-    {
-        $this->inventoriesService = $inventoriesService;
+    protected $tempToDelInventoriesService;
+    protected $adminInventoriesService;
+    protected $managerInventoriesService;
+    protected $userInventoriesService;
+    protected $createInventoryService;
+    protected $checkUpdateInventoryService;
+    protected $deleteInventoryService;
+    protected $adminRecievingService;
+    protected $managerApprovalService;
+    protected $adminApprovalService;
+
+    public function __construct(
+        TempToDelInventoriesService $tempToDelInventoriesService,
+        AdminInventoriesService $adminInventoriesService,
+        ManagerInventoriesService $managerInventoriesService,
+        UserInventoriesService $userInventoriesService,
+        CreateInventoryService $createInventoryService,
+        CheckUpdateInventoryService $checkUpdateInventoryService,
+        DeleteInventoryService $deleteInventoryService,
+        AdminRecievingService $adminRecievingService,
+        ManagerApprovalService $managerApprovalService,
+        AdminApprovalService $adminApprovalService
+    ) {
+        $this->tempToDelInventoriesService = $tempToDelInventoriesService;
+        $this->adminInventoriesService = $adminInventoriesService;
+        $this->managerInventoriesService = $managerInventoriesService;
+        $this->userInventoriesService = $userInventoriesService;
+        $this->createInventoryService = $createInventoryService;
+        $this->deleteInventoryService = $deleteInventoryService;
+        $this->managerApprovalService = $managerApprovalService;
+        $this->adminRecievingService = $adminRecievingService;
+        $this->adminApprovalService = $adminApprovalService;
+        $this->checkUpdateInventoryService = $checkUpdateInventoryService;
     }
 
     public function view()
@@ -26,10 +64,10 @@ class InventoryController extends Controller
 
     public function create(Request $request)
     {
-        return $this->inventoriesService->createInventory($request);
+        return $this->createInventoryService->createInventory($request);
     }
 
-    public function update(Request $request, int $id, InventoriesService $inventoriesService)
+    public function update(Request $request, int $id, CheckUpdateInventoryService $checkUpdateInventoryService)
     {
         $validated = $request->validate([
             'list_no' => 'required|string|max:50',
@@ -37,22 +75,23 @@ class InventoryController extends Controller
             'loc_code' => 'required|string|max:50',
         ]);
 
-        $inventoriesService->updateInventory($id, $validated);
+        $checkUpdateInventoryService->checkUpdate($id, $validated);
 
         return response()->json(['message' => 'Inventory updated successfully.']);
     }
 
     public function displayIndexUser()
     {
-        $inventories = $this->inventoriesService->getUserInventories();
+        $inventories = $this->userInventoriesService->display();
         $totalInv = $inventories->count();
+
         return view('user.index', compact('inventories', 'totalInv'));
     }
 
     // index display of admin
     public function adminDisplay(Request $request)
     {
-        $data = $this->inventoriesService->getAdminInventories($request);
+        $data = $this->adminInventoriesService->display($request);
         if ($data) return $data;
 
         return view('admin.index');
@@ -61,7 +100,7 @@ class InventoryController extends Controller
     // index display of manager
     public function managerDisplay(Request $request)
     {
-        $data = $this->inventoriesService->getManagerInventories($request);
+        $data = $this->managerInventoriesService->display($request);
         if ($data) return $data;
 
         return view('manager.index');
@@ -70,7 +109,7 @@ class InventoryController extends Controller
     // manager approval
     public function approve(Request $request)
     {
-        $this->inventoriesService->managerApproval($request);
+        $this->managerApprovalService->approve($request);
 
         return redirect()->route('manager.index')->with('success', 'Inventory approved successfully.');
     }
@@ -78,7 +117,7 @@ class InventoryController extends Controller
     // RTO recieve by admin
     public function adminRecieve(Request $request)
     {
-        $this->inventoriesService->adminReceive($request);
+        $this->adminRecievingService->recieve($request);
 
         return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
     }
@@ -86,7 +125,7 @@ class InventoryController extends Controller
     // RTO approve by admin
     public function adminApprove(Request $request)
     {
-        $this->inventoriesService->adminApproval($request);
+        $this->adminApprovalService->approve($request);
 
         return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
     }
@@ -94,7 +133,7 @@ class InventoryController extends Controller
     // transfer RTO to archives
     public function destroy(Inventory $inventory)
     {
-        $this->inventoriesService->toArchiveInventoryAndDelete($inventory);
+        $this->tempToDelInventoriesService->toArchiveInventoryAndDelete($inventory);
 
         return redirect()->back()->with('success', 'Inventory archived successfully.');
     }
@@ -102,7 +141,7 @@ class InventoryController extends Controller
     // archive inventory
     public function destroyArch($id)
     {
-        $this->inventoriesService->deleteInventory($id);
+        $this->deleteInventoryService->delete($id);
 
         return redirect()->back()->with('success', 'Inventory archived successfully.');
     }
