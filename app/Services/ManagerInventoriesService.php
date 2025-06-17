@@ -12,7 +12,7 @@ class ManagerInventoriesService
     public function display($request) 
     {
         if ($request->ajax()) {
-            $data = Inventory::with('user')
+            $data = Inventory::with('user', 'items')
                 ->whereHas('user', function ($query) {
                     $query->where('managerId', Auth::id());
                 });

@@ -70,7 +70,6 @@ class InventoryController extends Controller
     public function update(Request $request, int $id, CheckUpdateInventoryService $checkUpdateInventoryService)
     {
         $validated = $request->validate([
-            'list_no' => 'required|string|max:50',
             'series_no' => 'required|string|max:50',
             'loc_code' => 'required|string|max:50',
         ]);

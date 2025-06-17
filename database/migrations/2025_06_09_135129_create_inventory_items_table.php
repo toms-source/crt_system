@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string("quantity_code");
             $table->string("index_code");
             $table->string("status");
-            $table->integer("retention_period");
-            $table->dateTime("disposal_date"); 
+            $table->integer("retention_period")->nullable();
+            $table->dateTime("disposal_date")->nullable(); 
             $table->timestamps();
 
             $table->foreignId('inventory_id')->constrained()->onDelete('cascade');

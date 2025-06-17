@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class CreateInventoryService 
+class CreateInventoryService
 {
     //
-    public function createInventory(Request $request) 
+    public function createInventory(Request $request)
     {
         DB::beginTransaction();
         $user = Auth::user();
@@ -23,7 +23,7 @@ class CreateInventoryService
                     !empty($item['doc_date']) &&
                     !empty($item['quantity_code']) &&
                     !empty($item['index_code']) &&
-                    !empty($item['retention_period']);
+                    (!empty($item['retention_period']) || strtolower($item['status']) === 'temporary');
             });
 
             $itemCount = $validItems->count();
@@ -40,9 +40,11 @@ class CreateInventoryService
 
             // Store each valid inventory item
             foreach ($validItems->values() as $index => $item) {
+                $isTemporary = strtolower($item['status']) === 'temporary';
+
                 $docDate = Carbon::parse($item['doc_date'])->startOfYear();
-                $disposalDate = $docDate->copy()->addYears((int) $item['retention_period']);
-                $retention = (int) $item['retention_period'];
+                $retention = $isTemporary ? null : (int) $item['retention_period'];
+                $disposalDate = $isTemporary ? null : $docDate->copy()->addYears($retention);
 
                 $inventory->items()->create([
                     'item_no' => $index + 1,

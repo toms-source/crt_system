@@ -28,7 +28,7 @@
 }"
     x-init="init()"
     x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
+    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 mx-6"
     style="display: none;">
     <!-- Overlay (Backdrop) -->
     <div
@@ -45,7 +45,7 @@
     </div>
 
     <div x-show="show"
-        class="uppercase px-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-2xl sm:mx-auto"
+        class="uppercase px-4 mx-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -60,8 +60,6 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
                     <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
                 </svg>
-
-
             </button>
         </div>
         <div class="head-title text-center pt-4">
@@ -75,39 +73,43 @@
 
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
-                <h3>Office origin: <span x-text="inventory.office_origin"></span></h3>
-                <h3>turn-over date: <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
+                <h3><strong>Office origin:</strong> <span x-text="inventory.office_origin"></span></h3>
+                <h3><strong>turn-over date:</strong> <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
-                <h3>prepared by: <span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
+                <h3><strong>prepared by:</strong> <span class="underline" x-text="inventory.prepared_by"></span></h3>
+                <h3><strong>approved by:</strong><span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
             </div>
         </div>
-        <div class="space-y-2 text-sm">
-            <p><strong>Item No:</strong> <span class="underline" x-text="inventory.id"></span></p>
-            <p class="flex gap-1 items-start">
-                <strong>Description:</strong>
-                <span
-                    class="underline block max-w-[400px] truncate"
-                    :title="inventory.description"
-                    x-text="inventory.description">
-                </span>
-            </p>
-            <p><strong>Doc Date:</strong>
-                <span class="underline" x-text="new Date(inventory.doc_date).getFullYear()"></span>
-            </p>
-            <p><strong>Quantity/unit code:</strong> <span class="underline" x-text="inventory.quantity_code"></span></p>
-            <p><strong>index code:</strong> <span class="underline" x-text="inventory.index_code"></span></p>
-            <p><strong>document status:</strong> <span class="underline" x-text="inventory.status"></span></p>
-            <p><strong>retention period:</strong> <span class="underline" x-text="inventory.retention_period"></span><span class="pl-2">year/s</span></p>
-            <p>
-                <strong>disposal date:</strong>
-                <span
-                    class="underline"
-                    :class="disposalYearClass"
-                    x-text="inventory.disposal_date ? new Date(inventory.disposal_date).getFullYear() : 'N/A'">
-                </span>
-            </p>
+        <div class="space-y-2 text-sm overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-200">
+                    <tr>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">item no</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Doc Date</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Quantity</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Index Code</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Status</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Retention period</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal date</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-stone-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <template x-for="item in inventory.items" :key="item.id">
+                        <tr>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.item_no"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.description"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.quantity_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.retention_period ?? '—'"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
         </div>
         <div class=" pb-24 text-sm flex justify-center py-4">
             <div class="flex-1">

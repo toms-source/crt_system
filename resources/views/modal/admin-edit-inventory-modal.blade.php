@@ -24,9 +24,6 @@
                     window.location.reload(); // or re-fetch table
                 })
             ">
-            <label class="block mb-2">List No:</label>
-            <input type="text" x-model="inventory.list_no" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 mb-4">
-
             <label class="block mb-2">Series No:</label>
             <input type="text" x-model="inventory.series_no" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-60 mb-4">
 

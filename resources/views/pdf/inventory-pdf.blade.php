@@ -61,6 +61,7 @@
             </td>
         </tr>
     </table>
+    <h4>Inventory Id: {{ $inventory->id }}</h4>
     <table style="width: 100%;">
         <tr>
             <td style="width: 48%; vertical-align: top;">
@@ -89,33 +90,42 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>{{ $inventory->id }}</td>
-                <td>{{ $inventory->description }}</td>
-                <td>{{ \Carbon\Carbon::parse($inventory->doc_date)->format('Y') }}</td>
-                <td>{{ $inventory->quantity_code }}</td>
-                <td>{{ $inventory->index_code }}</td>
-                <td style="color: {{ $inventory->status === 'Permanent' ? 'blue' : ($inventory->status === 'Temporary' ? 'orange' : 'black') }}">
-                    {{ $inventory->status }}
-                </td>
-                <td>{{ $inventory->retention_period }} <span style="margin-right: 2px; text-transform:uppercase;">year/s</span></td>
-                @php
-                $disposalDate = \Carbon\Carbon::parse($inventory->disposal_date);
-                $now = \Carbon\Carbon::now();
-                $diffInYears = $now->diffInYears($disposalDate, false);
-                $color = '';
+            @foreach ($inventory->items as $item)
+            @php
+            $disposalDate = \Carbon\Carbon::parse($item->disposal_date);
+            $now = \Carbon\Carbon::now();
+            $diffInYears = $now->diffInYears($disposalDate, false);
+            $color = '';
 
-                if ($diffInYears <= 1) {
-                    $color='red' ;
-                    } elseif ($diffInYears > 2) {
-                    $color = 'green';
-                    }
-                    @endphp
+            if ($diffInYears <= 1) {
+                $color='red' ;
+                } elseif ($diffInYears> 2) {
+                $color = 'green';
+                }
+                @endphp
+                <tr>
+                    <td>{{ $item->item_no }}</td>
+                    <td>{{ $item->description }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->doc_date)->format('Y') }}</td>
+                    <td>{{ $item->quantity_code }}</td>
+                    <td>{{ $item->index_code }}</td>
+                    <td style="color: {{ $item->status === 'Permanent' ? 'blue' : ($item->status === 'Temporary' ? 'orange' : 'black') }};">
+                        {{ $item->status }}
+                    </td>
+                    <td>
+                        @if ($item->retention_period)
+                        {{ $item->retention_period }}
+                        <span style="margin-right: 2px; text-transform:uppercase;">year/s</span>
+                        @else
+                        —
+                        @endif
+                    </td>
 
                     <td style="color: {{ $color }};">
-                        {{ $disposalDate->format('Y') }}
+                        {{ $item->disposal_date ? \Carbon\Carbon::parse($item->disposal_date)->format('Y') : '—' }}
                     </td>
-            </tr>
+                </tr>
+                @endforeach
         </tbody>
     </table>
     <div class="br">

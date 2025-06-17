@@ -11,7 +11,7 @@ class AdminInventoriesService
     public function display($request) 
     {
         if ($request->ajax()) {
-            $data = Inventory::whereNotNull('manager_approval');
+            $data = Inventory::with('items')->whereNotNull('manager_approval');
 
             return DataTables::of($data)
                 ->addIndexColumn()

@@ -24,11 +24,11 @@
                         <table id="inventory-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-200">
                                 <tr>
-                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
-                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
-                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
-                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
-                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
+                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
+                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
+                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
+                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Status</th>
+                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
 
@@ -40,7 +40,6 @@
                                 @forelse($inventories as $inventory)
                                 <tr>
                                     <td class="px-6 py-4">{{ $inventory->id }}</td>
-                                    <td class="px-6 py-4 max-w-[150px] truncate whitespace-nowrap overflow-hidden">{{ $inventory->description }}</td>
                                     <td class="px-6 py-4">{{ $loggedInUser->manager?->name ?? 'N/A' }}</td>
                                     <td class="px-6 py-4 uppercase font-bold text-center text-sm">
                                         <span class="rounded-full px-4
@@ -50,6 +49,7 @@
                                             {{ $inventory->approved_by === null ? 'Pending...' : 'Approved' }}
                                         </span>
                                     </td>
+                                    <td class="px-6 py-4">{{ $inventory->disposal_status }}</td>
                                     <td class="px-6 py-4">
                                         <x-success-button
                                             x-data

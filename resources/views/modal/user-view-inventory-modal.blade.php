@@ -69,12 +69,11 @@
             <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
             <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong> {{ $loggedInUser->manager?->name ?? 'N/A' }}</p>
-            <!-- <p class="text-sm">cost center head approval status:</p> -->
         </div>
 
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
-                <h3>Office origin: {{ $loggedInUser->office?->department ?? 'N/A' }}</h3>
+                <h3>Office origin: <span x-text="inventory.office_origin"></span></h3>
                 <h3>turn-over date: <span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
@@ -82,31 +81,31 @@
                 <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
             </div>
         </div>
-        <div class="space-y-2 text-sm">
+        <div class="space-y-2 text-sm overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-200">
                     <tr>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">item no</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Doc Date</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Quantity</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Index Code</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Status</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Retention period</th>
-                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal date</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">item no</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Doc Date</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Quantity</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Index Code</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Status</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Retention period</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal date</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white dark:bg-stone-800 divide-y divide-gray-200 dark:divide-gray-700" >
+                <tbody class="bg-white dark:bg-stone-800 divide-y divide-gray-200 dark:divide-gray-700">
                     <template x-for="item in inventory.items" :key="item.id">
                         <tr>
-                            <td class="px-4 py-2" x-text="item.item_no"></td>
-                            <td class="px-4 py-2" x-text="item.description"></td>
-                            <td class="px-4 py-2" x-text="item.doc_date"></td>
-                            <td class="px-4 py-2" x-text="item.quantity_code"></td>
-                            <td class="px-4 py-2" x-text="item.index_code"></td>
-                            <td class="px-4 py-2" x-text="item.status"></td>
-                            <td class="px-4 py-2" x-text="item.retention_period"></td>
-                            <td class="px-4 py-2" x-text="new Date(item.disposal_date).toLocaleDateString('en-US')"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.item_no"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.description"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.quantity_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.retention_period ?? '—'"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'"></td>
                         </tr>
                     </template>
                 </tbody>

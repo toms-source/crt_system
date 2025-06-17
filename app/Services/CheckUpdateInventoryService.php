@@ -11,7 +11,6 @@ class CheckUpdateInventoryService
         $inventory = Inventory::findOrFail($id);
 
         $inventory->update([
-            'list_no' => $data['list_no'],
             'series_no' => $data['series_no'],
             'loc_code' => $data['loc_code'],
         ]);

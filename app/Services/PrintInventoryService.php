@@ -18,7 +18,7 @@ class PrintInventoryService
     
     public function generatePdf(Request $request, $id)
     {
-        $inventory = Inventory::findOrFail($id);
+        $inventory = Inventory::with('items')->findOrFail($id);
 
         $recieve_date = null;
         $approved_date = null;
@@ -43,7 +43,7 @@ class PrintInventoryService
     }
     public function generateArchPdf(Request $request, $id)
     {
-        $inventory = ArchiveInventories::findOrFail($id);
+        $inventory = ArchiveInventories::with('items')->findOrFail($id);
 
         $recieve_date = null;
         $approved_date = null;
