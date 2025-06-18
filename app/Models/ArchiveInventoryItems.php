@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArchiveInventoryItems extends Model
 {
-    //
     protected $fillable = [
         'item_no',
         'description',
