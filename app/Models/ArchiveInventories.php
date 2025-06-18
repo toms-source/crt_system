@@ -7,15 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArchiveInventories extends Model
 {
     //
-      protected $fillable = [
-        'original_id',
-        'description',
-        'doc_date',
-        'quantity_code',
-        'index_code',
-        'status',
-        'retention_period',
-        'disposal_date',
+    protected $fillable = [
         'office_origin',
         'prepared_by',
         'list_no',
@@ -26,6 +18,7 @@ class ArchiveInventories extends Model
         'manager_approval',
         'approved_by',
         'approved_date',
+        'disposal_status',
         'user_id',
         'office_id',
     ];
@@ -34,5 +27,9 @@ class ArchiveInventories extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function items() 
+    {
+        return $this->hasMany(ArchiveInventoryItems::class);
     }
 }

@@ -13,14 +13,6 @@ return new class extends Migration
     {
         Schema::create('archive_inventories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('original_id'); // references the deleted inventory
-            $table->string("description");
-            $table->dateTime("doc_date");
-            $table->string("quantity_code");
-            $table->string("index_code");
-            $table->string("status");
-            $table->integer("retention_period");
-            $table->dateTime("disposal_date");
             $table->string('office_origin');
             $table->string('prepared_by');
             $table->string('list_no')->nullable();
@@ -31,6 +23,7 @@ return new class extends Migration
             $table->string('manager_approval')->nullable();
             $table->string('approved_by')->nullable();
             $table->string('approved_date')->nullable();
+            $table->string('disposal_status')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id')->nullable();

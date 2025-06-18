@@ -32,37 +32,37 @@
                         <!-- Description -->
                         <div>
                             <x-input-label :value="__('Document Description')" />
-                            <input type="text" :name="'items[' + index + '][description]'" x-model="item.description" placeholder="Ex. CRTS Inventory..." class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][description]'" x-model="item.description" placeholder="Ex. CRTS Inventory..." class="form-input w-full dark:bg-gray-800">
                         </div>
 
                         <!-- Doc Date -->
                         <div>
                             <x-input-label :value="__('Doc Date')" />
-                            <input type="date" :name="'items[' + index + '][doc_date]'" x-model="item.doc_date" class="form-input w-full dark:bg-gray-800">
+                            <input required type="date" :name="'items[' + index + '][doc_date]'" x-model="item.doc_date" class="form-input w-full dark:bg-gray-800">
                         </div>
 
                         <!-- Quantity/Unit Code -->
                         <div>
                             <x-input-label :value="__('Quantity/Unit Code')" />
-                            <input type="text" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
                         </div>
 
                         <!-- Index Code -->
                         <div>
                             <x-input-label :value="__('Index Code')" />
-                            <input type="text" :name="'items[' + index + '][index_code]'" x-model="item.index_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][index_code]'" x-model="item.index_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
                         </div>
 
                         <!-- Retention Period -->
-                        <div x-effect="if (item.status === 'Temporary') item.retention_period = ''">
+                        <div x-effect="if (item.status === 'Permanent') item.retention_period = ''">
                             <x-input-label :value="__('Retention Period (years)')" />
                             <input type="number"
                                 :name="'items[' + index + '][retention_period]'"
                                 x-model="item.retention_period"
                                 placeholder="Ex. 1"
                                 class="form-input w-full dark:bg-gray-800"
-                                :disabled="item.status === 'Temporary'"
-                                :class="item.status === 'Temporary' ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed' : ''">
+                                :disabled="item.status === 'Permanent'"
+                                :class="item.status === 'Permanent' ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed' : ''">
                         </div>
 
                         <!-- Status -->

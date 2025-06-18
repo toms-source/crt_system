@@ -130,9 +130,9 @@ class InventoryController extends Controller
     }
 
     // transfer RTO to archives
-    public function destroy(Inventory $inventory)
+    public function destroy($inventoryId)
     {
-        $this->tempToDelInventoriesService->toArchiveInventoryAndDelete($inventory);
+        $this->tempToDelInventoriesService->toArchiveInventoryAndDelete($inventoryId);
 
         return redirect()->back()->with('success', 'Inventory archived successfully.');
     }

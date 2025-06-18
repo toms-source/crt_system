@@ -106,7 +106,7 @@
                 <tr>
                     <td>{{ $item->item_no }}</td>
                     <td>{{ $item->description }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->doc_date)->format('Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->doc_date)->format('m-d-Y') }}</td>
                     <td>{{ $item->quantity_code }}</td>
                     <td>{{ $item->index_code }}</td>
                     <td style="color: {{ $item->status === 'Permanent' ? 'blue' : ($item->status === 'Temporary' ? 'orange' : 'black') }};">
@@ -122,7 +122,7 @@
                     </td>
 
                     <td style="color: {{ $color }};">
-                        {{ $item->disposal_date ? \Carbon\Carbon::parse($item->disposal_date)->format('Y') : '—' }}
+                        {{ $item->disposal_date ? \Carbon\Carbon::parse($item->disposal_date)->format('m-d-Y') : '—' }}
                     </td>
                 </tr>
                 @endforeach

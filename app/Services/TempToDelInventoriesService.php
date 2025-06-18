@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Inventory;
 use App\Models\ArchiveInventories;
+use Illuminate\Support\Facades\DB;
 
 class TempToDelInventoriesService
 {
@@ -12,34 +13,72 @@ class TempToDelInventoriesService
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    
-    public function toArchiveInventoryAndDelete(Inventory $inventory)
+
+    public function toArchiveInventoryAndDelete($inventoryId)
     {
-        ArchiveInventories::create([
-            'original_id'       => $inventory->id,
-            'description'       => $inventory->description,
-            'doc_date'          => $inventory->doc_date,
-            'quantity_code'     => $inventory->quantity_code,
-            'index_code'        => $inventory->index_code,
-            'status'            => $inventory->status,
-            'retention_period'  => $inventory->retention_period,
-            'disposal_date'     => $inventory->disposal_date,
-            'office_origin'     => $inventory->office_origin,
-            'prepared_by'       => $inventory->prepared_by,
-            'list_no'           => $inventory->list_no,
-            'series_no'         => $inventory->series_no,
-            'loc_code'          => $inventory->loc_code,
-            'recieved_by'       => $inventory->recieved_by,
-            'recieve_date'      => $inventory->recieve_date,
-            'manager_approval'  => $inventory->manager_approval,
-            'approved_by'       => $inventory->approved_by,
-            'approved_date'     => $inventory->approved_date,
-            'user_id'           => $inventory->user_id,
-            'office_id'         => $inventory->office_id,
-        ]);
+        // ArchiveInventories::create([
+        //     'original_id'       => $inventory->id,
+        //     'description'       => $inventory->description,
+        //     'doc_date'          => $inventory->doc_date,
+        //     'quantity_code'     => $inventory->quantity_code,
+        //     'index_code'        => $inventory->index_code,
+        //     'status'            => $inventory->status,
+        //     'retention_period'  => $inventory->retention_period,
+        //     'disposal_date'     => $inventory->disposal_date,
+        //     'office_origin'     => $inventory->office_origin,
+        //     'prepared_by'       => $inventory->prepared_by,
+        //     'list_no'           => $inventory->list_no,
+        //     'series_no'         => $inventory->series_no,
+        //     'loc_code'          => $inventory->loc_code,
+        //     'recieved_by'       => $inventory->recieved_by,
+        //     'recieve_date'      => $inventory->recieve_date,
+        //     'manager_approval'  => $inventory->manager_approval,
+        //     'approved_by'       => $inventory->approved_by,
+        //     'approved_date'     => $inventory->approved_date,
+        //     'user_id'           => $inventory->user_id,
+        //     'office_id'         => $inventory->office_id,
+        // ]);
 
-        $inventory->delete();
+        // $inventory->delete();
 
-        return true;
+        // return true;
+        $inventory = Inventory::with('items')->findOrFail($inventoryId);
+
+        DB::transaction(function () use ($inventory) {
+            // Create archived inventory
+            $archived = ArchiveInventories::create($inventory->only([
+                'office_origin',
+                'prepared_by',
+                'list_no',
+                'series_no',
+                'loc_code',
+                'recieved_by',
+                'recieved_date',
+                'manager_approval',
+                'approved_by',
+                'approved_date',
+                'disposal_status',
+                'user_id',
+                'office_id'
+            ]));
+
+            // Archive items
+            foreach ($inventory->items as $item) {
+                $archived->items()->create([
+                    'item_no' => $item->item_no,
+                    'description' => $item->description,
+                    'doc_date' => $item->doc_date,
+                    'quantity_code' => $item->quantity_code,
+                    'index_code' => $item->index_code,
+                    'status' => $item->status,
+                    'retention_period' => $item->retention_period,
+                    'disposal_date' => $item->disposal_date,
+                ]);
+            }
+
+            // Delete original
+            $inventory->items()->delete();
+            $inventory->delete();
+        });
     }
 }

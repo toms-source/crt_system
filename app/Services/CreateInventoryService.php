@@ -23,7 +23,7 @@ class CreateInventoryService
                     !empty($item['doc_date']) &&
                     !empty($item['quantity_code']) &&
                     !empty($item['index_code']) &&
-                    (!empty($item['retention_period']) || strtolower($item['status']) === 'temporary');
+                    (!empty($item['retention_period']) || strtolower($item['status']) === 'permanent');
             });
 
             $itemCount = $validItems->count();
@@ -40,11 +40,11 @@ class CreateInventoryService
 
             // Store each valid inventory item
             foreach ($validItems->values() as $index => $item) {
-                $isTemporary = strtolower($item['status']) === 'temporary';
+                $isPermanent = strtolower($item['status']) === 'permanent';
 
                 $docDate = Carbon::parse($item['doc_date'])->startOfYear();
-                $retention = $isTemporary ? null : (int) $item['retention_period'];
-                $disposalDate = $isTemporary ? null : $docDate->copy()->addYears($retention);
+                $retention = $isPermanent ? null : (int) $item['retention_period'];
+                $disposalDate = $isPermanent ? null : $docDate->copy()->addYears($retention);
 
                 $inventory->items()->create([
                     'item_no' => $index + 1,
