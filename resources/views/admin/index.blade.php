@@ -29,11 +29,11 @@
                     <table id="inventory-table" class="display nowrap dt-responsive text-center min-w-full divide-y divide-gray-200 dark:divide-gray-700 drop-shadow-md shadow-stone-500" style="width:100%">
                         <thead class="bg-gray-50 dark:bg-gray-200">
                             <tr>
-                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
+                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">prepared by</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center Head</th>
-                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Date</th>
+                                <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Status</th>
                                 <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                             </tr>
                         </thead>
@@ -45,25 +45,11 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script>
-            $(function() {
-                $('#inventory-table').DataTable({
+            document.addEventListener('DOMContentLoaded', () => {
+                const table = $('#inventory-table').DataTable({
                     responsive: true,
                     processing: true,
                     serverSide: true,
-                    initComplete: function() {
-                        const $searchInput = $('div.dataTables_filter input');
-                        $searchInput
-                            .addClass('mb-4 px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-stone-800 text-gray-900 dark:text-gray-100')
-                            .attr('placeholder', 'Search...');
-
-                        const $select = $('div.dataTables_length select');
-                        $select
-                            .addClass('px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-stone-800 text-gray-900 dark:text-gray-100');
-                        $select.find('option').each(function() {
-                            this.style.color = document.documentElement.classList.contains('dark') ? '#f9fafb' : '#1f2937';
-                            this.style.backgroundColor = document.documentElement.classList.contains('dark') ? '#1c1917' : '#ffffff';
-                        });
-                    },
                     ajax: '{{ route("admin.index") }}',
                     columns: [{
                             data: 'id',
@@ -82,23 +68,16 @@
                             name: 'manager_approval'
                         },
                         {
-                            data: 'disposal_date',
-                            name: 'disposal_date',
+                            data: 'disposal_status',
+                            name: 'disposal_status',
                             width: '200px',
-                            createdCell: function(td, cellData) {
-                                $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
-
-                                if (!cellData) return;
-
-                                const disposalDate = new Date(cellData);
-                                const today = new Date();
-                                const timeDiff = disposalDate - today;
-                                const yearsLeft = timeDiff / (1000 * 60 * 60 * 24 * 365);
-
-                                if (yearsLeft <= 1) {
-                                    $(td).addClass('text-red-800 font-extrabold text-center bg-red-300 rounded-full');
-                                } else if (yearsLeft => 2) {
-                                    $(td).addClass('text-green-800 font-extrabold text-center bg-green-300 rounded-full');
+                            render: function(data) {
+                                if (data === 'disposed') {
+                                    return '<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded-full">Disposed</span>';
+                                } else if (data === 'for disposal') {
+                                    return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">For Disposal</span>';
+                                } else {
+                                    return `<span class="text-gray-600 dark:text-gray-300">${data ?? 'N/A'}</span>`;
                                 }
                             }
                         },
@@ -109,10 +88,28 @@
                             searchable: false
                         }
                     ],
+                    initComplete: function() {
+                        const $searchInput = $('div.dataTables_filter input');
+                        $searchInput
+                            .addClass('mb-4 px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-stone-800 text-gray-900 dark:text-gray-100')
+                            .attr('placeholder', 'Search...');
+
+                        const $select = $('div.dataTables_length select');
+                        $select
+                            .addClass('px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-stone-800 text-gray-900 dark:text-gray-100');
+                        $select.find('option').each(function() {
+                            this.style.color = document.documentElement.classList.contains('dark') ? '#f9fafb' : '#1f2937';
+                            this.style.backgroundColor = document.documentElement.classList.contains('dark') ? '#1c1917' : '#ffffff';
+                        });
+                    }
+                });
+
+                // For Alpine or external reload
+                document.querySelector('#inventory-table').addEventListener('reload-datatable', () => {
+                    table.ajax.reload();
                 });
             });
         </script>
-
         <!-- DataTables CSS -->
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" />
 

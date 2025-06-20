@@ -33,30 +33,41 @@
                     <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-200">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Approved by(cost center head)</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Recieved and Approve by</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory Id</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal status</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+
+
                             @foreach ( $userArchiveInventory as $archInventory)
                             <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->original_id }}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->description }}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->id }}</td>
+
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">
+                                    {{ Carbon\Carbon::parse($archInventory->created_at)->format('M-d-Y') }}
+                                </td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->manager_approval }}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->approved_by }}</td>
-                                    <td>
-                                        <x-success-button
-                                            x-data
-                                            x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                            View
-                                        </x-success-button>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->disposal_status }}</td>
+                                <td>
+                                    <x-success-button
+                                        x-data
+                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                        View
+                                    </x-success-button>
+
+                                    <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">
                                         <x-primary-button>
-                                            <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                        </x-primary-button>
-                                    </td>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                                            </svg>download</x-primary-button>
+                                    </a>
+
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -69,16 +80,16 @@
 
                         <div class="p-4">
                             <div class="">
-                                <strong>Item No: <span>{{ $archInventory->original_id }}</span></strong>
+                                <strong>Inventory Id: </strong><span>{{ $archInventory->id }}</span>
                             </div>
                             <div class="">
-                                <strong>Description: <span>{{ $archInventory->description }}</span></strong>
+                                <strong>Turn-Over Date: </strong><span>{{ Carbon\Carbon::parse($archInventory->created_at)->format('M-d-Y') }}</span>
                             </div>
                             <div class="">
-                                <strong>Approved by(cost center head): <span>{{ $archInventory->manager_approval }}</span></strong>
+                                <strong>cost center head: </strong><span>{{ $archInventory->manager_approval }}</span>
                             </div>
                             <div class="">
-                                <strong>Recieved and Approve by: <span>{{ $archInventory->approved_by }}</span></strong>
+                                <strong>Disposal status: </strong><span>{{ $archInventory->disposal_status }}</span>
                             </div>
                             <div class="mt-4">
                                 <x-success-button

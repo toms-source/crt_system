@@ -25,32 +25,32 @@
         <div class="p-6 md:p-10" x-data="{ items: [{}] }">
 
             <template x-for="(item, index) in items" :key="index">
-                <div class="border border-gray-300 dark:border-gray-600 p-6 rounded-lg mb-6 bg-white dark:bg-gray-700 shadow-sm">
+                <div class="border border-stone-300 dark:border-stone-600 p-6 rounded-lg mb-6 bg-white dark:bg-stone-700 shadow-sm">
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4"> Items #<span x-text="index + 1"></span></h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Description -->
                         <div>
                             <x-input-label :value="__('Document Description')" />
-                            <input required type="text" :name="'items[' + index + '][description]'" x-model="item.description" placeholder="Ex. CRTS Inventory..." class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][description]'" x-model="item.description" placeholder="Ex. CRTS Inventory..." class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                         </div>
 
                         <!-- Doc Date -->
                         <div>
                             <x-input-label :value="__('Doc Date')" />
-                            <input required type="date" :name="'items[' + index + '][doc_date]'" x-model="item.doc_date" class="form-input w-full dark:bg-gray-800">
+                            <input required type="date" :name="'items[' + index + '][doc_date]'" x-model="item.doc_date" class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                         </div>
 
                         <!-- Quantity/Unit Code -->
                         <div>
                             <x-input-label :value="__('Quantity/Unit Code')" />
-                            <input required type="text" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                         </div>
 
                         <!-- Index Code -->
                         <div>
                             <x-input-label :value="__('Index Code')" />
-                            <input required type="text" :name="'items[' + index + '][index_code]'" x-model="item.index_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-gray-800">
+                            <input required type="text" :name="'items[' + index + '][index_code]'" x-model="item.index_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                         </div>
 
                         <!-- Retention Period -->
@@ -60,7 +60,7 @@
                                 :name="'items[' + index + '][retention_period]'"
                                 x-model="item.retention_period"
                                 placeholder="Ex. 1"
-                                class="form-input w-full dark:bg-gray-800"
+                                class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white"
                                 :disabled="item.status === 'Permanent'"
                                 :class="item.status === 'Permanent' ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed' : ''">
                         </div>
@@ -68,7 +68,7 @@
                         <!-- Status -->
                         <div>
                             <x-input-label :value="__('Document Status')" />
-                            <select :name="'items[' + index + '][status]'" x-model="item.status" class="form-select w-full dark:bg-gray-800">
+                            <select :name="'items[' + index + '][status]'" x-model="item.status" class="form-select w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                                 <option value="" disabled selected hidden>-- Select Status --</option>
                                 <option value="Permanent">Permanent</option>
                                 <option value="Temporary">Temporary</option>

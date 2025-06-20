@@ -10,6 +10,7 @@ use App\Services\AdminRecievingService;
 use App\Services\CheckUpdateInventoryService;
 use App\Services\CreateInventoryService;
 use App\Services\DeleteInventoryService;
+use App\Services\DisposeService;
 use App\Services\ManagerApprovalService;
 use App\Services\ManagerInventoriesService;
 use App\Services\TempToDelInventoriesService;
@@ -28,6 +29,7 @@ class InventoryController extends Controller
     protected $adminRecievingService;
     protected $managerApprovalService;
     protected $adminApprovalService;
+    protected $disposeService;
 
     public function __construct(
         TempToDelInventoriesService $tempToDelInventoriesService,
@@ -39,7 +41,8 @@ class InventoryController extends Controller
         DeleteInventoryService $deleteInventoryService,
         AdminRecievingService $adminRecievingService,
         ManagerApprovalService $managerApprovalService,
-        AdminApprovalService $adminApprovalService
+        AdminApprovalService $adminApprovalService,
+        DisposeService $disposeService
     ) {
         $this->tempToDelInventoriesService = $tempToDelInventoriesService;
         $this->adminInventoriesService = $adminInventoriesService;
@@ -51,6 +54,7 @@ class InventoryController extends Controller
         $this->adminRecievingService = $adminRecievingService;
         $this->adminApprovalService = $adminApprovalService;
         $this->checkUpdateInventoryService = $checkUpdateInventoryService;
+        $this->disposeService = $disposeService;
     }
 
     public function view()
@@ -143,5 +147,12 @@ class InventoryController extends Controller
         $this->deleteInventoryService->delete($id);
 
         return redirect()->back()->with('success', 'Inventory archived successfully.');
+    }
+
+    // dispose an Inventory
+    public function dispose($id)
+    {
+        $inventory = $this->disposeService->disposal($id);
+        return response()->json($inventory);
     }
 }

@@ -67,6 +67,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::post('/admin/approve-form', [InventoryController::class, 'adminApprove'])
     ->name('admin.approve');
+
+    Route::post('/admin/dashboard/dispose{inventory}', [InventoryController::class, 'dispose'])
+    ->name('admin.dispose');
 });
 
 // Manager Route

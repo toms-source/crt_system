@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
@@ -32,23 +31,25 @@ class AuthenticatedSessionController extends Controller
 
         //$request = User::with('roles');
 
-        
+
         $user = $request->user();
-        
+
+        // login admin
         if ($user->hasRole('admin')) {
-            return redirect()->intended(route('admin.index', absolute: false));
+            return redirect()->route('admin.index');
+        } 
+        // login cost-center
+        elseif ($user->hasRole('manager')) {
+            return redirect()->route('manager.index');
+        } 
+        // login user
+        elseif ($user->hasRole('user')) {
+            return redirect()->route('user.index');
+        } 
+        // fallback
+        else {
+            return redirect('/'); 
         }
-        elseif($user->hasRole('manager')) {
-            return redirect()->intended(route('manager.index', absolute: false));
-        }
-        elseif($user->hasRole('user')) {
-            return redirect()->intended(route('user.index', absolute: false));
-        }
-        else
-        {
-            return redirect()->intended(route('/', absolute: false));
-        }
-        
     }
 
     /**

@@ -99,7 +99,7 @@
 
             if ($diffInYears <= 1) {
                 $color='red' ;
-                } elseif ($diffInYears> 2) {
+                } elseif ($diffInYears > 1) {
                 $color = 'green';
                 }
                 @endphp

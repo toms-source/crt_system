@@ -3,21 +3,23 @@
     show: false,
     inventory: {},
     
-    get disposalYearClass() {
-        if (!this.inventory.disposal_date) return '';
+        disposalYearClass(date) {
+    if (!date) return '';
 
-        const now = new Date();
-        const disposalDate = new Date(this.inventory.disposal_date);
-        const diffYears = (disposalDate - now) / (1000 * 60 * 60 * 24 * 365);
+    const now = new Date();
+    const disposalDate = new Date(date);
 
-        if (diffYears <= 1) {
-            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-        } else if (diffYears => 2) {
-            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
-        } else {
-            return '';
-        }
-    },
+    // Calculate year difference
+    const diffYears = disposalDate.getFullYear() - now.getFullYear();
+
+    if (diffYears <= 1) {
+        return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+    } else if (diffYears >= 2) {
+        return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+    }
+
+    return '';
+},
 
     init() {
         window.addEventListener('open-modal', event => {
@@ -105,7 +107,11 @@
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.retention_period ?? '—'"></td>
-                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'"></td>
+                            <td
+                                class="whitespace-nowrap px-4 py-2 text-center"
+                                :class="disposalYearClass(item.disposal_date)"
+                                x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'">
+                            </td>
                         </tr>
                     </template>
                 </tbody>

@@ -3,21 +3,23 @@
     show: false,
     inventory: {},
     
-    get disposalYearClass() {
-        if (!this.inventory.disposal_date) return '';
+    disposalYearClass(date) {
+    if (!date) return '';
 
-        const now = new Date();
-        const disposalDate = new Date(this.inventory.disposal_date);
-        const diffYears = (disposalDate - now) / (1000 * 60 * 60 * 24 * 365);
+    const now = new Date();
+    const disposalDate = new Date(date);
 
-        if (diffYears <= 1) {
-            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-        } else if (diffYears => 2) {
-            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
-        } else {
-            return '';
-        }
-    },
+    // Calculate year difference
+    const diffYears = disposalDate.getFullYear() - now.getFullYear();
+
+    if (diffYears <= 1) {
+        return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+    } else if (diffYears >= 2) {
+        return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+    }
+
+    return '';
+},
 
     init() {
         window.addEventListener('open-modal', event => {
@@ -100,12 +102,16 @@
                         <tr>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.item_no"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.description"></td>
-                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date ? new Date(item.doc_date).toLocaleDateString('en-US') : '—'"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.quantity_code"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.retention_period ?? '—'"></td>
-                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'"></td>
+                            <td
+                                class="whitespace-nowrap px-4 py-2 text-center"
+                                :class="disposalYearClass(item.disposal_date)"
+                                x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'">
+                            </td>
                         </tr>
                     </template>
                 </tbody>
@@ -118,7 +124,7 @@
                 <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
-                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
+                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3><strong>date:</strong><span
                         x-text="inventory.recieve_date 
                                 ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
@@ -128,7 +134,7 @@
                                     }) 
                                 : 'N/A'">
                     </span></h3>
-                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
+                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3><strong>date:</strong>
                     <span
                         x-text="inventory.approved_date 

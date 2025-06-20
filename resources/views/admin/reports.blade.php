@@ -72,36 +72,50 @@
                     <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-200">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prepared by</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">disposal date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">disposal status</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach ( $adminArchiveInventory as $archInventory)
                             <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->original_id}}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by}}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->manager_approval}}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->prepared_by }}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->manager_approval }}</td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">
+                                    {{ optional($archInventory->items->first())->disposal_date 
+                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m-d-Y') 
+                                    : 'N/A' }}
+                                </td>
+                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->disposal_status }}</td>
                                 <td>
                                     <div class="flex items-center gap-4">
                                         <x-success-button
-                                        x-data
-                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                        View
-                                    </x-success-button>
-                                    <form action="{{ route('archInventory.destroy', $archInventory->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-danger-button type="submit">Delete</x-danger-button>
-                                    </form>
-                                    <x-primary-button>
-                                        <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                    </x-primary-button>
-                                </div>
-                                    
+                                            x-data
+                                            x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
+                                            View
+                                        </x-success-button>
+                                        <form action="{{ route('archInventory.destroy', $archInventory->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-danger-button type="submit">Delete</x-danger-button>
+                                        </form>
+                                        <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">
+
+                                            <x-primary-button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                    <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                                                    <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                                                </svg>
+                                                download
+                                            </x-primary-button>
+                                        </a>
+
+                                    </div>
+
                                 </td>
                             </tr>
                             @endforeach
@@ -117,16 +131,18 @@
 
                         <div class="p-4">
                             <div class="">
-                                <strong>Item No: <span>{{ $archInventory->original_id }}</span></strong>
+                                <strong>Prepared by: </strong><span>{{ $archInventory->prepared_by }}</span>
                             </div>
                             <div class="">
-                                <strong>Prepared By: <span>{{ $archInventory->prepared_by }}</span></strong>
+                                <strong>cost center head: </strong><span>{{ $archInventory->manager_approval }}</span>
                             </div>
                             <div class="">
-                                <strong>Cost Center Head: <span>{{ $archInventory->manager_approval }}</span></strong>
+                                <strong>disposal date: </strong><span>{{ optional($archInventory->items->first())->disposal_date 
+                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m-d-Y') 
+                                    : 'N/A' }}</span>
                             </div>
                             <div class="">
-                                <strong>Disposal Date: <span>{{ $archInventory->disposal_date }}</span></strong>
+                                <strong>disposal status: </strong><span>{{ $archInventory->disposal_status }}</span>
                             </div>
                             <div class="flex gap-4 mt-4">
                                 <x-success-button

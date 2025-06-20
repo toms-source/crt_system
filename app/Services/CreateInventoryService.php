@@ -42,7 +42,7 @@ class CreateInventoryService
             foreach ($validItems->values() as $index => $item) {
                 $isPermanent = strtolower($item['status']) === 'permanent';
 
-                $docDate = Carbon::parse($item['doc_date'])->startOfYear();
+                $docDate = Carbon::parse($item['doc_date']);
                 $retention = $isPermanent ? null : (int) $item['retention_period'];
                 $disposalDate = $isPermanent ? null : $docDate->copy()->addYears($retention);
 

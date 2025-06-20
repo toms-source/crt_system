@@ -3,21 +3,23 @@
     show: false,
     archInventory: {},
     
-    get disposalYearClass() {
-        if (!this.archInventory.disposal_date) return '';
+        disposalYearClass(date) {
+    if (!date) return '';
 
-        const now = new Date();
-        const disposalDate = new Date(this.archInventory.disposal_date);
-        const diffYears = (disposalDate - now) / (1000 * 60 * 60 * 24 * 365);
+    const now = new Date();
+    const disposalDate = new Date(date);
 
-        if (diffYears <= 1) {
-            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-        } else if (diffYears => 2) {
-            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
-        } else {
-            return '';
-        }
-    },
+    // Calculate year difference
+    const diffYears = disposalDate.getFullYear() - now.getFullYear();
+
+    if (diffYears <= 1) {
+        return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+    } else if (diffYears >= 2) {
+        return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+    }
+
+    return '';
+},
 
     init() {
         window.addEventListener('open-modal', event => {
@@ -28,7 +30,7 @@
 }"
     x-init="init()"
     x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
+    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 mx-6"
     style="display: none;">
     <!-- Overlay (Backdrop) -->
     <div
@@ -45,7 +47,7 @@
     </div>
 
     <div x-show="show"
-        class="uppercase px-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-2xl sm:mx-auto"
+        class="uppercase px-4 mx-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -81,36 +83,54 @@
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
+                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300' : ''" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
             </div>
         </div>
-        <div class="space-y-2 text-sm">
-            <p><strong>Item No:</strong> <span x-text="archInventory.id"></span></p>
-            <p><strong>Description:</strong> <span x-text="archInventory.description"></span></p>
-            <p><strong>Doc Date:</strong>
-                <span x-text="new Date(archInventory.doc_date).getFullYear()"></span>
-            </p>
-            <p><strong>Quantity/unit code:</strong> <span x-text="archInventory.quantity_code"></span></p>
-            <p><strong>index code:</strong> <span x-text="archInventory.index_code"></span></p>
-            <p><strong>document status:</strong> <span x-text="archInventory.status"></span></p>
-            <p><strong>retention period:</strong> <span x-text="archInventory.retention_period"></span><span class="pl-2">year/s</span></p>
-            <p>
-                <strong>disposal date:</strong>
-                <span
-                    class="underline"
-                    :class="disposalYearClass"
-                    x-text="archInventory.disposal_date ? new Date(archInventory.disposal_date).getFullYear() : 'N/A'">
-                </span>
-            </p>
+        <div class="space-y-2 text-sm overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-200">
+                    <tr>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">item no</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Description</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Doc Date</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Quantity</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Index Code</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Status</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Retention period</th>
+                        <th class="whitespace-nowrap text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal date</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-stone-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <template x-for="item in archInventory.items" :key="item.id">
+                        <tr>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.item_no"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.description"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center"
+                                x-text="new Date(item.doc_date).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })">
+                            </td>
+
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.quantity_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.retention_period ?? '—'"></td>
+                            <td
+                                class="whitespace-nowrap px-4 py-2 text-center"
+                                :class="disposalYearClass(item.disposal_date)"
+                                x-text="item.disposal_date ? new Date(item.disposal_date).toLocaleDateString('en-US') : '—'">
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
         </div>
         <div class="pb-24 text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3>inventory list no.:</h3>
-                <h3>disposal series no.:</h3>
-                <h3>location code:</h3>
+                <h3>inventory list no.: <span x-text="archInventory.list_no"></span></h3>
+                <h3>disposal series no.: <span x-text="archInventory.series_no"></span></h3>
+                <h3>location code: <span x-text="archInventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
-                <h3>recieved by:<span x-text="archInventory.recieved_by" :class="archInventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
+                <h3>recieved by:<span x-text="archInventory.recieved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3>
                     date:
                     <span
@@ -123,7 +143,7 @@
                                 : 'N/A'">
                     </span>
                 </h3>
-                <h3>approved by(supervisor):<span x-text="archInventory.approved_by" :class="archInventory.approved_by ? 'bg-green-300' : 'bg-red-500'" class="px-2 rounded-full text-green-800 font-bold"></span></h3>
+                <h3>approved by(supervisor):<span x-text="archInventory.approved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3>
                     date:
                     <span

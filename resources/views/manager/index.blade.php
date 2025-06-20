@@ -29,10 +29,11 @@
                         <table id="inventory-table" class="display nowrap dt-responsive text-center min-w-full divide-y divide-gray-200 dark:divide-gray-700 drop-shadow-md shadow-stone-500" style="width:100%">
                             <thead class="bg-gray-50 dark:bg-gray-200">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Item No</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">prepared by</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center Head</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">disposal Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
@@ -72,28 +73,21 @@
                                 },
                                 {
                                     data: 'manager_approval',
-                                    name: 'manager_approval'
+                                    name: 'manager_approval',
+                                    render: function(data, type, row) {
+                                        return data ? '<span class="px-4 py-2 bg-green-300 text-green-700 font-bold rounded-full">Approved</span>' : '<span class="px-4 py-2 bg-yellow-300 text-yellow-700 font-bold rounded-full">Pending</span>';
+                                    },
                                 },
                                 {
-                                    data: 'disposal_date',
-                                    name: 'disposal_date',
+                                    data: 'disposal_status',
+                                    name: 'disposal_status'
+                                },
+                                {
+                                    data: 'created_at',
+                                    name: 'created_at',
+                                    orderable: false,
+                                    searchable: false,
                                     width: '200px',
-                                    createdCell: function(td, cellData) {
-                                        $(td).addClass('max-w-[200px] break-words overflow-hidden whitespace-normal text-left');
-
-                                        if (!cellData) return;
-
-                                        const disposalDate = new Date(cellData);
-                                        const today = new Date();
-                                        const timeDiff = disposalDate - today;
-                                        const yearsLeft = timeDiff / (1000 * 60 * 60 * 24 * 365);
-
-                                        if (yearsLeft <= 1) {
-                                            $(td).addClass('text-red-800 font-extrabold text-center bg-red-300 rounded-full');
-                                        } else if (yearsLeft => 2) {
-                                            $(td).addClass('text-green-800 font-extrabold text-center bg-green-300 rounded-full');
-                                        }
-                                    }
                                 },
                                 {
                                     data: 'action',
