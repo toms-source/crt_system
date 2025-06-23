@@ -66,7 +66,7 @@
         <tr>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Office Origin:</strong> <span style="text-transform: capitalize;">{{ $inventory->office_origin}}</span></p>
-                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('m-d-Y') }}</span></p>
+                <p class="uppercase"><strong>Turn-Over Date:</strong> <span style="text-transform: capitalize;">{{ \Carbon\Carbon::parse($inventory->created_at)->format('m/d/Y') }}</span></p>
             </td>
             <td style="width: 48%; vertical-align: top;">
                 <p class="uppercase"><strong>Prepared/Turn-over By:</strong> <span style="text-transform: capitalize;">{{ $inventory->prepared_by}}</span></p>
@@ -106,10 +106,10 @@
                 <tr>
                     <td>{{ $item->item_no }}</td>
                     <td>{{ $item->description }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->doc_date)->format('m-d-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->doc_date)->format('m/d/Y') }}</td>
                     <td>{{ $item->quantity_code }}</td>
                     <td>{{ $item->index_code }}</td>
-                    <td style="color: {{ $item->status === 'Permanent' ? 'blue' : ($item->status === 'Temporary' ? 'orange' : 'black') }};">
+                    <td>
                         {{ $item->status }}
                     </td>
                     <td>
@@ -121,8 +121,8 @@
                         @endif
                     </td>
 
-                    <td style="color: {{ $color }};">
-                        {{ $item->disposal_date ? \Carbon\Carbon::parse($item->disposal_date)->format('m-d-Y') : '—' }}
+                    <td style="color: {{ $color }}">
+                        {{ $item->disposal_date ? \Carbon\Carbon::parse($item->disposal_date)->format('m/d/Y') : '—' }}
                     </td>
                 </tr>
                 @endforeach
@@ -142,12 +142,12 @@
 
                 <p class="foot"><strong>recieved by: </strong> {{ $inventory->recieved_by}}
                     @if(!empty($inventory->recieved_by))
-                    - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('m-d-Y') }}
+                    - {{ \Carbon\Carbon::parse($inventory->recieve_date)->format('m/d/Y') }}
                     @endif
                 </p>
                 <p class="foot"><strong>approved by:</strong> {{ $inventory->approved_by}}
                     @if(!empty($inventory->approved_by))
-                    - {{ \Carbon\Carbon::parse($inventory->approve_date)->format('m-d-Y') }}
+                    - {{ \Carbon\Carbon::parse($inventory->approve_date)->format('m/d/Y') }}
                     @endif
                 </p>
             </td>

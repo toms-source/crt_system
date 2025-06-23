@@ -40,7 +40,7 @@
                                 @forelse($inventories as $inventory)
                                 <tr>
                                     <td class="px-6 py-4">{{ $inventory->id }}</td>
-                                    <td class="px-6 py-4">{{ $loggedInUser->manager?->name ?? 'N/A' }}</td>
+                                    <td class="px-6 py-4 capitalize">{{ $loggedInUser->manager?->name ?? 'N/A' }}</td>
                                     <td class="px-6 py-4 uppercase font-bold text-center text-sm">
                                         <span class="rounded-full px-4
                                                                 @if(!is_null($inventory->approved_by)) bg-green-200 text-green-800
@@ -49,7 +49,7 @@
                                             {{ $inventory->approved_by === null ? 'Pending...' : 'Approved' }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4">{{ $inventory->disposal_status }}</td>
+                                    <td class="px-6 py-4 capitalize">{{ $inventory->disposal_status }}</td>
                                     <td class="px-6 py-4">
                                         <x-success-button
                                             x-data
@@ -84,13 +84,10 @@
 
                             <div class="p-4">
                                 <div class="">
-                                    <strong>Item No: <span>{{ $inventory->id }}</span></strong>
+                                    <strong>Inventory ID:</strong> <span>{{ $inventory->id }}</span>
                                 </div>
                                 <div class="">
-                                    <strong>Description: <span>{{ $inventory->description }}</span></strong>
-                                </div>
-                                <div class="">
-                                    <strong>Cost Center Head: <span>{{ $loggedInUser->manager?->name ?? 'N/A' }}</span></strong>
+                                    <strong>Cost Center Head:</strong> <span class="capitalize">{{ $loggedInUser->manager?->name ?? 'N/A' }}</span>
                                 </div>
                                 <div class="">
                                     <strong>Approval Status: <span class="rounded-full px-4
@@ -99,6 +96,9 @@
                                                                 @endif">
                                             {{ $inventory->approved_by === null ? 'Pending...' : 'Approved' }}
                                         </span></strong>
+                                </div>
+                                <div class="">
+                                    <strong>Disposal Status:</strong> <span>{{ $inventory->disposal_status }}</span>
                                 </div>
                                 <div class="mt-4">
                                     <x-success-button

@@ -79,7 +79,7 @@
             </div>
             <div class="flex-1">
                 <h3><strong>prepared by: </strong><span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>
-                <h3><strong>approved by: </strong><span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
+                <h3><strong>approved by: </strong><span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : 'bg-red-300 text-red-700'" class="px-2 rounded-full  font-bold"></span></h3>
             </div>
         </div>
 
@@ -125,7 +125,7 @@
                 <h3>location code: <span x-text="inventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
-                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
+                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by"></span></h3>
                 <h3><strong>date:</strong><span
                         x-text="inventory.recieve_date 
                                 ? new Date(inventory.recieve_date).toLocaleString('en-US', {  
@@ -135,7 +135,7 @@
                                     }) 
                                 : 'N/A'">
                     </span></h3>
-                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
+                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by"></span></h3>
                 <h3><strong>date:</strong>
                     <span
                         x-text="inventory.approved_date 

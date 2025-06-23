@@ -83,7 +83,7 @@
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300' : ''" class="px-2 rounded-full text-yellow-800 font-bold"></span></h3>
+                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : ''" class="px-2 rounded-full  font-bold"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm overflow-x-auto">

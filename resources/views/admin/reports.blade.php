@@ -87,7 +87,7 @@
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->manager_approval }}</td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">
                                     {{ optional($archInventory->items->first())->disposal_date 
-                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m-d-Y') 
+                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m/d/Y') 
                                     : 'N/A' }}
                                 </td>
                                 <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{$archInventory->disposal_status }}</td>
@@ -131,18 +131,18 @@
 
                         <div class="p-4">
                             <div class="">
-                                <strong>Prepared by: </strong><span>{{ $archInventory->prepared_by }}</span>
+                                <strong>Prepared by: </strong><span class="capitalize">{{ $archInventory->prepared_by }}</span>
                             </div>
                             <div class="">
-                                <strong>cost center head: </strong><span>{{ $archInventory->manager_approval }}</span>
+                                <strong>cost center head: </strong><span class="capitalize">{{ $archInventory->manager_approval }}</span>
                             </div>
                             <div class="">
                                 <strong>disposal date: </strong><span>{{ optional($archInventory->items->first())->disposal_date 
-                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m-d-Y') 
+                                    ? \Carbon\Carbon::parse($archInventory->items->first()->disposal_date)->format('m/d/Y') 
                                     : 'N/A' }}</span>
                             </div>
                             <div class="">
-                                <strong>disposal status: </strong><span>{{ $archInventory->disposal_status }}</span>
+                                <strong>disposal status: </strong><span class="capitalize">{{ $archInventory->disposal_status }}</span>
                             </div>
                             <div class="flex gap-4 mt-4">
                                 <x-success-button
@@ -155,9 +155,15 @@
                                     @method('DELETE')
                                     <x-danger-button type="submit">Delete</x-danger-button>
                                 </form>
-                                <x-primary-button>
-                                    <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                </x-primary-button>
+                                <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">
+                                    <x-primary-button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                            <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                                            <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                                        </svg>
+                                        download
+                                    </x-primary-button>
+                                </a>
                             </div>
                         </div>
                     </div>

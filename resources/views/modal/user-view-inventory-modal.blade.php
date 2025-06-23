@@ -80,7 +80,7 @@
             </div>
             <div class="flex-1">
                 <h3>prepared by: <span x-text="inventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300' : 'bg-red-500'" class="px-2 rounded-full text-white"></span></h3>
+                <h3>approved by:<span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : 'bg-red-300 text-red-700'" class="px-2 rounded-full"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm overflow-x-auto">
@@ -119,12 +119,12 @@
         </div>
         <div class=" text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3><strong>inventory list no.:</strong><span x-text="inventory.list_no" class="underline"></span></h3>
-                <h3><strong>disposal series no.:</strong><span x-text="inventory.series_no" class="underline"></span></h3>
-                <h3><strong>location code:</strong><span x-text="inventory.loc_code" class="underline"></span></h3>
+                <h3><strong>inventory list no.:</strong><span x-text="inventory.list_no"></span></h3>
+                <h3><strong>disposal series no.:</strong><span x-text="inventory.series_no"></span></h3>
+                <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
-                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" class="underline"></span></h3>
+                <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by"></span></h3>
                 <h3><strong>date:</strong>
                     <span
                         x-text="inventory.recieve_date 
@@ -133,10 +133,10 @@
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
-                                : 'N/A'" class="underline">
+                                : 'N/A'">
                     </span>
                 </h3>
-                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" class="underline"></span></h3>
+                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by"></span></h3>
                 <h3><strong>date:</strong>
                     <span
                         x-text="inventory.approved_date 
@@ -145,7 +145,7 @@
                                     day: '2-digit', 
                                     year: 'numeric' 
                                     }) 
-                                : 'N/A'" class="underline">
+                                : 'N/A'">
                     </span>
                 </h3>
             </div>
