@@ -75,13 +75,6 @@
                                 <x-dropdown-link :href="route('profile.edit')">
                                     {{ __('Edit Profile') }}
                                 </x-dropdown-link>
-                                <!-- Darkmode Toggle -->
-                                <x-dropdown-link
-                                    @click="toggle()"
-                                    aria-label="Toggle Dark Mode">
-                                    <span x-show="isDark">Good Morning! 🌞</span>
-                                    <span x-show="!isDark">Good Night! 🌙</span>
-                                </x-dropdown-link>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <x-dropdown-link :href="route('logout')"
@@ -98,29 +91,6 @@
             </main>
         </div>
     </div>
-
-
-    <!-- Darkmode Script -->
-    <script>
-        function darkMode() {
-            return {
-                isDark: false,
-                toggle() {
-                    this.isDark = !this.isDark;
-                    localStorage.setItem('dark', this.isDark);
-                },
-                init() {
-                    // Load dark mode setting from localStorage or system preference
-                    if (localStorage.getItem('dark') !== null) {
-                        this.isDark = JSON.parse(localStorage.getItem('dark'));
-                    } else {
-                        // fallback to system preference
-                        this.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    }
-                }
-            }
-        }
-    </script>
 </body>
 
 

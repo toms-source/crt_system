@@ -90,27 +90,6 @@
         passwordInput.type = checkbox.checked ? "text" : "password";
     }
 </script>
-
-<script>
-    function darkMode() {
-        return {
-            isDark: false,
-            toggle() {
-                this.isDark = !this.isDark;
-                localStorage.setItem('dark', this.isDark);
-            },
-            init() {
-                // Load dark mode setting from localStorage or system preference
-                if (localStorage.getItem('dark') !== null) {
-                    this.isDark = JSON.parse(localStorage.getItem('dark'));
-                } else {
-                    // fallback to system preference
-                    this.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                }
-            }
-        }
-    }
-</script>
 <script src="{{ asset('js/disabledbutton.js') }}"></script>
 
 </html>
