@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Inventory;
 use App\Services\AdminApprovalService;
 use App\Services\AdminInventoriesService;
 use App\Services\AdminRecievingService;
@@ -80,7 +79,8 @@ class InventoryController extends Controller
 
         $checkUpdateInventoryService->checkUpdate($id, $validated);
 
-        return response()->json(['message' => 'Inventory updated successfully.']);
+        return response()
+            ->json(['message' => 'Inventory updated successfully.']);
     }
 
     public function displayIndexUser()
@@ -114,7 +114,9 @@ class InventoryController extends Controller
     {
         $this->managerApprovalService->approve($request);
 
-        return redirect()->route('manager.index')->with('success', 'Inventory approved successfully.');
+        return redirect()
+            ->route('manager.index')
+            ->with('success', 'Inventory approved successfully.');
     }
 
     // RTO recieve by admin
@@ -122,7 +124,9 @@ class InventoryController extends Controller
     {
         $this->adminRecievingService->recieve($request);
 
-        return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Inventory recieved successfully.');
     }
 
     // RTO approve by admin
@@ -130,7 +134,9 @@ class InventoryController extends Controller
     {
         $this->adminApprovalService->approve($request);
 
-        return redirect()->route('admin.index')->with('success', 'Inventory recieved successfully.');
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Inventory recieved successfully.');
     }
 
     // transfer RTO to archives
@@ -138,7 +144,9 @@ class InventoryController extends Controller
     {
         $this->tempToDelInventoriesService->toArchiveInventoryAndDelete($inventoryId);
 
-        return redirect()->back()->with('success', 'Inventory archived successfully.');
+        return redirect()
+            ->back()
+            ->with('success', 'Inventory archived successfully.');
     }
 
     // archive inventory
@@ -146,13 +154,20 @@ class InventoryController extends Controller
     {
         $this->deleteInventoryService->delete($id);
 
-        return redirect()->back()->with('success', 'Inventory archived successfully.');
+        return redirect()
+            ->back()
+            ->with('success', 'Inventory archived successfully.');
     }
 
     // dispose an Inventory
     public function dispose($id)
     {
         $inventory = $this->disposeService->disposal($id);
+
+        // return redirect()
+        //     ->back()
+        //     ->with('success', 'Inventory marked as disposed.');
+
         return response()->json($inventory);
     }
 }

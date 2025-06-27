@@ -102,7 +102,7 @@
                         <tr>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.item_no"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.description"></td>
-                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.doc_date ? new Date(item.doc_date).toLocaleDateString('en-US') : '—'"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.quantity_code"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.index_code"></td>
                             <td class="whitespace-nowrap px-4 py-2 text-center" x-text="item.status"></td>

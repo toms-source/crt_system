@@ -47,7 +47,7 @@ class AdminInventoriesService
                                 .then(res => res.json())
                                 .then(data => {
                                     if (data.success) {
-                                        alert(data.message);
+                                        document.querySelector(\'#inventory-table\').dispatchEvent(new Event(\'reload-datatable\'));
                                         
                                     }
                                 });

@@ -118,6 +118,7 @@
 
         @include('modal.admin-view-inventory-modal')
         @include('modal.admin-edit-inventory-modal')
+        
     </div>
     @if(session('error'))
     <div x-data="{ show: true }" x-show="show"

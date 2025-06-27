@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\ArchiveInventories;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class InventoriesArchService

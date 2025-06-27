@@ -20,6 +20,10 @@
 
     return '';
 },
+    confirmDelete(id) {
+            this.deleteId = id;
+            this.showDeleteModal = true;
+        },
 
     init() {
         window.addEventListener('open-modal', event => {
@@ -154,24 +158,10 @@
                 <div class="flex justify-end">
 
                     <div class="flex gap-4">
-                        <!-- <x-danger-button>{{__('delete')}}</x-danger-button> -->
 
-                        <form
-                            :action="`{{ url('admin/inventory') }}/${inventory.id}`"
-                            method="POST"
-                            @submit.prevent="
-        if (confirm('Are you sure you want to delete this item?')) {
-            $el.submit();
-        } else {
-            // Do nothing if cancelled
-        }
-    ">
-                            @csrf
-                            @method('DELETE')
-                            <x-danger-button type="submit">
-                                {{ __('Delete') }}
-                            </x-danger-button>
-                        </form>
+                        <x-danger-button type="button" x-on:click="confirmDelete(inventory.id)">
+                            {{ __('Delete') }}
+                        </x-danger-button>
 
                         <form :action="'{{ route('admin.recieve') }}'" method="POST" x-show="!inventory.recieved_by">
                             @csrf
@@ -208,6 +198,7 @@
     </div>
 </div>
 
+    @include('modal.delete-confirmation-modal')
 @if (session('success'))
 <div x-data="{ show: true }" x-show="show"
     class="fixed top-5 right-5 bg-green-500 text-white p-4 rounded shadow-lg"
