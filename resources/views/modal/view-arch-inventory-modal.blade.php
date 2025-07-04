@@ -30,7 +30,7 @@
 }"
     x-init="init()"
     x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 mx-6"
+    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 lg:mx-4 md:mx-4 sm:mx-2 xs:mx-0"
     style="display: none;">
     <!-- Overlay (Backdrop) -->
     <div
@@ -47,7 +47,7 @@
     </div>
 
     <div x-show="show"
-        class="uppercase px-4 mx-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+        class="uppercase px-3 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -62,28 +62,25 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
                     <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
                 </svg>
-
-
             </button>
         </div>
         <div class="head-title text-center pt-4">
             <span class="flex justify-center">
                 <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
             </span>
-            <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
-            <p class="text-md">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
+            <h1 class="text-red-600 font-bold lg:text-lg md:text-lg sm:text-sm xs:text-sm p-4 dark:text-red-400">National Transmission Corporation</h1>
+            <p class="xs:text-sm">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong><span x-text="archInventory.manager_approval"></span></p>
-            <!-- <p class="text-sm">cost center head approval status:</p> -->
         </div>
 
         <div class="inventory-head text-sm w-full flex justify-center py-4">
             <div class="flex-1">
-                <h3>Office origin: <span x-text="archInventory.office_origin"></span></h3>
-                <h3>turn-over date: <span x-text="new Date(archInventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
+                <h3><strong>Office origin:</strong> <span x-text="archInventory.office_origin"></span></h3>
+                <h3><strong>turn-over date:</strong> <span x-text="new Date(archInventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
             <div class="flex-1">
-                <h3>prepared by: <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
-                <h3>approved by:<span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : ''" class="px-2 rounded-full  font-bold"></span></h3>
+                <h3><strong>prepared by:</strong> <span class="underline font-bold" x-text="archInventory.prepared_by"></span></h3>
+                <h3><strong>approved by:</strong><span x-text="archInventory.manager_approval ?? 'N/A'" :class="archInventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : ''" class="px-2 rounded-full  font-bold"></span></h3>
             </div>
         </div>
         <div class="space-y-2 text-sm overflow-x-auto">
@@ -125,14 +122,14 @@
         </div>
         <div class="pb-24 text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3>inventory list no.: <span x-text="archInventory.list_no"></span></h3>
-                <h3>disposal series no.: <span x-text="archInventory.series_no"></span></h3>
-                <h3>location code: <span x-text="archInventory.loc_code"></span></h3>
+                <h3><strong>inventory list no.: </strong><span x-text="archInventory.list_no"></span></h3>
+                <h3><strong>disposal series no.:</strong> <span x-text="archInventory.series_no"></span></h3>
+                <h3><strong>location code:</strong> <span x-text="archInventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
-                <h3>recieved by:<span x-text="archInventory.recieved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
+                <h3><strong>recieved by:</strong><span x-text="archInventory.recieved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3>
-                    date:
+                    <strong>date:</strong>
                     <span
                         x-text="archInventory.recieve_date 
                                 ? new Date(archInventory.recieve_date).toLocaleString('en-US', {  
@@ -143,9 +140,9 @@
                                 : 'N/A'">
                     </span>
                 </h3>
-                <h3>approved by(supervisor):<span x-text="archInventory.approved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
+                <h3><strong>approved by:</strong><span x-text="archInventory.approved_by" :class="archInventory.approved_by ? 'bg-blue-300' : ''" class="px-2 rounded-full text-blue-800 font-bold"></span></h3>
                 <h3>
-                    date:
+                    <strong>date:</strong>
                     <span
                         x-text="archInventory.approved_date 
                                 ? new Date(archInventory.approved_date).toLocaleString('en-US', {  

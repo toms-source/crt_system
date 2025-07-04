@@ -5,15 +5,15 @@
                 <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-200">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Office ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Department Name(Double click to edit)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center Name(Double click to edit)</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="bg-zinc-200 dark:bg-stone-900">
                         @foreach ($offices as $office)
                         <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
-                            <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200"><span>Dept -</span>{{ $office->id }}</td>
+                            <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200"><span>CCID</span>{{ $office->id }}</td>
 
                             <!-- display department name and double click to edit -->
                             <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200"

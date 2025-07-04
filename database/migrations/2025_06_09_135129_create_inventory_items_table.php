@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer("item_no");
             $table->string("description");
             $table->dateTime("doc_date");
-            $table->string("quantity_code");
+            $table->integer("quantity_code");
             $table->string("index_code");
             $table->string("status");
             $table->integer("retention_period")->nullable();

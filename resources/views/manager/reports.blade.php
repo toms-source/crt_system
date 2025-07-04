@@ -30,7 +30,7 @@
     <div class="text-gray-900 dark:text-gray-100">
         <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{$totalInv}}</h3>
         <div class="flex justify-between items-center mx-2 mt-4 ">
-            <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">RTO/Inventory History</h2>
+            <h2 class="w-full py-6 px-4 bg-stone-600 text-gray-50 font-bold text-xl rounded-t-lg">Records Overview</h2>
         </div>
         <div class="mx-2">
             <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden">

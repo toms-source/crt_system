@@ -21,7 +21,8 @@ class CreateInventoryService
             $validItems = collect($request->items)->filter(function ($item) {
                 return !empty($item['description']) &&
                     !empty($item['doc_date']) &&
-                    !empty($item['quantity_code']) &&
+                    isset($item['quantity_code']) &&
+                    is_numeric($item['quantity_code']) &&
                     !empty($item['index_code']) &&
                     (!empty($item['retention_period']) || strtolower($item['status']) === 'permanent');
             });
@@ -50,7 +51,7 @@ class CreateInventoryService
                     'item_no' => $index + 1,
                     'description' => $item['description'],
                     'doc_date' => $docDate,
-                    'quantity_code' => $item['quantity_code'],
+                    'quantity_code' => (int) $item['quantity_code'],
                     'index_code' => $item['index_code'],
                     'status' => $item['status'],
                     'retention_period' => $retention,

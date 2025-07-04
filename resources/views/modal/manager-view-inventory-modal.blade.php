@@ -30,7 +30,7 @@
 }"
     x-init="init()"
     x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 mx-6"
+    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 lg:mx-4 md:mx-4 sm:mx-2 xs:mx-0"
     style="display: none;">
     <!-- Overlay -->
     <div
@@ -44,7 +44,7 @@
 
     <!-- Modal Content -->
     <div x-show="show"
-        class="uppercase px-4 mx-4 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+        class="uppercase px-3 mb-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-stone-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -67,17 +67,17 @@
             <span class="flex justify-center">
                 <img src="{{ asset('images/TranscoLogo.png') }}" class="w-[100px]" />
             </span>
-            <h1 class="text-red-600 font-bold text-lg p-4 dark:text-red-400">National Transmission Corporation</h1>
-            <p>RECORDS TURN-OVER / INVENTORY LIST FORM</p>
+            <h1 class="text-red-600 font-bold lg:text-lg md:text-lg sm:text-sm xs:text-sm p-4 dark:text-red-400">National Transmission Corporation</h1>
+            <p class="xs:text-sm">RECORDS TURN-OVER / INVENTORY LIST FORM</p>
             <p><strong>Cost Center Head:</strong> {{ $loggedInUser->name ?? 'N/A' }}</p>
         </div>
 
         <div class="text-sm w-full flex justify-center py-4">
-            <div class="flex-1">
+            <div class="flex-1 xs:text-sm">
                 <p><strong>Office origin:</strong> {{ $loggedInUser->office?->department ?? 'N/A' }}</p>
                 <h3><strong>turn-over date: </strong><span x-text="new Date(inventory.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) ?? 'N/A'"></span></h3>
             </div>
-            <div class="flex-1">
+            <div class="flex-1 xs:text-sm">
                 <h3><strong>prepared by: </strong><span class="underline font-bold" x-text="inventory.prepared_by"></span></h3>
                 <h3><strong>approved by: </strong><span x-text="inventory.manager_approval ?? 'N/A'" :class="inventory.manager_approval ? 'bg-yellow-300 text-yellow-700' : 'bg-red-300 text-red-700'" class="px-2 rounded-full  font-bold"></span></h3>
             </div>
@@ -120,9 +120,9 @@
 
         <div class="text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3>inventory list no.: <span x-text="inventory.list_no"></span></h3>
-                <h3>disposal series no.: <span x-text="inventory.series_no"></span></h3>
-                <h3>location code: <span x-text="inventory.loc_code"></span></h3>
+                <h3><strong>inventory list no.:</strong> <span x-text="inventory.list_no"></span></h3>
+                <h3><strong>disposal series no.:</strong> <span x-text="inventory.series_no"></span></h3>
+                <h3><strong>location code:</strong> <span x-text="inventory.loc_code"></span></h3>
             </div>
             <div class="flex-1">
                 <h3><strong>recieved by:</strong><span x-text="inventory.recieved_by" :class="inventory.recieved_by"></span></h3>
@@ -135,7 +135,7 @@
                                     }) 
                                 : 'N/A'">
                     </span></h3>
-                <h3><strong>approved by(supervisor):</strong><span x-text="inventory.approved_by" :class="inventory.approved_by"></span></h3>
+                <h3><strong>approved by:</strong><span x-text="inventory.approved_by" :class="inventory.approved_by"></span></h3>
                 <h3><strong>date:</strong>
                     <span
                         x-text="inventory.approved_date 

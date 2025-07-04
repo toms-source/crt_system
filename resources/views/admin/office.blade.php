@@ -33,7 +33,7 @@
             <div class="flex flex-col sm:flex-row items-center justify-between mt-4">
                 <!-- Submit Button -->
                 <x-green-button id="officeBtn">
-                    {{ __('register new department') }}
+                    {{ __('register new Cost Center') }}
                 </x-green-button>
             </div>
         </div>

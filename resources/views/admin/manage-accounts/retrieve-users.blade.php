@@ -9,7 +9,7 @@
                     <h5 class="truncate capitalize text-lg px-3 bg-blue-200 rounded-full text-blue-800 font-bold" title="{{ $user->office?->department ?? 'No Office Assigned' }}">
                         {{ $user->office?->department ?? 'No Office Assigned' }}
                     </h5>
-                    <p class="text-xs">Department</p>
+                    <p class="text-xs">Cost Center</p>
                 </div>
 
             </div>

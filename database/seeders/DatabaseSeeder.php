@@ -15,18 +15,9 @@ class DatabaseSeeder extends Seeder
     protected static ?string $password;
     public function run(): void
     {
-        // $managers = User::factory(20)->create();
-
-        // $managers->each(function ($user) {
-        //     $user->assignRole('user');
-        // });
-        // $user = User::factory(10)->create();
-        // $user -> assignRole('user');
-
-
         $admin = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin Admin',
+            'email' => 'admin@transco.com.ph',
             'password' => static::$password ??=Hash::make('password')
         ]);
         $admin -> assignRole('admin');

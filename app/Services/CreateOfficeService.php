@@ -26,12 +26,12 @@ class CreateOfficeService
         $existingOffice = Offices::where('department', $request->department)->first();
         if ($existingOffice) {
             return redirect()->back()
-                ->withErrors(['department' => 'Office already exists.'])
+                ->withErrors(['department' => 'Cost Center already exists.'])
                 ->withInput();
         }
         // Create the office
         Offices::create(['department' => $request->department]);
 
-        return redirect()->back()->with('success', 'Office created successfully.');
+        return redirect()->back()->with('success', 'Cost Center created successfully.');
     }
 }

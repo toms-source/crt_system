@@ -44,7 +44,7 @@
                         <!-- Quantity/Unit Code -->
                         <div>
                             <x-input-label :value="__('Quantity/Unit Code')" />
-                            <input required type="text" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
+                            <input required type="number" min="1" :name="'items[' + index + '][quantity_code]'" x-model="item.quantity_code" placeholder="Ex. 7UAwqol1" class="form-input w-full dark:bg-stone-800 text-stone-800 dark:text-white">
                         </div>
 
                         <!-- Index Code -->
