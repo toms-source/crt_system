@@ -34,7 +34,7 @@ class ReportsController extends Controller
     // the function where the archive inventory fetches and display in managers reports
     public function managerReports()
     {
-        $managerArchiveInventory = $this->inventoriesArchService->getAll();
+        $managerArchiveInventory = $this->inventoriesArchService->ccmArchive();
         $totalInv = $managerArchiveInventory->count();
         return view('manager.reports', compact('managerArchiveInventory', 'totalInv'));
     }

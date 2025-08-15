@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\ArchiveInventories;
 use Illuminate\Support\Facades\Auth;
 
+use function Pest\Laravel\get;
+
 class InventoriesArchService
 {
 
@@ -20,11 +22,17 @@ class InventoriesArchService
     }
     public function getAll()
     {
-        $user = Auth::user();
-
         return ArchiveInventories::with('owner', 'items')
-            ->where('office_id', $user->office_id)
+            ->where('user_id', Auth::id())
             ->get();
     }
     
+    public function ccmArchive() 
+    {
+        return ArchiveInventories::with('user', 'items')
+        ->whereHas('user', function ($query) {
+                    $query->where('managerId', Auth::id());
+                })
+                ->get();
+    }
 }
