@@ -132,11 +132,17 @@ class InventoryController extends Controller
     // RTO approve by admin
     public function adminApprove(Request $request)
     {
-        $this->adminApprovalService->approve($request);
+        try {
+            $this->adminApprovalService->approve($request);
 
-        return redirect()
-            ->route('admin.index')
-            ->with('success', 'Inventory recieved successfully.');
+            return redirect()
+                ->route('admin.index')
+                ->with('success', 'Inventory approved successfully.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.index')
+                ->with('error', $e->getMessage());
+        }
     }
 
     // transfer RTO to archives

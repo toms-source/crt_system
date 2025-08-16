@@ -17,6 +17,10 @@ class AdminApprovalService
         $inventory = Inventory::findOrFail($request->id);
         $user = Auth::user();
 
+        if (is_null($inventory->recieved_by)) {
+            throw new \Exception('You cannot approve an item that has not been received.');
+        }
+
         if (!$inventory->approved_by) {
             $inventory->approved_by = $user->name;
             $inventory->approved_date = now();

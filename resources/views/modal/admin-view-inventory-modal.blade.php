@@ -177,11 +177,24 @@
                             </p>
                         </template>
 
-                        <form :action="'{{ route('admin.approve') }}'" method="POST" x-show="!inventory.approved_by">
+                        <!-- <form :action="'{{ route('admin.approve') }}'" method="POST" x-show="!inventory.approved_by">
                             @csrf
                             <input type="hidden" name="id" :value="inventory.id">
                             <x-primary-button type="submit">{{__('approve')}}</x-primary-button>
+                        </form> -->
+
+                        <form :action="'{{ route('admin.approve') }}'" method="POST" x-show="!inventory.approved_by">
+                            @csrf
+                            <input type="hidden" name="id" :value="inventory.id">
+                            <button
+                                type="submit"
+                                class="px-4 py-2 rounded bg-blue-600 text-white font-bold"
+                                :class="!inventory.recieved_by ? 'opacity-50 cursor-not-allowed' : ''"
+                                :disabled="inventory.recieved_by ? false : true">
+                                {{ __('approve') }}
+                            </button>
                         </form>
+
                         <template x-if="inventory.approved_by">
                             <p class="text-blue-700 dark:text-blue-200 flex align-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -198,7 +211,7 @@
     </div>
 </div>
 
-    @include('modal.delete-confirmation-modal')
+@include('modal.delete-confirmation-modal')
 @if (session('success'))
 <div x-data="{ show: true }" x-show="show"
     class="fixed top-5 right-5 bg-green-500 text-white p-4 rounded shadow-lg"
