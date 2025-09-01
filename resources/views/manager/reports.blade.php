@@ -19,7 +19,7 @@
     <div class="mx-2 mt-5 px-4 py-6 bg-green-300 rounded-md border-4 border-green-300 border-l-green-800 shadow-sm shadow-green-800">
         <div>
             <p class="text-green-800 font-bold">
-                hello manager this is all the list/s of completed RTO/Inventory by user under your provision
+                hello Cost Center Head this is all the list/s of completed RTO/Inventory by user under your provision
             <div class="text-red-700 text-sm">
                 <span class="uppercase text-red-700 text-sm font-extrabold mr-2">note*</span>all the list below will be controll by the admin
             </div>

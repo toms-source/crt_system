@@ -93,7 +93,13 @@
                             </svg>
                             <div class="ml-4">
 
-                                <div class="capitalize text-sm opacity-80">{{ Auth::user()->getRoleNames()->first() ?? 'No Role' }},</div>
+                                <!-- <div class="capitalize text-sm opacity-80">{{ Auth::user()->getRoleNames()->first() ?? 'No Role' }},</div> -->
+                                <div class="capitalize text-sm opacity-80">
+                                    @php
+                                    $role = Auth::user()->getRoleNames()->first();
+                                    echo $role === 'manager' ? 'Cost Center Head' : ucfirst($role);
+                                    @endphp,
+                                </div>
                                 <div class="font-bold capitalize text-green-700 dark:text-green-300">
                                     {{ Auth::user()->name }}
                                 </div>

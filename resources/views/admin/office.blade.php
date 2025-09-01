@@ -4,7 +4,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
-            <a href="{{ route('admin.registerForm') }}">Add Manager</a>
+            <a href="{{ route('admin.registerForm') }}">Add Cost Center Manager</a>
         </div>
 
         <div class="flex underline underline-offset-4">
@@ -18,12 +18,12 @@
 
     <!-- Office Department -->
     <form method="POST" action="{{ route('admin.storeOffice') }}" class="dark:bg-stone-800 bg-gray-200 rounded-lg mx-6 mt-2" id="registerForm">
-        <h2 class="py-4 px-6 bg-green-600 rounded-t-lg text-xl font-bold text-white">Create Office</h2>
+        <h2 class="py-4 px-6 bg-green-600 rounded-t-lg text-xl font-bold text-white">Add Cost Center</h2>
         @csrf
         <div class="p-10">
             <!-- office name -->
             <div>
-                <x-input-label for="office_dept" :value="__('Office Department')" class="dark:text-gray-300 text-md" />
+                <x-input-label for="office_dept" :value="__('Cost Center')" class="dark:text-gray-300 text-md" />
                 <x-text-input placeholder="Ex. Accounting" id="department" class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" type="text" name="department" :value="old('department    ')" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>

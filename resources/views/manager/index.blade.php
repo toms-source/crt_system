@@ -16,7 +16,7 @@
 
     <div class="mx-2 mt-5 px-4 py-6 bg-green-300 rounded-md border-4 border-green-300 border-l-green-800">
         <div>
-            <p class="text-green-800 font-bold">hello manager this is all your pending for approval <span class="font-extrabold">RECORDS TURN-OVER</span> </p>
+            <p class="text-green-800 font-bold">hello Cost Center Head this is all your pending for approval <span class="font-extrabold">RECORDS TURN-OVER</span> </p>
         </div>
     </div>
 

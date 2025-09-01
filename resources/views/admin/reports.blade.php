@@ -6,7 +6,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
 
-            <a href="{{ route('admin.office') }}">Manager Office</a>
+            <a href="{{ route('admin.office') }}">Manage Cost Center</a>
         </div>
     </div>
     <header class="flex justify-between items-center mx-2 mt-4">

@@ -8,7 +8,7 @@
         </div>
 
         <div class="flex underline underline-offset-4">
-            <a href="{{ route('admin.office') }}">Office Department</a>
+            <a href="{{ route('admin.office') }}">Manage Cost Center</a>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -54,9 +54,9 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label for="office_id" :value="__('Select Office')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Status</x-input-label>
+                <x-input-label for="office_id" :value="__('Cost Center')" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Status</x-input-label>
                 <select name="office_id" id="office_id" class="block w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-gray-500 focus:border-gray-500 text-gray-700 dark:text-gray-300 dark:bg-stone-900 ">
-                    <option value="" disabled selected hidden>-- Select Office --</option>
+                    <option value="" disabled selected hidden>-- Select Cost Center --</option>
 
                     @foreach($offices as $office)
                     <option value="{{ $office->id }}">{{ $office->department }}</option>
