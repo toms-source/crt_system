@@ -28,6 +28,10 @@ class ArchiveInventories extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function office()
+    {
+        return $this->belongsTo(Offices::class, 'office_id');
+    }
     public function user() 
     {
         return $this->belongsTo(User::class);

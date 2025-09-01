@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\ArchiveInventories;
 use Illuminate\Support\Facades\Auth;
 
-use function Pest\Laravel\get;
 
 class InventoriesArchService
 {

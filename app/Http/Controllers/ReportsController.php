@@ -6,29 +6,36 @@ use App\Models\User;
 use App\Models\ArchiveInventories;
 use App\Models\Offices;
 use App\Services\InventoriesArchService;
+use App\Services\AdminArchInventories;
 
 class ReportsController extends Controller
 {
     protected $inventoriesArchService;
-    
-    public function __construct(InventoriesArchService $inventoriesArchService)
+    protected $adminArchiveInventory;
+
+    public function __construct(InventoriesArchService $inventoriesArchService, AdminArchInventories $adminArchiveInventory)
     {
         // Inventories constructor
         $this->inventoriesArchService = $inventoriesArchService;
+        $this->adminArchiveInventory = $adminArchiveInventory;
     }
 
     //the function where the archive inventory fetches and display in admin reports
     public function adminReports()
     {
+
+        if (request()->ajax()) {
+            return $this->adminArchiveInventory->display();
+        }
         // This count all the user's table
         // archive inventories table and office table
         $users = User::count() - 1;
         $inventories = ArchiveInventories::count();
         $office = Offices::count();
 
-        $adminArchiveInventory = $this->inventoriesArchService->getAllByAdmin();
+        
 
-        return view('admin.reports', compact('users', 'inventories', 'office', 'adminArchiveInventory'));
+        return view('admin.reports', compact('users', 'inventories', 'office'));
     }
 
     // the function where the archive inventory fetches and display in managers reports
