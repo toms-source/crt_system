@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('approved_by')->nullable();
             $table->string('approved_date')->nullable();
             $table->string('disposal_status')->nullable();
+            $table->dateTime('disposed_date')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id')->nullable();
