@@ -85,10 +85,15 @@ class InventoryController extends Controller
 
     public function displayIndexUser()
     {
-        $inventories = $this->userInventoriesService->display();
-        $totalInv = $inventories->count();
+        if(request()->ajax())
+        {
+            return $this->userInventoriesService->display();
+        }
 
-        return view('user.index', compact('inventories', 'totalInv'));
+        $inventories = $this->userInventoriesService->count();
+        //$totalInv = $inventories->count();
+
+        return view('user.index', compact('inventories'));
     }
 
     // index display of admin

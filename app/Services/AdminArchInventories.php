@@ -28,7 +28,7 @@ class AdminArchInventories
             })
             ->addColumn('created_at', function ($row) {
                 return optional($row->items->first())->disposal_date
-                    ? Carbon::parse($row->items->first()->created_at)->format('m/d/Y')
+                    ? Carbon::parse($row->items->first()->created_at)->format('m-d-Y')
                     : 'N/A';
             })
             ->addColumn('disposal_status', fn($row) => ucfirst($row->disposal_status))

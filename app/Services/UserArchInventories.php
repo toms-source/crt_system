@@ -2,30 +2,26 @@
 
 namespace App\Services;
 
-use App\Models\Inventory;
+use App\Models\ArchiveInventories;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
-class UserInventoriesService 
+class UserArchInventories 
 {
+    /**
+     * Get all countries.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
 
-    public function display() {
-        // return Inventory::with(['owner', 'items'])
-        //     ->where('user_id', Auth::id())
-        //     ->get()
-        //     ->map(function ($inventory) {
-        //         $inventory->items->transform(function ($item) {
-        //             $item->doc_date = \Carbon\Carbon::parse($item->doc_date)->format('m/d/Y');
-        //             return $item;
-        //         });
-        //         return $inventory;
-        //     });
-        $query = Inventory::with(['owner', 'items'])
-                    ->where('user_id', Auth::id())
-                        ->get();
+    public function display()
+    {
+        $query = ArchiveInventories::with('owner', 'items')
+            ->where('user_id', Auth::id())
+            ->get();
 
-        return DataTables::of($query)
+            return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('created_at', function ($row) {
                 return optional($row->items->first())->disposal_date
@@ -35,7 +31,7 @@ class UserInventoriesService
             ->addColumn('manager_approval', fn($row) => ucfirst($row->manager_approval)) // cost center head
             ->addColumn('disposal_status', fn($row) => ucfirst($row->disposal_status))
             ->addColumn('action', function ($row) {
-                $downloadUrl = route('print-pdf', $row->id);
+                $downloadUrl = route('print-arch-pdf', $row->id);
                 $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
 
                 return '
@@ -43,7 +39,7 @@ class UserInventoriesService
                         <!-- View Button -->
                         <button 
                             x-data 
-                            x-on:click=\'$dispatch("open-modal", { inventory: ' . $inventoryJson . ' })\'
+                            x-on:click=\'$dispatch("open-modal", { archInventory: ' . $inventoryJson . ' })\'
                             class="inline-flex items-center px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded hover:bg-green-700 transition">
                             View
                         </button>
@@ -59,12 +55,4 @@ class UserInventoriesService
             ->rawColumns(['action'])
             ->make(true);
     }
-
-    public function count()
-    {
-        return Inventory::whereHas('owner', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->count();
-    }
-    
 }

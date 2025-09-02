@@ -7,17 +7,28 @@ use App\Models\ArchiveInventories;
 use App\Models\Offices;
 use App\Services\InventoriesArchService;
 use App\Services\AdminArchInventories;
+use App\Services\ManagerArchInventories;
+use App\Services\UserArchInventories;
 
 class ReportsController extends Controller
 {
     protected $inventoriesArchService;
     protected $adminArchiveInventory;
+    protected $managerArchiveInventory;
+    protected $userArchiveInventory;
 
-    public function __construct(InventoriesArchService $inventoriesArchService, AdminArchInventories $adminArchiveInventory)
+    public function __construct(
+        InventoriesArchService $inventoriesArchService,
+        AdminArchInventories $adminArchiveInventory,
+        ManagerArchInventories $managerArchiveInventory,
+        UserArchInventories $userArchiveInventory,
+    ) 
     {
         // Inventories constructor
         $this->inventoriesArchService = $inventoriesArchService;
         $this->adminArchiveInventory = $adminArchiveInventory;
+        $this->managerArchiveInventory = $managerArchiveInventory;
+        $this->userArchiveInventory = $userArchiveInventory;
     }
 
     //the function where the archive inventory fetches and display in admin reports
@@ -33,23 +44,29 @@ class ReportsController extends Controller
         $inventories = ArchiveInventories::count();
         $office = Offices::count();
 
-        
-
         return view('admin.reports', compact('users', 'inventories', 'office'));
     }
 
     // the function where the archive inventory fetches and display in managers reports
     public function managerReports()
     {
-        $managerArchiveInventory = $this->inventoriesArchService->ccmArchive();
-        $totalInv = $managerArchiveInventory->count();
-        return view('manager.reports', compact('managerArchiveInventory', 'totalInv'));
+        if (request()->ajax()) {
+            return $this->managerArchiveInventory->display();
+        }
+
+        $totalInv = $this->managerArchiveInventory->count();
+
+        return view('manager.reports', compact('totalInv'));
     }
 
     public function userReports()
     {
+        if(request()->ajax()) {
+            return $this->userArchiveInventory->display();
+        }
+
         $userArchiveInventory = $this->inventoriesArchService->getAll();
         $totalArch = $userArchiveInventory->count();
-        return view('user.reports', compact('userArchiveInventory', 'totalArch'));
+        return view('user.reports', compact('totalArch'));
     }
 }

@@ -29,81 +29,70 @@
         </div>
         <div class="mx-2">
             <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden">
-                <div class="lg:block md:hidden sm:hidden xs:hidden">
-                    <table id="inventory-table" class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-200">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory Id</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div>
+                    <div class="bg-white dark:bg-stone-800 p-4 shadow overflow-hidden sm:rounded-l">
+                        <table id="inventory-table" class="display nowrap dt-responsive text-center min-w-full divide-y divide-gray-200 dark:divide-gray-700 drop-shadow-md shadow-stone-500" style="width:100%">
+                            <thead class="bg-gray-50 dark:bg-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory Id</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+                        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
 
-                            @foreach ( $userArchiveInventory as $archInventory)
-                            <tr class="border-b border-gray-300 dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-800">
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->id }}</td>
+                        <script>
+                            $(function() {
+                                $('#inventory-table').DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    responsive: true,
+                                    ajax: "{{ route('user.reports') }}",
+                                    columns: [{
+                                            data: 'id',
+                                            name: 'id'
+                                        },
+                                        {
+                                            data: 'created_at',
+                                            name: 'created_at'
+                                        },
+                                        {
+                                            data: 'manager_approval',
+                                            name: 'manager_approval'
+                                        },
+                                        {
+                                            data: 'disposal_status',
+                                            name: 'disposal_status'
+                                        },
+                                        {
+                                            data: 'action',
+                                            name: 'action',
+                                            orderable: false,
+                                            searchable: false
+                                        },
+                                    ],
+                                    pagingType: "simple_numbers",
+                                    language: {
+                                        search: "_INPUT_",
+                                        searchPlaceholder: "Search...",
+                                        lengthMenu: "Show _MENU_ entries",
 
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">
-                                    {{ Carbon\Carbon::parse($archInventory->created_at)->format('M-d-Y') }}
-                                </td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->manager_approval }}</td>
-                                <td class="py-3 px-6 text-left text-gray-700 dark:text-gray-200">{{ $archInventory->disposal_status }}</td>
-                                <td>
-                                    <x-success-button
-                                        x-data
-                                        x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                        View
-                                    </x-success-button>
-
-                                    <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">
-                                        <x-primary-button>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-                                                <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                                            </svg>download</x-primary-button>
-                                    </a>
-
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <!-- mobile view -->
-                <div class="lg:hidden md:block sm:block xs:block mt-4">
-                    @foreach ( $userArchiveInventory as $archInventory )
-                    <div class="bg-stone-200 dark:bg-stone-700 border-t-8 border-green-500 overflow-hidden shadow shadow-stone-500 sm:rounded-lg mb-4">
-
-                        <div class="p-4">
-                            <div class="">
-                                <strong>Inventory Id: </strong><span>{{ $archInventory->id }}</span>
-                            </div>
-                            <div class="">
-                                <strong>Turn-Over Date: </strong><span>{{ Carbon\Carbon::parse($archInventory->created_at)->format('M-d-Y') }}</span>
-                            </div>
-                            <div class="">
-                                <strong>cost center head: </strong><span>{{ $archInventory->manager_approval }}</span>
-                            </div>
-                            <div class="">
-                                <strong>Disposal status: </strong><span>{{ $archInventory->disposal_status }}</span>
-                            </div>
-                            <div class="mt-4">
-                                <x-success-button
-                                    x-data
-                                    x-on:click="$dispatch('open-modal', { archInventory: {{ $archInventory->toJson() }}})">
-                                    View
-                                </x-success-button>
-                                <x-primary-button>
-                                    <a href="{{ route('print-arch-pdf', $archInventory->id) }}" target="_blank" class="text-white">PDF</a>
-                                </x-primary-button>
-                            </div>
-                        </div>
+                                    },
+                                    drawCallback: function() {
+                                        $('#inventory-table_paginate').addClass('flex items-center gap-2 mt-4');
+                                        $('#inventory-table_paginate a').addClass('px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600');
+                                        $('#inventory-table_paginate .current').addClass('bg-green-600 text-white');
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>

@@ -14,118 +14,86 @@
     </div>
 
     <div class="text-gray-900 dark:text-gray-100 w-full py-6 ">
-        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{ $totalInv }}</h3>
+        <h3 class="text-gray-800 dark:text-green-200 py-4 px-4 font-bold text-lg">Total Inventory: {{ $inventories }}</h3>
         <div class="text-xl mx-2 py-6 px-4 rounded-t-lg bg-stone-600 text-gray-50 font-bold">Records Turn-Over Inventory List</div>
         <div>
             <div class="px-2">
-                <div class="bg-white dark:bg-stone-800 p-4 shadow overflow-hidden sm:rounded-l">
+                <div class="bg-zinc-200 dark:bg-stone-800 shadow overflow-hidden">
                     <!-- show table when desktop mode -->
-                    <div class="lg:block md:hidden sm:hidden xs:hidden">
-                        <table id="inventory-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-200">
-                                <tr>
-                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
-                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
-                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
-                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Status</th>
-                                    <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
-                                </tr>
-                            </thead>
+                    <div>
+                        <div class="bg-white dark:bg-stone-800 p-4 shadow overflow-hidden sm:rounded-l">
+                            <table id="inventory-table" class="display nowrap dt-responsive text-center min-w-full divide-y divide-gray-200 dark:divide-gray-700 drop-shadow-md shadow-stone-500" style="width:100%">
+                                <thead class="bg-gray-50 dark:bg-gray-200">
+                                    <tr>
+                                        <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
+                                        <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
+                                        <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
+                                        <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Status</th>
+                                        <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
 
-                            <tbody class="bg-white dark:bg-stone-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                @php
-                                $loggedInUser = Auth::user();
-                                @endphp
 
-                                @forelse($inventories as $inventory)
-                                <tr>
-                                    <td class="px-6 py-4">{{ $inventory->id }}</td>
-                                    <td class="px-6 py-4 capitalize">{{ $loggedInUser->manager?->name ?? 'N/A' }}</td>
-                                    <td class="px-6 py-4 uppercase font-bold text-center text-sm">
-                                        <span class="rounded-full px-4
-                                                                @if(!is_null($inventory->approved_by)) bg-green-200 text-green-800
-                                                                @elseif(is_null($inventory->approved_by)) bg-yellow-200 text-yellow-800
-                                                                @endif">
-                                            {{ $inventory->approved_by === null ? 'Pending...' : 'Approved' }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 capitalize">{{ $inventory->disposal_status }}</td>
-                                    <td class="px-6 py-4">
-                                        <x-success-button
-                                            x-data
-                                            x-on:click="$dispatch('open-modal', { inventory: {{ $inventory->toJson() }}})">
-                                            View
-                                        </x-success-button>
-                                        <a href="{{ route('print-pdf', $inventory->id) }}" target="_blank" class="text-white">
-                                            <x-danger-button>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-                                                    <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                                                    <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                                                </svg>
-                                                download
-                                            </x-danger-button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="5" class="text-center py-6 text-gray-500 dark:text-gray-300">
-                                        No created Inventory yet.
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- show cards when in mobile or tablet -->
-                    <div class="lg:hidden md:block sm:block xs:block">
-                        @foreach ( $inventories as $inventory )
-                        <div class="bg-stone-200 dark:bg-stone-700 border-t-8 border-green-500 overflow-hidden shadow shadow-stone-500 sm:rounded-lg mb-4">
+                            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+                            <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
-                            <div class="p-4">
-                                <div class="">
-                                    <strong>Inventory ID:</strong> <span>{{ $inventory->id }}</span>
-                                </div>
-                                <div class="">
-                                    <strong>Cost Center Head:</strong> <span class="capitalize">{{ $loggedInUser->manager?->name ?? 'N/A' }}</span>
-                                </div>
-                                <div class="">
-                                    <strong>Approval Status: <span class="rounded-full px-4
-                                                                @if(!is_null($inventory->approved_by)) bg-green-200 text-green-800
-                                                                @elseif(is_null($inventory->approved_by)) bg-yellow-200 text-yellow-800
-                                                                @endif">
-                                            {{ $inventory->approved_by === null ? 'Pending...' : 'Approved' }}
-                                        </span></strong>
-                                </div>
-                                <div class="">
-                                    <strong>Disposal Status:</strong> <span>{{ $inventory->disposal_status }}</span>
-                                </div>
-                                <div class="mt-4">
-                                    <x-success-button
-                                        x-data
-                                        x-on:click="$dispatch('open-modal', { inventory: {{ $inventory->toJson() }}})">
-                                        View
-                                    </x-success-button>
-                                    <a href="{{ route('print-pdf', $inventory->id) }}" target="_blank" class="text-white">
-                                        <x-danger-button>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-                                                <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                                            </svg>
-                                            download
-                                        </x-danger-button>
-                                    </a>
+                            <script>
+                                $(function() {
+                                    $('#inventory-table').DataTable({
+                                        processing: true,
+                                        serverSide: true,
+                                        responsive: true,
+                                        ajax: "{{ route('user.index') }}",
+                                        columns: [{
+                                                data: 'id',
+                                                name: 'id'
+                                            },
+                                            {
+                                                data: 'manager_approval',
+                                                name: 'manager_approval'
+                                            },
+                                            {
+                                                data: 'approved_by',
+                                                name: 'approved_by',
+                                                render: function(data) {
+                                                    if (!data) {
+                                                        return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">Pending...</span>';
+                                                    } else {
+                                                        return '<span class="text-green-800 font-semibold bg-green-200 px-4 py-2 rounded-full">Approved</span>';
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                data: 'disposal_status',
+                                                name: 'disposal_status'
+                                            },
+                                            {
+                                                data: 'action',
+                                                name: 'action',
+                                                orderable: false,
+                                                searchable: false
+                                            },
+                                        ],
+                                        pagingType: "simple_numbers",
+                                        language: {
+                                            search: "_INPUT_",
+                                            searchPlaceholder: "Search...",
+                                            lengthMenu: "Show _MENU_ entries",
 
-                                </div>
-                            </div>
+                                        },
+                                        drawCallback: function() {
+                                            $('#inventory-table_paginate').addClass('flex items-center gap-2 mt-4');
+                                            $('#inventory-table_paginate a').addClass('px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600');
+                                            $('#inventory-table_paginate .current').addClass('bg-green-600 text-white');
+                                        }
+                                    });
+                                });
+                            </script>
 
                         </div>
-                        @endforeach
-
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>

@@ -73,6 +73,7 @@
                         <table id="inventory-table" class="display nowrap dt-responsive text-center min-w-full divide-y divide-gray-200 dark:divide-gray-700 drop-shadow-md shadow-stone-500" style="width:100%">
                             <thead class="bg-gray-50 dark:bg-gray-200">
                                 <tr>
+                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
                                     <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Prapred by</th>
                                     <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center Head</th>
                                     <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Cost Center</th>
@@ -96,7 +97,12 @@
                             serverSide: true,
                             responsive: true,
                             ajax: "{{ route('admin.reports') }}",
-                            columns: [{
+                            columns: [
+                                {
+                                    data: 'id',
+                                    name: 'id'
+                                },
+                                {
                                     data: 'prepared_by',
                                     name: 'prepared_by'
                                 },
