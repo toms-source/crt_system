@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
-class UserArchInventories 
+class UserArchInventories
 {
     /**
      * Get all countries.
@@ -21,7 +21,7 @@ class UserArchInventories
             ->where('user_id', Auth::id())
             ->get();
 
-            return DataTables::of($query)
+        return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('created_at', function ($row) {
                 return optional($row->items->first())->disposal_date
@@ -29,7 +29,16 @@ class UserArchInventories
                     : 'N/A';
             })
             ->addColumn('manager_approval', fn($row) => ucfirst($row->manager_approval)) // cost center head
-            ->addColumn('disposal_status', fn($row) => ucfirst($row->disposal_status))
+            ->addColumn('disposal_status', function ($row) {
+                $status = ucfirst($row->disposal_status ?? 'N/A');
+
+                if ($row->disposed_date) {
+                    $date = \Carbon\Carbon::parse($row->disposed_date)->format('m/d/Y');
+                    return $status . ' (' . $date . ')';
+                }
+
+                return $status;
+            })
             ->addColumn('action', function ($row) {
                 $downloadUrl = route('print-arch-pdf', $row->id);
                 $inventoryJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');

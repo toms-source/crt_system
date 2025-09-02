@@ -67,8 +67,23 @@
                                             name: 'manager_approval'
                                         },
                                         {
-                                            data: 'disposal_status',
-                                            name: 'disposal_status'
+                                            data: null,
+                                            name: 'disposal_status',
+                                            width: '200px',
+                                            render: function(data) {
+                                                if (data.disposal_status === 'disposed') {
+                                                    let date = new Date(data.disposed_date);
+                                                    let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+
+                                                    return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded-full">
+                                                    Disposed (${formattedDate})
+                                                </span>`;
+                                                } else if (data.disposal_status === 'for disposal') {
+                                                    return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">For Disposal</span>';
+                                                } else {
+                                                    return `<span class="text-gray-600 dark:text-gray-300">${data.disposal_status ?? 'N/A'}</span>`;
+                                                }
+                                            }
                                         },
                                         {
                                             data: 'action',

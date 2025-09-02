@@ -78,7 +78,6 @@
                                 width: '200px',
                                 render: function(data) {
                                     if (data.disposal_status === 'disposed') {
-                                        // Format disposed_date (assuming it's in ISO format from DB)
                                         let date = new Date(data.disposed_date);
                                         let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 
