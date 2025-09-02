@@ -10,6 +10,7 @@ class DisposeService
     {
         $inventory = Inventory::findOrFail($id);
         $inventory->disposal_status = 'disposed';
+        $inventory->disposed_date = now();
         $inventory->save();
 
         return [

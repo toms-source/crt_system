@@ -19,6 +19,7 @@ class ArchiveInventories extends Model
         'approved_by',
         'approved_date',
         'disposal_status',
+        'disposed_date',
         'user_id',
         'office_id',
     ];
