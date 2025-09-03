@@ -26,8 +26,11 @@
                     <div>
                         <!-- Name -->
                         <div class="text-xl md:text-md xs:text-sm font-bold">
-                            <h1 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->name }}">{{ $user->name }} -
-                                <span title="{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}">{{ $user->roles->isNotEmpty() ? $user->getRoleNames()->join(', ') : 'No Role Assigned' }}</span>
+                            <h1 class="w-[250px] sm:w-[300px] truncate capitalize" title="{{ $user->name }}">
+                                {{ $user->name }} -
+                                <span title="{{ $user->display_roles ?? 'No Role Assigned' }}">
+                                    {{ $user->display_roles ?? 'No Role Assigned' }}
+                                </span>
                             </h1>
                         </div>
 

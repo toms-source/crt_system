@@ -74,9 +74,24 @@ class UsersServices
 
     public function usersRoles(array $roles = ['manager', 'user'], int $perPage = 6)
     {
-        return User::whereHas("roles", function ($query) use ($roles) {
+        $users = User::whereHas("roles", function ($query) use ($roles) {
             $query->whereIn("name", $roles);
         })->paginate($perPage);
+
+        $roleMapping = [
+            'manager' => 'Head',
+            'user' => 'Member',
+        ];
+
+        $users->getCollection()->transform(function ($user) use ($roleMapping) {
+            $user->display_roles = $user->getRoleNames()
+                ->map(fn($role) => $roleMapping[$role] ?? ucfirst($role)) // fallback
+                ->join(', ');
+
+            return $user;
+        });
+
+        return $users;
     }
 
     public function searchUsers(?string $search, int $perPage = 6)
