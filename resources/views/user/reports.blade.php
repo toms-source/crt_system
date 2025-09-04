@@ -38,6 +38,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Date of disposed</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
@@ -72,18 +73,18 @@
                                             width: '200px',
                                             render: function(data) {
                                                 if (data.disposal_status === 'disposed') {
-                                                    let date = new Date(data.disposed_date);
-                                                    let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-
-                                                    return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded-full">
-                                                    Disposed (${formattedDate})
-                                                </span>`;
-                                                } else if (data.disposal_status === 'for disposal') {
-                                                    return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">For Disposal</span>';
+                                                    return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded">
+                                                    Disposed</span>`;
+                                                } else if (data.disposal_status === 'disposal') {
+                                                    return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded">For Disposal</span>';
                                                 } else {
                                                     return `<span class="text-gray-600 dark:text-gray-300">${data.disposal_status ?? 'N/A'}</span>`;
                                                 }
                                             }
+                                        },
+                                        {
+                                            data: 'disposed_date',
+                                            name: 'disposed_date'
                                         },
                                         {
                                             data: 'action',

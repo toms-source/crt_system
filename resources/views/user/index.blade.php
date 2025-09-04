@@ -28,7 +28,9 @@
                                         <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
                                         <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">cost center head</th>
                                         <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
                                         <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Disposal Status</th>
+                                        <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Date of disposed</th>
                                         <th class="text-center px-6 py-3 text-xs font-bold text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                                     </tr>
                                 </thead>
@@ -58,11 +60,15 @@
                                                 name: 'approved_by',
                                                 render: function(data) {
                                                     if (!data) {
-                                                        return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">Pending...</span>';
+                                                        return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded">Pending...</span>';
                                                     } else {
-                                                        return '<span class="text-green-800 font-semibold bg-green-200 px-4 py-2 rounded-full">Approved</span>';
+                                                        return '<span class="text-green-800 font-semibold bg-green-200 px-4 py-2 rounded">Approved</span>';
                                                     }
                                                 }
+                                            },
+                                            {
+                                                data: 'created_at',
+                                                name: 'created_at'
                                             },
                                             {
                                                 data: null,
@@ -70,18 +76,19 @@
                                                 width: '200px',
                                                 render: function(data) {
                                                     if (data.disposal_status === 'disposed') {
-                                                        let date = new Date(data.disposed_date);
-                                                        let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-
-                                                        return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded-full">
-                                                    Disposed (${formattedDate})
+                                                        return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded">
+                                                    Disposed
                                                 </span>`;
-                                                    } else if (data.disposal_status === 'for disposal') {
-                                                        return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">For Disposal</span>';
+                                                    } else if (data.disposal_status === 'disposal') {
+                                                        return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded">Disposal</span>';
                                                     } else {
-                                                        return `<span class="text-gray-600 dark:text-gray-300">${data.disposal_status ?? 'N/A'}</span>`;
+                                                        return `<span class="text-gray-600">${data.disposal_status ?? 'N/A'}</span>`;
                                                     }
                                                 }
+                                            },
+                                            {
+                                                data: 'disposed_date',
+                                                name: 'dispoed_date'
                                             },
                                             {
                                                 data: 'action',

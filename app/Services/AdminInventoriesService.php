@@ -67,7 +67,10 @@ class AdminInventoriesService
                 })->addColumn('disposal_date_full', function ($row) {
                     return $row->disposal_date ? Carbon::parse($row->disposal_date)->toDateString() : null;
                 })->editColumn('created_at', function ($row) {
-                    return $row->created_at ? Carbon::parse($row->created_at)->format('m/d/Y') : '';
+                    return $row->created_at ? Carbon::parse($row->created_at)->format('Y-m-d') : '';
+                })
+                ->editColumn('disposed_date', function ($row) {
+                    return $row->disposed_date ? Carbon::parse($row->disposed_date)->format('Y-m-d') : '';
                 })
                 ->editColumn('disposal_date', function ($row) {
                     return $row->disposal_date ? Carbon::parse($row->disposal_date)->format('Y') : '';

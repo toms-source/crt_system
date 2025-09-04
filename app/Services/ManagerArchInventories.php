@@ -32,19 +32,15 @@ class ManagerArchInventories
             })
             ->addColumn('created_at', function ($row) {
                 return optional($row->items->first())->disposal_date
-                    ? Carbon::parse($row->items->first()->created_at)->format('m/d/Y')
+                    ? Carbon::parse($row->items->first()->created_at)->format('Y-m-d')
                     : 'N/A';
             })
             
             ->addColumn('disposal_status', function ($row) {
-                $status = ucfirst($row->disposal_status ?? 'N/A');
-
-                if ($row->disposed_date) {
-                    $date = \Carbon\Carbon::parse($row->disposed_date)->format('m/d/Y');
-                    return $status . ' (' . $date . ')';
-                }
-
-                return $status;
+                return $row->disposal_status ?? 'N/A';
+            })
+            ->editColumn('disposed_date', function ($row) {
+                return $row->disposed_date ? Carbon::parse($row->disposed_date)->format('Y-m-d') : '';
             })
             ->addColumn('action', function ($row) {
                 $downloadUrl = route('print-arch-pdf', $row->id);

@@ -31,9 +31,10 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Inventory ID</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">prepared by</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Approval Status</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">disposal Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Turn-Over Date</th>
+                                    <th class="text-center px-6 py-3 text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Date of disposed</th>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-green-900 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
@@ -72,10 +73,17 @@
                                     name: 'prepared_by'
                                 },
                                 {
+                                    data: 'created_at',
+                                    name: 'created_at',
+                                    orderable: false,
+                                    searchable: false,
+                                    width: '200px',
+                                },
+                                {
                                     data: 'manager_approval',
                                     name: 'manager_approval',
                                     render: function(data, type, row) {
-                                        return data ? '<span class="px-4 py-2 bg-green-300 text-green-700 font-bold rounded-full">Approved</span>' : '<span class="px-4 py-2 bg-yellow-300 text-yellow-700 font-bold rounded-full">Pending</span>';
+                                        return data ? '<span class="px-4 py-2 bg-green-300 text-green-700 font-bold rounded">Approved</span>' : '<span class="px-4 py-2 bg-yellow-300 text-yellow-700 font-bold rounded-full">Pending</span>';
                                     },
                                 },
                                 {
@@ -84,25 +92,19 @@
                                     width: '200px',
                                     render: function(data) {
                                         if (data.disposal_status === 'disposed') {
-                                            let date = new Date(data.disposed_date);
-                                            let formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-
-                                            return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded-full">
-                                                    Disposed (${formattedDate})
+                                            return `<span class="text-red-800 font-semibold bg-red-200 px-4 py-2 rounded">
+                                                    Disposed
                                                 </span>`;
-                                        } else if (data.disposal_status === 'for disposal') {
-                                            return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded-full">For Disposal</span>';
+                                        } else if (data.disposal_status === 'disposal') {
+                                            return '<span class="text-yellow-800 font-semibold bg-yellow-200 px-4 py-2 rounded">Disposal</span>';
                                         } else {
                                             return `<span class="text-gray-600 dark:text-gray-300">${data.disposal_status ?? 'N/A'}</span>`;
                                         }
                                     }
                                 },
                                 {
-                                    data: 'created_at',
-                                    name: 'created_at',
-                                    orderable: false,
-                                    searchable: false,
-                                    width: '200px',
+                                    data: 'disposed_date',
+                                    name: 'disposed_date',
                                 },
                                 {
                                     data: 'action',

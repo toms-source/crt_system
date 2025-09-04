@@ -28,7 +28,11 @@ class ManagerInventoriesService
                 // Disposal Date (Year only) — from related inventory items
                 ->editColumn('created_at', function ($row) {
                     $earliestDate = $row->items->min('created_at');
-                    return $earliestDate ? Carbon::parse($earliestDate)->format('m/d/Y') : '—';
+                    return $earliestDate ? Carbon::parse($earliestDate)->format('Y-m-d') : '—';
+                })
+
+                ->editColumn('disposed_date', function ($row) {
+                    return $row->disposed_date ? Carbon::parse($row->disposed_date)->format('Y-m-d') : '';
                 })
 
                 // Action Buttons

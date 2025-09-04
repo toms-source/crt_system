@@ -34,7 +34,7 @@ class CreateInventoryService
                 'office_origin' => $user->office->department ?? 'Unknown Office',
                 'prepared_by' => $user->name,
                 'list_no' => $itemCount,
-                'disposal_status' => 'for disposal',
+                'disposal_status' => 'disposal',
                 'user_id' => $user->id,
                 'office_id' => $user->office_id,
             ]);

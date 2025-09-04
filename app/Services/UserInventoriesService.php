@@ -7,32 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
-class UserInventoriesService 
+class UserInventoriesService
 {
 
-    public function display() {
-        
+    public function display()
+    {
+
         $query = Inventory::with(['owner', 'items'])
-                    ->where('user_id', Auth::id())
-                        ->get();
+            ->where('user_id', Auth::id())
+            ->get();
 
         return DataTables::of($query)
             ->addIndexColumn()
-            ->addColumn('created_at', function ($row) {
-                return optional($row->items->first())->disposal_date
-                    ? Carbon::parse($row->items->first()->created_at)->format('m/d/Y')
-                    : 'N/A';
+            ->editColumn('created_at', function ($row) {
+                $earliestDate = $row->items->min('created_at');
+                return $earliestDate ? Carbon::parse($earliestDate)->format('Y-m-d') : '—';
+            })
+            ->editColumn('disposed_date', function ($row) {
+                return $row->disposed_date ? Carbon::parse($row->disposed_date)->format('Y-m-d') : '';
             })
             ->addColumn('manager_approval', fn($row) => ucfirst($row->manager_approval)) // cost center head
             ->addColumn('disposal_status', function ($row) {
-                $status = ucfirst($row->disposal_status ?? 'N/A');
-
-                if ($row->disposed_date) {
-                    $date = \Carbon\Carbon::parse($row->disposed_date)->format('m/d/Y');
-                    return $status . ' (' . $date . ')';
-                }
-
-                return $status;
+                return $row->disposal_status ?? 'N/A';
             })
             ->addColumn('action', function ($row) {
                 $downloadUrl = route('print-pdf', $row->id);
@@ -66,5 +62,4 @@ class UserInventoriesService
             $query->where('user_id', Auth::id());
         })->count();
     }
-    
 }
