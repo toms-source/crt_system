@@ -160,7 +160,7 @@
                     <div class="flex gap-4">
 
                         <x-danger-button type="button" x-on:click="confirmDelete(inventory.id)">
-                            {{ __('Delete') }}
+                            {{ __('Reject') }}
                         </x-danger-button>
 
                         <form :action="'{{ route('admin.recieve') }}'" method="POST" x-show="!inventory.recieved_by">

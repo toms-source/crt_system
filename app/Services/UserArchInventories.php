@@ -24,8 +24,9 @@ class UserArchInventories
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('created_at', function ($row) {
-                return optional($row->items->first())->disposal_date
-                    ? Carbon::parse($row->items->first()->created_at)->format('Y-m-d')
+                $item = $row->items->first();
+                return $item && $item->created_at
+                    ? Carbon::parse($item->created_at)->format('Y-m-d')
                     : 'N/A';
             })
             ->addColumn('manager_approval', fn($row) => ucfirst($row->manager_approval)) // cost center head
