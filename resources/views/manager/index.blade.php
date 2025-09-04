@@ -83,7 +83,7 @@
                                     data: 'manager_approval',
                                     name: 'manager_approval',
                                     render: function(data, type, row) {
-                                        return data ? '<span class="px-4 py-2 bg-green-300 text-green-700 font-bold rounded">Approved</span>' : '<span class="px-4 py-2 bg-yellow-300 text-yellow-700 font-bold rounded-full">Pending</span>';
+                                        return data ? '<span class="px-4 py-2 bg-green-300 text-green-700 font-bold rounded">Approved</span>' : '<span class="px-4 py-2 bg-yellow-300 text-yellow-700 font-bold rounded">Pending</span>';
                                     },
                                 },
                                 {
