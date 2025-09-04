@@ -11,15 +11,6 @@ class DisposeService
 {
     public function disposal($inventoryId) 
     {
-        // $inventory = Inventory::findOrFail($id);
-        // $inventory->disposal_status = 'disposed';
-        // $inventory->disposed_date = now();
-        // $inventory->save();
-
-        // return [
-        //     'success' => true,
-        //     'message' => 'Inventory marked as disposed.'
-        // ];
         $inventory = Inventory::with('items')->findOrFail($inventoryId);
 
     DB::transaction(function () use ($inventory) {

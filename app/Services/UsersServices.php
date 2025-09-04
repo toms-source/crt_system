@@ -80,7 +80,7 @@ class UsersServices
 
         $roleMapping = [
             'manager' => 'Head',
-            'user' => 'Member',
+            'user' => 'User',
         ];
 
         $users->getCollection()->transform(function ($user) use ($roleMapping) {
