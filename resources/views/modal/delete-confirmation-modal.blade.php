@@ -11,7 +11,7 @@
             <x-secondary-button x-on:click="showDeleteModal = false">Cancel</x-secondary-button>
 
             <form
-                :action="`{{ url('manager/inventory') }}/${deleteId}`"
+                :action="`{{ url('admin/inventory') }}/${deleteId}`"
                 method="POST"
                 x-ref="deleteForm">
                 @csrf
