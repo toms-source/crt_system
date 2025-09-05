@@ -14,6 +14,7 @@ use App\Services\ManagerApprovalService;
 use App\Services\ManagerInventoriesService;
 use App\Services\TempToDelInventoriesService;
 use App\Services\UserInventoriesService;
+use App\Services\ManagerTempToDelInventoriesService;
 
 class InventoryController extends Controller
 {
@@ -29,6 +30,7 @@ class InventoryController extends Controller
     protected $managerApprovalService;
     protected $adminApprovalService;
     protected $disposeService;
+    protected $managerTempToDelInventories;
 
     public function __construct(
         TempToDelInventoriesService $tempToDelInventoriesService,
@@ -41,7 +43,8 @@ class InventoryController extends Controller
         AdminRecievingService $adminRecievingService,
         ManagerApprovalService $managerApprovalService,
         AdminApprovalService $adminApprovalService,
-        DisposeService $disposeService
+        DisposeService $disposeService,
+        ManagerTempToDelInventoriesService $managerTempToDelInventories,
     ) {
         $this->tempToDelInventoriesService = $tempToDelInventoriesService;
         $this->adminInventoriesService = $adminInventoriesService;
@@ -54,6 +57,7 @@ class InventoryController extends Controller
         $this->adminApprovalService = $adminApprovalService;
         $this->checkUpdateInventoryService = $checkUpdateInventoryService;
         $this->disposeService = $disposeService;
+        $this->managerTempToDelInventories = $managerTempToDelInventories;
     }
 
     public function view()
@@ -154,6 +158,14 @@ class InventoryController extends Controller
     public function destroy($inventoryId)
     {
         $this->tempToDelInventoriesService->toArchiveInventoryAndDelete($inventoryId);
+
+        return redirect()
+            ->back()
+            ->with('success', 'Inventory archived successfully.');
+    }
+    public function managerDestroy($inventoryId)
+    {
+        $this->managerTempToDelInventories->toArchiveInventoryAndDelete($inventoryId);
 
         return redirect()
             ->back()

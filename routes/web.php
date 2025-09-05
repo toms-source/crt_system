@@ -88,6 +88,9 @@ Route::middleware(['auth', 'role:manager'])->group(function () {
 
     Route::post('/user/register', [UserController::class, 'registerUser'])
     ->name('user.register');
+
+    Route::delete('/manager/inventory/{inventory}', [InventoryController::class, 'managerDestroy'])
+    ->name('inventory.destroy');
 });
 
 // User Route

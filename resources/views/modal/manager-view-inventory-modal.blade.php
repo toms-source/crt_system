@@ -1,26 +1,31 @@
 <div
     x-data="{
-    show: false,
-    inventory: {},
-    
-        disposalYearClass(date) {
-    if (!date) return '';
+        show: false,
+        inventory: {},
+        
+            disposalYearClass(date) {
+        if (!date) return '';
 
-    const now = new Date();
-    const disposalDate = new Date(date);
+        const now = new Date();
+        const disposalDate = new Date(date);
 
-    // Calculate year difference
-    const diffYears = disposalDate.getFullYear() - now.getFullYear();
+        // Calculate year difference
+        const diffYears = disposalDate.getFullYear() - now.getFullYear();
 
-    if (diffYears <= 1) {
-        return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
-    } else if (diffYears >= 2) {
-        return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
-    }
+        if (diffYears <= 1) {
+            return 'text-red-800 bg-red-300 font-extrabold rounded-full px-4';
+        } else if (diffYears >= 2) {
+            return 'text-green-800 bg-green-300 font-extrabold rounded-full px-4';
+        }
 
-    return '';
-},
+        return '';
+    },
 
+        confirmDelete(id) {
+            this.deleteId = id;
+            this.showDeleteModal = true;
+        },
+        
     init() {
         window.addEventListener('open-modal', event => {
             this.inventory = event.detail.inventory;
@@ -154,6 +159,9 @@
             <div class="p-8 flex justify-end">
                 <div>
                     <div class="flex gap-4">
+                        <x-danger-button type="button" x-on:click="confirmDelete(inventory.id)">
+                            {{ __('Reject') }}
+                        </x-danger-button>
                         <form :action="'{{ route('inventory.approve') }}'" method="POST" x-show="!inventory.manager_approval">
                             @csrf
                             <input type="hidden" name="id" :value="inventory.id">
@@ -180,7 +188,7 @@
         </div>
     </div>
 </div>
-
+@include('modal.manager-disposal-modal')
 @if (session('success'))
 <div x-data="{ show: true }" x-show="show"
     class="fixed top-5 right-5 bg-green-500 text-white p-4 rounded shadow-lg"

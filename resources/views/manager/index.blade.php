@@ -132,4 +132,5 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
     @include('modal.manager-view-inventory-modal')
+    @include('modal.disposal-modal')
 </x-app-layout>
