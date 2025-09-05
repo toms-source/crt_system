@@ -134,7 +134,7 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 48%; vertical-align: top; border: none; margin-left: 20px;">
-                <p class="foot"><strong>INVENTORY LIST NO.:</strong> {{ $inventory->list_no }}</p>
+                <p class="foot"><strong>INVENTORY LIST NO.:</strong> {{ $inventory->id }}</p>
                 <p class="foot"><strong>DISPOSAL SERIES NO.:</strong> {{$inventory->series_no }}</span></p>
                 <p class="foot"><strong>LOC CODE:</strong> {{ $inventory->loc_code }}</p>
             </td>

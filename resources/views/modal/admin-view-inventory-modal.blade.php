@@ -123,7 +123,7 @@
         </div>
         <div class=" pb-24 text-sm flex justify-center py-4">
             <div class="flex-1">
-                <h3><strong>inventory list no.: </strong> <span x-text="inventory.list_no"></span></h3>
+                <h3><strong>inventory list no.: </strong> <span x-text="inventory.id"></span></h3>
                 <h3><strong> disposal series no.: </strong><span x-text="inventory.series_no"></span></h3>
                 <h3><strong>location code:</strong><span x-text="inventory.loc_code"></span></h3>
             </div>

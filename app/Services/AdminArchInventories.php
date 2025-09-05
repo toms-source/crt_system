@@ -22,6 +22,9 @@ class AdminArchInventories
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('prepared_by', fn($row) => ucfirst($row->prepared_by))
+            ->filterColumn('prepared_by', function ($query, $keyword) {
+                $query->where('prepared_by', 'LIKE', "%{$keyword}%");
+            })
             ->addColumn('manager_approval', fn($row) => ucfirst($row->manager_approval)) // cost center head
             ->addColumn('office_name', function ($row) {
                 return $row->office ? $row->office->department : 'N/A';
@@ -31,6 +34,11 @@ class AdminArchInventories
                 return $item && $item->created_at
                     ? Carbon::parse($item->created_at)->format('Y-m-d')
                     : 'N/A';
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereHas('items', function ($q) use ($keyword) {
+                    $q->whereDate('created_at', 'LIKE', "%{$keyword}%");
+                });
             })
             ->addColumn('disposal_status', function ($row) {
                 return $row->disposal_status ?? 'N/A';
