@@ -27,8 +27,9 @@ class AdminArchInventories
                 return $row->office ? $row->office->department : 'N/A';
             })
             ->addColumn('created_at', function ($row) {
-                return optional($row->items->first())->disposal_date
-                    ? Carbon::parse($row->items->first()->created_at)->format('Y-m-d')
+                $item = $row->items->first();
+                return $item && $item->created_at
+                    ? Carbon::parse($item->created_at)->format('Y-m-d')
                     : 'N/A';
             })
             ->addColumn('disposal_status', function ($row) {

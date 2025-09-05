@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Inventory;
 use App\Models\ArchiveInventories;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ManagerTempToDelInventoriesService
 {
@@ -17,6 +18,12 @@ class ManagerTempToDelInventoriesService
     public function toArchiveInventoryAndDelete($inventoryId)
 {
     $inventory = Inventory::with('items')->findOrFail($inventoryId);
+    $user = Auth::user();
+
+    if (!$inventory->manager_approval) {
+            $inventory->manager_approval = 'Rejected by'.' '.$user->name ;
+            $inventory->save();
+        }
 
     DB::transaction(function() use ($inventory) {
         $inventory->disposal_status = 'disposed';
@@ -53,6 +60,7 @@ class ManagerTempToDelInventoriesService
                 'disposal_date' => $item->disposal_date,
             ]);
         }
+        
 
         // Delete original
         $inventory->items()->delete();
